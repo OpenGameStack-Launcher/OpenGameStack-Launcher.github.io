@@ -226,6 +226,12 @@
             flex-wrap: wrap;
         }
 
+        .hero-note {
+            margin-top: 1rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
         .badge {
             font-family: "IBM Plex Mono", "Segoe UI", monospace;
             font-size: 0.75rem;
@@ -297,6 +303,40 @@
             font-size: 0.95rem;
         }
 
+        .release {
+            padding: 1rem 0 4rem 0;
+        }
+
+        .release-panel {
+            background: rgba(30, 41, 59, 0.75);
+            border: 1px solid rgba(226, 232, 240, 0.18);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .release-panel h2 {
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            color: white;
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .release-panel p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .release-list {
+            list-style: disc;
+            margin-left: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 1.25rem;
+        }
+
+        .release-list li {
+            margin-bottom: 0.4rem;
+        }
+
         /* --- FOOTER --- */
         footer {
             text-align: center;
@@ -347,6 +387,7 @@
                 <div>OPEN <span>GAME STACK</span></div>
             </div>
             <nav>
+                <a href="#alpha-download" class="nav-link">Alpha Download</a>
                 <a href="https://github.com/OpenGameStack-Org" class="nav-link">GitHub</a>
                 <a href="https://www.linkedin.com/company/open-game-stack" class="nav-link">LinkedIn</a>
             </nav>
@@ -357,9 +398,11 @@
             <h1>Build Games.<br>Own the Stack.</h1>
             <p>The universal standard for sovereign, version-controlled open source game development. Serve indie creators, studios, and defense programs with one unified toolchain.</p>
             <div class="hero-actions">
+                <a href="https://github.com/OpenGameStack-Org/ogs-launcher/releases/tag/v0.1.0-alpha" class="btn">Download Alpha v0.1.0</a>
                 <a href="https://github.com/OpenGameStack-Org" class="btn">View on GitHub</a>
                 <a href="manifesto.html" class="btn btn-outline">Read the Manifesto</a>
             </div>
+            <p class="hero-note">Current alpha target: Windows 10/11 (x64), Godot 4.3 launcher prototype.</p>
             <div class="hero-badges">
                 <span class="badge">Offline-First</span>
                 <span class="badge">LTS Tooling</span>
@@ -380,6 +423,19 @@
             <div class="card">
                 <h3>For Defense & Enterprise</h3>
                 <p>Zero licensing. No vendor kill-switches. Audit the source code. Run offline forever. Archive the entire stack for 20+ year sustainment and long-term missions. Sovereignty guaranteed.</p>
+            </div>
+        </section>
+
+        <section class="release" id="alpha-download">
+            <div class="release-panel">
+                <h2>Alpha Package</h2>
+                <p>Keep it simple: download the latest OGS Launcher alpha package and start testing the core workflow (project import, tool management, and Seal for Delivery).</p>
+                <ul class="release-list">
+                    <li>Download the latest alpha from GitHub Releases.</li>
+                    <li>Extract the package to a local folder.</li>
+                    <li>Run the launcher and load an OGS project with <code>stack.json</code> and <code>ogs_config.json</code>.</li>
+                </ul>
+                <a href="https://github.com/OpenGameStack-Org/ogs-launcher/releases/tag/v0.1.0-alpha" class="btn">Get Alpha v0.1.0 Package</a>
             </div>
         </section>
 
