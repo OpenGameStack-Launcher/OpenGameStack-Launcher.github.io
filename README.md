@@ -22,7 +22,7 @@ Because we do not use complex build tools (React, Vue, etc.), running this site 
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/OpenGameStack-Org/OpenGameStack-Org.github.io.git
+    git clone https://github.com/OpenGameStack-Launcher.git
     ```
 2.  **Open the file:**
     Simply double-click `index.html` or drag it into your browser.
