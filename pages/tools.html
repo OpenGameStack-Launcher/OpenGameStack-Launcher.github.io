@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Open Game Stack tool catalog: frozen, versioned game development tools with upstream release links.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../assets/css/site.css">
+    <title>Tools | Open Game Stack</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #38bdf8;
+            --secondary: #64748b;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --grid-line: rgba(148, 163, 184, 0.2);
+            --outline: rgba(226, 232, 240, 0.2);
+        }
+
+        body {
+            font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+            background-color: #0b0f19;
+            background-image: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+                radial-gradient(circle at 70% 0%, rgba(59, 130, 246, 0.15), transparent 45%);
+            color: #e0e6ed;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        a {
+            text-decoration: none;
+            transition: color 0.3s, border-color 0.3s;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+            letter-spacing: -0.5px;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .header-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .header-link {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: "IBM Plex Mono", "Segoe UI", monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .header-link:hover,
+        .release-link:hover,
+        .archive-link:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            padding: 3.5rem 0 2rem 0;
+        }
+
+        .eyebrow {
+            font-family: "IBM Plex Mono", "Segoe UI", monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            height: 1px;
+            width: 24px;
+            background: var(--grid-line);
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        }
+
+        .intro {
+            color: #cbd5e1;
+            max-width: 760px;
+            font-size: 1.05rem;
+        }
+
+        .catalog {
+            padding: 1rem 0 3rem 0;
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .category {
+            background: rgba(30, 41, 59, 0.75);
+            border: 1px solid rgba(226, 232, 240, 0.18);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .category-head {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.14);
+            background: rgba(15, 23, 42, 0.55);
+        }
+
+        .category-title {
+            color: #fff;
+            font-size: 1.3rem;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            margin-bottom: 0.35rem;
+        }
+
+        .category-description {
+            color: #cbd5e1;
+            font-size: 0.98rem;
+        }
+
+        .tool-list {
+            padding: 1rem 1.25rem 1.3rem 1.25rem;
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .tool-card {
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 10px;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.45);
+            display: grid;
+            grid-template-columns: 190px minmax(0, 1fr);
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .tool-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.65));
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            box-shadow: 0 10px 24px rgba(2, 8, 23, 0.24), 0 0 0 1px rgba(56, 189, 248, 0.1) inset;
+        }
+
+        .tool-icon {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
+        .tool-content {
+            min-width: 0;
+        }
+
+        .tool-id-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 0.7rem;
+        }
+
+        .tool-id {
+            font-family: "IBM Plex Mono", "Segoe UI", monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: #f8fafc;
+            font-size: 0.92rem;
+            margin-bottom: 0;
+        }
+
+        .tool-description {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .version-label {
+            font-family: "IBM Plex Mono", "Segoe UI", monospace;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.72rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .version-list {
+            list-style: none;
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .version-item {
+            color: #e2e8f0;
+            font-size: 0.93rem;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .version-tag {
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            color: #7dd3fc;
+            border-radius: 999px;
+            padding: 3px 10px;
+            font-size: 0.75rem;
+            font-family: "IBM Plex Mono", "Segoe UI", monospace;
+        }
+
+        .release-link,
+        .archive-link {
+            color: #cbd5f5;
+            font-size: 0.82rem;
+            border-bottom: 1px solid rgba(203, 213, 225, 0.4);
+            font-family: "IBM Plex Mono", "Segoe UI", monospace;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .tool-card {
+                padding: 0.9rem;
+                grid-template-columns: 1fr;
+            }
+
+            .tool-visual {
+                min-height: 0;
+                padding: 0.85rem;
+            }
+
+            .tool-icon {
+                width: 92px;
+                height: 92px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="site-header">
+            <a href="../index.html" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../index.html" class="site-nav-link">Home</a>
+                <a href="manifesto.html" class="site-nav-link">Manifesto</a>
+                <a href="tools.html" class="site-nav-link">Tools</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="eyebrow">Tool Catalog</div>
+            <h1>Frozen Tool Stack</h1>
+            <p class="intro">The current mirrored tool catalog is organized by category, then tool id, then available version.
+                Each version links to the official release information and the frozen archive package.</p>
+        </section>
+
+        <section class="catalog" aria-label="Open Game Stack tools">
+            <article class="category">
+                <div class="category-head">
+                    <h2 class="category-title">Engine</h2>
+                    <p class="category-description">Core runtime and editor technology used to build, run, and export
+                        game projects.</p>
+                </div>
+                <div class="tool-list">
+                    <div class="tool-card">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/Godot.png" alt="Godot logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">godot</h3>
+                            </div>
+                            <p class="tool-description">Open source 2D and 3D game engine used for gameplay scripting,
+                                scene authoring, and platform export workflows.</p>
+                            <p class="version-label">Version</p>
+                            <ul class="version-list">
+                                <li class="version-item">
+                                    <span class="version-tag">4.3</span>
+                                    <a class="release-link" href="https://godotengine.org/releases/4.3/" target="_blank"
+                                        rel="noopener noreferrer">Official release page</a>
+                                    <a class="archive-link"
+                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/godot-4.3-win64.zip"
+                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="category">
+                <div class="category-head">
+                    <h2 class="category-title">3D</h2>
+                    <p class="category-description">Three-dimensional content creation tools for modeling, rigging,
+                        animation, simulation, and rendering.</p>
+                </div>
+                <div class="tool-list">
+                    <div class="tool-card">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/Blender.png" alt="Blender logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">blender</h3>
+                            </div>
+                            <p class="tool-description">Full 3D content pipeline tool for mesh creation, UV editing,
+                                animation, and asset export into game projects.</p>
+                            <p class="version-label">Version</p>
+                            <ul class="version-list">
+                                <li class="version-item">
+                                    <span class="version-tag">4.5.7</span>
+                                    <a class="release-link" href="https://www.blender.org/download/releases/4-5/"
+                                        target="_blank" rel="noopener noreferrer">Official release page</a>
+                                    <a class="archive-link"
+                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/blender-4.5.7-win64.zip"
+                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="category">
+                <div class="category-head">
+                    <h2 class="category-title">2D</h2>
+                    <p class="category-description">Two-dimensional art tools for illustration, texture creation, and
+                        concept development.</p>
+                </div>
+                <div class="tool-list">
+                    <div class="tool-card">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/Krita.png" alt="Krita logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">krita</h3>
+                            </div>
+                            <p class="tool-description">Digital painting and illustration application for concept art,
+                                texture maps, and sprite content production.</p>
+                            <p class="version-label">Version</p>
+                            <ul class="version-list">
+                                <li class="version-item">
+                                    <span class="version-tag">5.2.15</span>
+                                    <a class="release-link"
+                                        href="https://krita.org/en/posts/2026/krita-5.2.15-released/" target="_blank"
+                                        rel="noopener noreferrer">Official release page</a>
+                                    <a class="archive-link"
+                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/krita-5.2.15-win64.zip"
+                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="category">
+                <div class="category-head">
+                    <h2 class="category-title">Audio</h2>
+                    <p class="category-description">Sound production and editing tools for dialogue cleanup, effects,
+                        and final mix preparation.</p>
+                </div>
+                <div class="tool-list">
+                    <div class="tool-card">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/Audacity.png" alt="Audacity logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">audacity</h3>
+                            </div>
+                            <p class="tool-description">Audio recording and waveform editing utility for voice work, SFX
+                                trimming, normalization, and mastering passes.</p>
+                            <p class="version-label">Version</p>
+                            <ul class="version-list">
+                                <li class="version-item">
+                                    <span class="version-tag">3.7.7</span>
+                                    <a class="release-link" href="https://www.audacityteam.org/blog/audacity-3-7/"
+                                        target="_blank" rel="noopener noreferrer">Official release page</a>
+                                    <a class="archive-link"
+                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/audacity-3.7.7-win64.zip"
+                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 OpenGameStack.org. Dual-use technology for open simulation.</p>
+
+            <div class="site-footer-links">
+                <a href="manifesto.html" class="site-footer-link">Manifesto</a>
+                <a href="tools.html" class="site-footer-link">Tools</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
+            </div>
+
+            <p class="site-footer-note">
+                Maintained by the Open Game Stack Initiative.
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>

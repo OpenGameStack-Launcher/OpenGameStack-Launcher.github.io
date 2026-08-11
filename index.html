@@ -8,6 +8,7 @@
         content="Open Game Stack: The universal standard for sovereign, version-controlled open source game development.">
 
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="assets/css/site.css">
 
     <title>Open Game Stack | Sovereign Development</title>
     <style>
@@ -206,9 +207,10 @@
         }
 
         .btn-outline {
-            background: transparent;
-            border: 1px solid var(--outline);
-            color: white;
+            background: var(--primary);
+            color: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.6);
+            box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2) inset;
         }
 
         .hero-actions {
@@ -245,10 +247,9 @@
         }
 
         .btn-outline:hover {
-            background: rgba(148, 163, 184, 0.12);
-            border-color: #cbd5f5;
-            color: #e2e8f0;
-            box-shadow: none;
+            background: #bae6fd;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(56, 189, 248, 0.35);
         }
 
         .btn:focus-visible {
@@ -381,16 +382,12 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="container" id="main">
-        <header>
-            <div class="logo">
-                <img src="logo.png" alt="Open Game Stack Logo">
-                <div>OPEN <span>GAME STACK</span></div>
-            </div>
-            <nav>
-                <a href="#alpha-download" class="nav-link">Alpha Download</a>
-                <a href="https://github.com/OpenGameStack-Launcher" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://www.linkedin.com/company/open-game-stack-org" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a href="mailto:contact@opengamestack.org" class="nav-link">Email</a>
+        <header class="site-header">
+            <a href="index.html" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html" class="site-nav-link">Home</a>
+                <a href="pages/manifesto.html" class="site-nav-link">Manifesto</a>
+                <a href="pages/tools.html" class="site-nav-link">Tools</a>
             </nav>
         </header>
 
@@ -401,7 +398,8 @@
             <div class="hero-actions">
                 <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.1.4-alpha/OGS-Launcher-alpha-win64-0.1.4-alpha.zip" class="btn" target="_blank" rel="noopener noreferrer">Download Alpha v0.1.4</a>
                 <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher" class="btn" target="_blank" rel="noopener noreferrer">View on GitHub</a>
-                <a href="manifesto.html" class="btn btn-outline">Read the Manifesto</a>
+                <a href="pages/manifesto.html" class="btn btn-outline">Read the Manifesto</a>
+                <a href="pages/tools.html" class="btn btn-outline">Browse Frozen Tools</a>
             </div>
             <p class="hero-note">Current alpha target: Windows 10/11 (x64), Godot 4.3 launcher prototype.</p>
             <div class="hero-badges">
@@ -440,19 +438,18 @@
             </div>
         </section>
 
-        <footer>
+        <footer class="site-footer">
             <p>&copy; 2026 OpenGameStack.org. Dual-use technology for open simulation.</p>
 
-            <div style="margin: 20px 0;">
-                <a href="https://github.com/OpenGameStack-Launcher" target="_blank" rel="noopener noreferrer"
-                    style="color: var(--secondary); margin: 0 10px;">GitHub</a>
-                <a href="https://www.linkedin.com/company/open-game-stack-org" target="_blank" rel="noopener noreferrer"
-                    style="color: var(--secondary); margin: 0 10px;">LinkedIn</a>
-                <a href="mailto:contact@opengamestack.org"
-                    style="color: var(--secondary); margin: 0 10px;">Email</a>
+            <div class="site-footer-links">
+                <a href="pages/manifesto.html" class="site-footer-link">Manifesto</a>
+                <a href="pages/tools.html" class="site-footer-link">Tools</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
             </div>
 
-            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.6;">
+            <p class="site-footer-note">
                 Maintained by the Open Game Stack Initiative.
             </p>
         </footer>

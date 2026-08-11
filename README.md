@@ -13,7 +13,9 @@ This repository hosts the source code for the Open Game Stack web presence. Cons
 
 ## 📂 Repository Structure
 * `index.html`: The main landing page.
-* `manifesto.html`: The core philosophy and "Declaration of Digital Sovereignty."
+* `pages/manifesto.html`: The core philosophy and "Declaration of Digital Sovereignty."
+* `pages/tools.html`: The frozen tool catalog with category, tool id, version, and release links.
+* `assets/css/site.css`: Shared site chrome, typography, and footer/header styles used by every page.
 * `CNAME`: DNS configuration for the custom domain.
 * `logo.png` / `favicon.png`: Brand assets.
 
