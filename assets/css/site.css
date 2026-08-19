@@ -1,14 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+@import url('../fonts/fonts-local.css');
 
+/* --- COLORS & VARIABLES --- */
 :root {
     --primary: #38bdf8;
-    --secondary: #64748b;
+    --secondary: #94a3b8;
     --bg-dark: #0f172a;
     --card-bg: #1e293b;
+    --accent: #0ea5e9;
     --grid-line: rgba(148, 163, 184, 0.2);
     --outline: rgba(226, 232, 240, 0.2);
 }
 
+/* --- RESET & BASICS --- */
 * {
     margin: 0;
     padding: 0;
@@ -44,7 +47,7 @@ body::before {
 
 a {
     text-decoration: none;
-    transition: color 0.3s, border-color 0.3s, background 0.3s, transform 0.3s;
+    transition: color 0.3s, transform 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
     color: inherit;
 }
 
@@ -57,6 +60,23 @@ ul {
     list-style: none;
 }
 
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 16px;
+    background: #ffffff;
+    color: #0f172a;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    top: 16px;
+}
+
+/* --- LAYOUT --- */
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -65,16 +85,17 @@ ul {
     z-index: 1;
 }
 
+/* --- HEADER --- */
 .site-header {
     padding: 2rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 1rem;
 }
 
-.site-logo {
+.site-logo, .logo {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -85,8 +106,15 @@ ul {
     font-family: "Space Grotesk", "Segoe UI", sans-serif;
     white-space: nowrap;
 }
+.site-header .site-logo {
+    font-size: 1.5rem;
+}
+.logo img {
+    height: 50px;
+    width: auto;
+}
 
-.site-logo span {
+.site-logo span, .logo span {
     color: var(--primary);
 }
 
@@ -98,7 +126,7 @@ ul {
     justify-content: flex-end;
 }
 
-.site-nav-link {
+.site-nav-link, .nav-link, .header-link {
     color: var(--secondary);
     font-size: 0.85rem;
     font-weight: 500;
@@ -108,12 +136,15 @@ ul {
 }
 
 .site-nav-link:hover,
-.site-nav-link:focus-visible {
+.site-nav-link:focus-visible,
+.nav-link:hover,
+.header-link:hover {
     color: #ffffff;
 }
 
 .site-nav-link:focus-visible,
 .site-footer-link:focus-visible,
+.nav-link:focus-visible,
 .btn:focus-visible,
 .btn-outline:focus-visible,
 .release-link:focus-visible,
@@ -121,6 +152,18 @@ ul {
     outline: 2px solid var(--primary);
     outline-offset: 3px;
     border-radius: 4px;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    padding: 5rem 0;
+    text-align: center;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .eyebrow {
@@ -143,6 +186,41 @@ ul {
     background: var(--grid-line);
 }
 
+.hero h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #fff, var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    letter-spacing: -0.02em;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--secondary);
+    max-width: 700px;
+    margin: 0 auto 2.5rem auto;
+}
+
+.intro {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    border-left: 4px solid var(--primary);
+    padding-left: 20px;
+}
+.hero .intro {
+    font-size: 1.05rem;
+    border-left: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+/* --- BUTTONS --- */
 .btn {
     display: inline-block;
     background: var(--primary);
@@ -151,29 +229,413 @@ ul {
     border-radius: 6px;
     font-weight: 700;
     font-size: 1rem;
+    transition: transform 0.3s, background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
     border: 1px solid rgba(56, 189, 248, 0.6);
-    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2) inset;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 0 0 1px rgba(56, 189, 248, 0.2) inset;
 }
 
 .btn:hover {
     background: #bae6fd;
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 10px 24px rgba(56, 189, 248, 0.6);
 }
 
 .btn-outline {
-    background: var(--primary);
-    color: #0f172a;
+    background: transparent;
+    color: var(--primary);
     border: 1px solid rgba(56, 189, 248, 0.6);
     box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.2) inset;
 }
 
 .btn-outline:hover {
-    background: #bae6fd;
+    background: rgba(56, 189, 248, 0.1);
+    color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(56, 189, 248, 0.35);
 }
 
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-actions-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hero-actions .btn,
+.hero-actions .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-icon {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+
+.btn-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.hero-badges {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hero-note {
+    margin-top: 1rem;
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+.badge {
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #cbd5f5;
+    border: 1px solid var(--outline);
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.6);
+}
+
+/* --- FEATURES GRID --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 4rem 0;
+}
+
+.card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), transparent 70%);
+    opacity: 0.4;
+}
+
+.card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.card p {
+    color: var(--secondary);
+    font-size: 0.95rem;
+}
+
+/* --- RELEASE PANEL --- */
+.release {
+    padding: 1rem 0 4rem 0;
+}
+
+.release-panel {
+    background: rgba(30, 41, 59, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.18);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: 0.3s;
+}
+
+.release-panel:hover {
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.release-panel h2 {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: white;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.release-panel p {
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+}
+
+.release-list {
+    list-style: disc;
+    margin-left: 1.2rem;
+    color: #cbd5e1;
+    margin-bottom: 1.25rem;
+}
+
+.release-list li {
+    margin-bottom: 0.4rem;
+}
+
+/* --- MANIFESTO LAYOUT --- */
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 56px;
+    align-items: start;
+}
+
+.layout header {
+    margin-bottom: 4rem;
+}
+
+.layout h2 {
+    font-size: 1.8rem;
+    color: white;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.layout p {
+    color: #cbd5e1;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+strong {
+    color: var(--primary);
+}
+
+.section-index {
+    position: sticky;
+    top: 30px;
+    border-left: 1px solid var(--outline);
+    padding-left: 16px;
+}
+
+.section-index .label {
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.section-index a {
+    display: block;
+    color: #cbd5f5;
+    font-size: 0.9rem;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.section-index a:hover {
+    color: var(--primary);
+}
+
+.closing {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+    padding: 2rem 1.5rem;
+    font-style: italic;
+    opacity: 0.85;
+    background: rgba(15, 23, 42, 0.6);
+    border-left: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    text-align: center;
+}
+
+/* --- TOOLS CATALOG --- */
+.catalog {
+    padding: 1rem 0 3rem 0;
+    display: grid;
+    gap: 1.2rem;
+}
+
+.category {
+    background: rgba(30, 41, 59, 0.75);
+    border: 1px solid rgba(226, 232, 240, 0.18);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.category-head {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.14);
+    background: rgba(15, 23, 42, 0.55);
+}
+
+.category-title {
+    color: #fff;
+    font-size: 1.3rem;
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    margin-bottom: 0.35rem;
+}
+
+.category-description {
+    color: #cbd5e1;
+    font-size: 0.98rem;
+    margin-bottom: 0;
+}
+
+.tool-list {
+    padding: 1rem 1.25rem 1.3rem 1.25rem;
+    display: grid;
+    gap: 0.9rem;
+}
+
+.tool-card {
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 10px;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: stretch;
+    transition: 0.3s;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tool-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 0.75rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.65));
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 10px 24px rgba(2, 8, 23, 0.24), 0 0 0 1px rgba(56, 189, 248, 0.1) inset;
+}
+
+.tool-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.tool-content {
+    min-width: 0;
+}
+
+.tool-id-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 0.7rem;
+}
+
+.tool-id {
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #f8fafc;
+    font-size: 0.92rem;
+    margin-bottom: 0;
+}
+
+.tool-description {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.version-label {
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    margin-bottom: 0.4rem;
+}
+
+.version-list {
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.version-item {
+    color: #e2e8f0;
+    font-size: 0.93rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.version-tag {
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    color: #7dd3fc;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+}
+
+.release-link,
+.archive-link {
+    color: #cbd5f5;
+    font-size: 0.82rem;
+    border-bottom: 1px solid rgba(203, 213, 225, 0.4);
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+}
+
+.release-link:hover,
+.archive-link:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* --- FOOTER --- */
 .site-footer {
     text-align: center;
     padding: 3rem 0;
@@ -207,10 +669,12 @@ ul {
     opacity: 0.6;
 }
 
+/* --- MOBILE TWEAKS --- */
 @media (max-width: 768px) {
     .site-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 1rem;
     }
 
     .site-nav {
@@ -219,5 +683,79 @@ ul {
 
     .site-footer-links {
         gap: 12px 18px;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-actions {
+        width: 100%;
+        gap: 12px;
+    }
+
+    .hero-actions-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-actions .btn, .hero-actions .btn-outline {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    p,
+    .intro {
+        max-width: none;
+    }
+
+    .section-index {
+        position: static;
+        border-left: none;
+        border-top: 1px solid var(--outline);
+        padding-left: 0;
+        padding-top: 20px;
+    }
+    
+    .tool-card {
+        padding: 0.9rem;
+        grid-template-columns: 1fr;
+    }
+
+    .tool-visual {
+        min-height: 0;
+        padding: 0.85rem;
+    }
+
+    .tool-icon {
+        width: 92px;
+        height: 92px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .card:hover,
+    .tool-card:hover,
+    .btn:hover,
+    .btn-outline:hover {
+        transform: none;
     }
 }
