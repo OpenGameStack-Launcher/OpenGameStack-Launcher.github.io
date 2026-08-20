@@ -562,6 +562,19 @@ strong {
     flex: 0 0 auto;
 }
 
+.tool-mark {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 112px;
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    border-radius: 50%;
+    color: var(--primary);
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+}
+
 .tool-content {
     min-width: 0;
 }
@@ -740,6 +753,12 @@ strong {
     .tool-icon {
         width: 92px;
         height: 92px;
+    }
+
+    .tool-mark {
+        width: 72px;
+        height: 72px;
+        font-size: 2rem;
     }
 }
 

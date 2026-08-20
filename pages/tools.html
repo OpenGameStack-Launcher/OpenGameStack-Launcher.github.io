@@ -29,7 +29,7 @@
                 Each version links to the official release information and the frozen archive package.</p>
         </section>
 
-        <section class="catalog" aria-label="Open Game Stack tools">
+        <section class="catalog" aria-label="Open Game Stack tools" data-catalog>
             <article class="category">
                 <div class="category-head">
                     <h2 class="category-title">Engine</h2>
@@ -180,6 +180,166 @@
             </p>
         </footer>
     </main>
+    <script>
+        (() => {
+            const catalog = document.querySelector('[data-catalog]');
+            const repositoryUrl = 'https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json';
+            const categoryDescriptions = {
+                'Engine': 'Core runtime and editor technology used to build, run, and export game projects.',
+                '2D': 'Two-dimensional art tools for illustration, texture creation, and concept development.',
+                '3D': 'Three-dimensional content creation tools for modeling, rigging, animation, simulation, and rendering.',
+                'Audio': 'Sound production and editing tools for dialogue cleanup, effects, and final mix preparation.'
+            };
+            const toolDetails = {
+                godot: {
+                    description: 'Open source 2D and 3D game engine used for gameplay scripting, scene authoring, and platform export workflows.',
+                    image: '../assets/images/Godot.png'
+                },
+                blender: {
+                    description: 'Full 3D content pipeline tool for mesh creation, UV editing, animation, and asset export into game projects.',
+                    image: '../assets/images/Blender.png'
+                },
+                krita: {
+                    description: 'Digital painting and illustration application for concept art, texture maps, and sprite content production.',
+                    image: '../assets/images/Krita.png'
+                },
+                gimp: {
+                    description: 'Image editor for raster artwork, texture preparation, compositing, and production-ready game assets.',
+                    image: '../assets/images/GIMP.png'
+                },
+                audacity: {
+                    description: 'Audio recording and waveform editing utility for voice work, SFX trimming, normalization, and mastering passes.',
+                    image: '../assets/images/Audacity.png'
+                }
+            };
+            const categoryOrder = ['Engine', '2D', '3D', 'Audio'];
+
+            const isValidCatalog = (data) => data
+                && Array.isArray(data.tools)
+                && data.tools.every((tool) => tool
+                    && typeof tool.id === 'string'
+                    && typeof tool.version === 'string'
+                    && typeof tool.category === 'string'
+                    && typeof tool.info_url === 'string'
+                    && typeof tool.archive_url === 'string');
+
+            const createLink = (className, href, text) => {
+                const link = document.createElement('a');
+                link.className = className;
+                link.href = href;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = text;
+                return link;
+            };
+
+            const renderCatalog = (tools) => {
+                const groupedTools = new Map();
+                for (const tool of tools) {
+                    if (!groupedTools.has(tool.category)) {
+                        groupedTools.set(tool.category, new Map());
+                    }
+                    const categoryTools = groupedTools.get(tool.category);
+                    if (!categoryTools.has(tool.id)) {
+                        categoryTools.set(tool.id, []);
+                    }
+                    categoryTools.get(tool.id).push(tool);
+                }
+
+                const categories = [...groupedTools.keys()].sort((left, right) => {
+                    const leftIndex = categoryOrder.indexOf(left);
+                    const rightIndex = categoryOrder.indexOf(right);
+                    return (leftIndex === -1 ? categoryOrder.length : leftIndex)
+                        - (rightIndex === -1 ? categoryOrder.length : rightIndex)
+                        || left.localeCompare(right);
+                });
+                const fragment = document.createDocumentFragment();
+
+                for (const categoryName of categories) {
+                    const category = document.createElement('article');
+                    category.className = 'category';
+                    const header = document.createElement('div');
+                    header.className = 'category-head';
+                    const title = document.createElement('h2');
+                    title.className = 'category-title';
+                    title.textContent = categoryName;
+                    const description = document.createElement('p');
+                    description.className = 'category-description';
+                    description.textContent = categoryDescriptions[categoryName] || 'Open-source tools available as versioned frozen archives.';
+                    header.append(title, description);
+
+                    const toolList = document.createElement('div');
+                    toolList.className = 'tool-list';
+                    const categoryTools = groupedTools.get(categoryName);
+                    for (const toolId of [...categoryTools.keys()].sort()) {
+                        const versions = categoryTools.get(toolId).sort((left, right) => right.version.localeCompare(left.version, undefined, { numeric: true }));
+                        const details = toolDetails[toolId] || {};
+                        const card = document.createElement('div');
+                        card.className = 'tool-card';
+                        const visual = document.createElement('div');
+                        visual.className = 'tool-visual';
+                        if (details.image) {
+                            const image = document.createElement('img');
+                            image.className = 'tool-icon';
+                            image.src = details.image;
+                            image.alt = `${toolId} logo`;
+                            visual.append(image);
+                        } else {
+                            const mark = document.createElement('span');
+                            mark.className = 'tool-mark';
+                            mark.textContent = toolId.slice(0, 1).toUpperCase();
+                            mark.setAttribute('aria-label', toolId);
+                            visual.append(mark);
+                        }
+
+                        const content = document.createElement('div');
+                        content.className = 'tool-content';
+                        const idRow = document.createElement('div');
+                        idRow.className = 'tool-id-row';
+                        const id = document.createElement('h3');
+                        id.className = 'tool-id';
+                        id.textContent = toolId;
+                        idRow.append(id);
+                        const toolDescription = document.createElement('p');
+                        toolDescription.className = 'tool-description';
+                        toolDescription.textContent = details.description || 'Open-source tool available as a versioned frozen archive.';
+                        const versionLabel = document.createElement('p');
+                        versionLabel.className = 'version-label';
+                        versionLabel.textContent = 'Version';
+                        const versionList = document.createElement('ul');
+                        versionList.className = 'version-list';
+                        for (const version of versions) {
+                            const item = document.createElement('li');
+                            item.className = 'version-item';
+                            const tag = document.createElement('span');
+                            tag.className = 'version-tag';
+                            tag.textContent = version.version;
+                            item.append(tag, createLink('release-link', version.info_url, 'Official release page'), createLink('archive-link', version.archive_url, 'Frozen archive'));
+                            versionList.append(item);
+                        }
+                        content.append(idRow, toolDescription, versionLabel, versionList);
+                        card.append(visual, content);
+                        toolList.append(card);
+                    }
+                    category.append(header, toolList);
+                    fragment.append(category);
+                }
+                catalog.replaceChildren(fragment);
+            };
+
+            fetch(repositoryUrl, { cache: 'no-cache' })
+                .then((response) => response.ok ? response.json() : Promise.reject(new Error('Catalog unavailable')))
+                .then((data) => {
+                    if (!isValidCatalog(data)) {
+                        throw new Error('Catalog data is invalid');
+                    }
+                    renderCatalog(data.tools);
+                })
+                .catch(() => {
+                    // Leave the static catalog in place when the remote catalog cannot load.
+                });
+        })();
+    </script>
 </body>
 
 </html>
