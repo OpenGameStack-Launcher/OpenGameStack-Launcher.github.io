@@ -33,9 +33,9 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
 `tests/validate_site.py` enforces the following categories of checks across all HTML and CSS files in the repository:
 
 1. **Required Repository Files & Custom Domain (`CNAME`):**
-   - Verifies that `CNAME`, `index.html`, `manifesto/index.html`, `tools/index.html`, `examples/index.html`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
+   - Verifies that `CNAME`, `index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
    - Verifies that all 7 tool PNG icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`) exist in `REQUIRED_FILES`.
-   - Confirms that the legacy `pages/` directory does not exist.
+   - Confirms that legacy `pages/` and `manifesto/` directories do not exist.
    - Confirms `CNAME` equals `opengamestack.org`.
 2. **HTML5 Document Structure & Landmarks:**
    - Every `.html` file declares `<!DOCTYPE html>` and `<html lang="en">`.
@@ -43,7 +43,8 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Every `.html` file contains `<header class="site-header">`, `<main id="main">`, and `<footer class="site-footer">`.
    - Every `.html` file contains a skip-to-content accessibility landmark link (`<a class="skip-link" href="#main">`).
 3. **Internal Link & Asset Resolution:**
-   - Every local `<a href="...">`, `<link href="...">`, `<script src="...">`, and `<img src="...">` resolves to an existing file in the repository. Directory targets containing `index.html` (such as `manifesto/`, `../tools/`, `./`) resolve cleanly to the underlying `index.html` file.
+   - Every local `<a href="...">`, `<link href="...">`, `<script src="...">`, and `<img src="...">` resolves to an existing file in the repository. Directory targets containing `index.html` (such as `mission/`, `../tools/`, `./`) resolve cleanly to the underlying `index.html` file.
+   - Confirms that no active HTML files contain links or references to legacy `manifesto.html`, `manifesto/`, or `/manifesto/`.
    - Primary navigation (`site-logo`, `site-nav-link`), footer links (`site-footer-link`), and internal CTA buttons (`btn`, `btn-outline`) are strictly prohibited from exposing `index.html`, legacy `pages/`, or `.html` file extensions, enforcing clean directory URLs.
    - Same-page `#fragment` links resolve to a matching `id` attribute in that document.
    - Every local `url(...)` reference in `assets/css/site.css` and `assets/fonts/fonts-local.css` resolves to an existing file on disk.
@@ -67,6 +68,10 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Verifies that all 7 catalog tools (Godot, Blender, Krita, GIMP, Audacity, Git, VSCodium) have self-hosted `.tool-icon` PNG images in `assets/images/` and verified in `REQUIRED_FILES`.
    - Verifies that obsolete `.tool-mark` monogram checks for `git` and `vscodium` have been replaced by full `.tool-icon` image checks across both static fallback cards and inline `toolDetails`.
    - Verifies that inline `toolDetails` in the hydration script specifies valid local image paths for all 7 catalog tools.
+8. **Mission Page & Hero CTA Verifications (`mission/index.html`, `index.html`):**
+   - Verifies that `mission/index.html` title text equals `Mission | Open Game Stack`.
+   - Verifies that `mission/index.html` preserves required section anchor IDs (`#sovereignty`, `#environment`, `#dual-use`, `#stability`).
+   - Verifies that `index.html` includes the secondary CTA button with text `The Mission` pointing to `mission/`.
 
 ---
 

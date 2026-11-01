@@ -13,7 +13,7 @@ A concise explanation of the user story, design motivation, and how this enhance
 
 ### 2. Technical Scope & Affected Files
 Direct references to HTML, CSS, asset, or validation files that need modification or creation:
-- `index.html` or `<directory>/index.html` (e.g., `manifesto/index.html`, `tools/index.html`, `examples/index.html`)
+- `index.html` or `<directory>/index.html` (e.g., `mission/index.html`, `tools/index.html`, `examples/index.html`)
 - `assets/css/site.css` or `assets/images/<asset_name>.png`
 - `tests/validate_site.py`
 

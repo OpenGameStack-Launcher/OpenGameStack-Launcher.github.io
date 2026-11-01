@@ -20,7 +20,7 @@ Walk the diff against each section below. Focus comments on lines that are part 
 
 ### 2. Semantic HTML5, Accessibility & Navigation Consistency
 - Every `.html` page must include `<!DOCTYPE html>`, `<html lang="en">`, `<meta charset="UTF-8">`, `<meta name="viewport" content="width=device-width, initial-scale=1.0">`, a non-empty `<meta name="description">`, and a `<title>`.
-- Confirm `<header class="site-header">`, `<main class="container" id="main">`, and `<footer class="site-footer">` landmarks are consistent across `index.html`, `manifesto/index.html`, `tools/index.html`, and `examples/index.html`.
+- Confirm `<header class="site-header">`, `<main class="container" id="main">`, and `<footer class="site-footer">` landmarks are consistent across `index.html`, `mission/index.html`, `tools/index.html`, and `examples/index.html`.
 - Every `<img>` tag must include a descriptive, non-empty `alt` attribute.
 - Keyboard focus states (`:focus-visible`) and `@media (prefers-reduced-motion: reduce)` rules in `assets/css/site.css` must be preserved.
 
