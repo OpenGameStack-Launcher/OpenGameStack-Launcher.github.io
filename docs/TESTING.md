@@ -34,6 +34,7 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
 
 1. **Required Repository Files & Custom Domain (`CNAME`):**
    - Verifies that `CNAME`, `index.html`, `manifesto/index.html`, `tools/index.html`, `examples/index.html`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
+   - Verifies that all 7 tool PNG icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`) exist in `REQUIRED_FILES`.
    - Confirms that the legacy `pages/` directory does not exist.
    - Confirms `CNAME` equals `opengamestack.org`.
 2. **HTML5 Document Structure & Landmarks:**
@@ -59,11 +60,13 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Asserts canonical manifest and config naming (`ogs_stack.json` and `ogs_config.json`).
    - Asserts Godot engine target reference (`Godot 4.7.2`).
    - Prohibits obsolete `v0.1.5` release links and legacy un-prefixed `stack.json` naming.
-7. **Tool Catalog Static Fallback Parity (`tools/index.html`):**
+7. **Tool Catalog Static Fallback Parity & Consistency (`tools/index.html`):**
    - Confirms `tools/index.html` includes the `[data-catalog]` container.
    - Confirms exactly 7 static fallback tool cards inside `[data-catalog]`.
    - Verifies static tool catalog IDs (`godot`, `gimp`, `krita`, `blender`, `audacity`, `git`, `vscodium`) and version sets against sibling `ogs-frozen-stacks/repository.json` (or baseline fallback).
-   - Verifies `.tool-mark` monograms for icon-less tools (`git` and `vscodium`).
+   - Verifies that all 7 catalog tools (Godot, Blender, Krita, GIMP, Audacity, Git, VSCodium) have self-hosted `.tool-icon` PNG images in `assets/images/` and verified in `REQUIRED_FILES`.
+   - Verifies that obsolete `.tool-mark` monogram checks for `git` and `vscodium` have been replaced by full `.tool-icon` image checks across both static fallback cards and inline `toolDetails`.
+   - Verifies that inline `toolDetails` in the hydration script specifies valid local image paths for all 7 catalog tools.
 
 ---
 
