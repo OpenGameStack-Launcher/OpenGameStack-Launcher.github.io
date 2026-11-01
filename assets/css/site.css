@@ -551,7 +551,7 @@ ul {
     font-weight: bold;
 }
 
-/* --- MANIFESTO LAYOUT --- */
+/* --- MISSION LAYOUT --- */
 .layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 280px;

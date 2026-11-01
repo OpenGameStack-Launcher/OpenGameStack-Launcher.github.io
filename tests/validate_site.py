@@ -27,7 +27,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 REQUIRED_FILES = [
     "CNAME",
     "index.html",
-    "manifesto/index.html",
+    "mission/index.html",
     "tools/index.html",
     "examples/index.html",
     "assets/css/site.css",
@@ -266,6 +266,12 @@ def validate_required_files(results: TestResults) -> None:
     results.expect(
         not legacy_pages_dir.exists(),
         "Legacy 'pages/' directory must be removed from repository",
+    )
+
+    legacy_manifesto_dir = REPO_ROOT / "manifesto"
+    results.expect(
+        not legacy_manifesto_dir.exists(),
+        "Legacy 'manifesto/' directory must be removed from repository",
         )
 
 
@@ -313,6 +319,10 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
     results.expect(inspector.has_footer, f"{rel_name}: Missing <footer class='site-footer'>")
 
     # 2. Zero-tracker / no third-party CDN check
+    results.expect(
+        "manifesto.html" not in content.lower() and "manifesto/" not in content.lower(),
+        f"{rel_name}: Obsolete 'manifesto' route or file reference found in HTML content",
+    )
     lower_content = content.lower()
     for pattern in FORBIDDEN_EXTERNAL_PATTERNS:
         results.expect(
@@ -403,6 +413,10 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "pages/" not in href,
             f"{rel_name}:{line}: Legacy 'pages/' reference in link '{href}'",
         )
+        results.expect(
+            "manifesto" not in href.lower(),
+            f"{rel_name}:{line}: Legacy 'manifesto' reference in link '{href}'",
+        )
 
         target_file, fragment = resolve_local_reference(html_path, href)
         results.expect(
@@ -447,6 +461,28 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "<code>stack.json</code>" not in content,
             "index.html: Obsolete 'stack.json' manifest naming found",
         )
+        cta_mission_links = [
+            href for _, href, _, _, _ in inspector.links if href == "mission/"
+        ]
+        results.expect(
+            len(cta_mission_links) >= 1,
+            "index.html: Missing hero/nav link to 'mission/'",
+        )
+        results.expect(
+            "The Mission" in content,
+            "index.html: Missing 'The Mission' CTA button text",
+        )
+
+    if rel_name == "mission/index.html":
+        results.expect(
+            inspector.title_text == "Mission | Open Game Stack",
+            f"mission/index.html: Expected title 'Mission | Open Game Stack', found '{inspector.title_text}'",
+        )
+        for anchor_id in ["sovereignty", "environment", "dual-use", "stability"]:
+            results.expect(
+                anchor_id in inspector.ids,
+                f"mission/index.html: Missing expected section anchor id '{anchor_id}'",
+            )
 
     # 8. Tool catalog static fallback parity and structure
     if rel_name == "tools/index.html":
