@@ -1,6 +1,6 @@
 # Open Game Stack Website
 
-The official public website for the **Open Game Stack** initiative—the universal standard for sovereign, version-controlled open source game development.
+The official public website for the **Open Game Stack** initiative, the universal standard for sovereign, version-controlled open source game development.
 
 **🌐 Live Site:** [opengamestack.org](https://opengamestack.org)
 
@@ -15,7 +15,11 @@ This repository hosts the source code for the Open Game Stack web presence. Cons
 * `index.html`: The main landing page.
 * `pages/manifesto.html`: The core philosophy and "Declaration of Digital Sovereignty."
 * `pages/tools.html`: The frozen tool catalog with category, tool id, version, and release links.
+* `examples/index.html`: Reference games and showcase projects built with Open Game Stack.
 * `assets/css/site.css`: Shared site chrome, typography, and footer/header styles used by every page.
+* `tests/validate_site.py`: Zero-dependency static site validation suite.
+* `docs/`: Canonical workflow guides, testing procedures, and standards.
+* `AGENTS.md`: Agent architecture guidelines, coding rules, and workflow entry point.
 * `CNAME`: DNS configuration for the custom domain.
 * `logo.png` / `favicon.png`: Brand assets.
 
@@ -24,7 +28,7 @@ Because we do not use complex build tools (React, Vue, etc.), running this site 
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/OpenGameStack-Launcher.git
+    git clone https://github.com/OpenGameStack-Launcher/OpenGameStack-Launcher.github.io.git
     ```
 2.  **Open the file:**
     Simply double-click `index.html` or drag it into your browser.

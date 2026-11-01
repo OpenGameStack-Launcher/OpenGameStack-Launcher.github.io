@@ -23,21 +23,26 @@ Open `http://127.0.0.1:8000` in your browser. When finished, stop the server (`C
 - [ ] **Header & Navigation:** Sticky glassmorphism header remains pinned on scroll; `Home`, `Manifesto`, `Tools`, and `Examples` links navigate cleanly.
 - [ ] **Skip Link:** Pressing `Tab` on initial page load reveals the `Skip to content` button and focuses `#main` when activated.
 - [ ] **Hero Actions & Release Panel:**
-  - Primary download button (`Download Alpha ...`) and `Get Alpha ... Package` button in `#alpha-download` point to a valid, published GitHub Release asset in `OpenGameStack-Launcher/ogs-launcher`.
-  - `View on GitHub` opens `https://github.com/OpenGameStack-Launcher/ogs-launcher` in a new tab.
+  - Primary download button (`Download v0.2.0`) and `Get v0.2.0 Package` button in `#alpha-download` point to `https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip`.
+  - Engine target note states: `Current target: Windows 10/11 (x64), built with Godot 4.7.2.`.
+  - Manifest and configuration references in the release panel list canonical `ogs_stack.json` and `ogs_config.json`.
+  - `View on GitHub` opens `https://github.com/OpenGameStack-Launcher/ogs-launcher` in a new tab with `rel="noopener noreferrer"`.
   - `Read the Manifesto` and `Browse Frozen Tools` navigate to `pages/manifesto.html` and `pages/tools.html`.
 - [ ] **Feature Cards:** The three audience cards (`For Indie Developers`, `For Studios`, `For Defense & Enterprise`) render in a 3-column grid on desktop and stack into a single column on narrow viewports (`<= 768px`).
 
 ### 2. Manifesto Page (`pages/manifesto.html`)
+- [ ] **Skip Link:** Pressing `Tab` on initial page load reveals the `Skip to content` link and moves focus to `#main` when activated.
 - [ ] **Two-Column Layout:** On desktop (`> 850px`), the manifesto article appears on the left and the sticky `Sections` sidebar index appears on the right.
 - [ ] **Section Anchors:** Clicking `Sovereignty Over Subscription`, `The Environment is the Artifact`, `Dual-Use by Design`, and `Stability is a Feature` smoothly scrolls to `#sovereignty`, `#environment`, `#dual-use`, and `#stability`.
 - [ ] **Responsive Collapse:** At `<= 850px`, the layout collapses cleanly into a single column with the section index below the article.
 
 ### 3. Tool Catalog Page (`pages/tools.html`)
-- [ ] **Dynamic Catalog Hydration:** With network access enabled, `pages/tools.html` fetches `https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json` and renders categories, tool icons/monograms, descriptions, version tags, `Official release page` links, and `Frozen archive` download links.
-- [ ] **Offline / No-JS Fallback:** With network access blocked (or JavaScript disabled in browser DevTools), `pages/tools.html` displays the static HTML tool catalog inside `[data-catalog]` without broken images or empty containers.
+- [ ] **Skip Link:** Pressing `Tab` on initial page load reveals the `Skip to content` link and moves focus to `#main` when activated.
+- [ ] **Dynamic Catalog Hydration:** With network access enabled, `pages/tools.html` fetches `https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json` and renders 5 categories (`Engine`, `2D`, `3D`, `Audio`, `Code`), 7 tools (`godot`, `gimp`, `krita`, `blender`, `audacity`, `git`, `vscodium`), `.tool-mark` monograms (`G` for `git`, `V` for `vscodium`), descriptions, version tags in descending order, `Official release page` links, and `Frozen archive` download links.
+- [ ] **Offline / No-JS Fallback:** With network access blocked (or JavaScript disabled in browser DevTools), `pages/tools.html` displays the static HTML tool catalog inside `[data-catalog]` containing all 7 tools across 5 categories in descending version order, with `.tool-mark` monograms for `git` and `vscodium` and without broken images or empty containers.
 
 ### 4. Examples Page (`examples/index.html`)
+- [ ] **Skip Link:** Pressing `Tab` on initial page load reveals the `Skip to content` link and moves focus to `#main` when activated.
 - [ ] **Reference Projects:** `Sudoku` and `Letter Logic` sections render clearly with working `Source Code` and `Play Online` external links.
 
 ---

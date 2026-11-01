@@ -4,14 +4,17 @@ Automated static site validator for OpenGameStack-Launcher.github.io (opengamest
 
 Checks:
 1. Required site files and CNAME configuration.
-2. HTML5 document structure, metadata, landmarks, and navigation consistency.
+2. HTML5 document structure, metadata, landmarks, skip links, and navigation consistency.
 3. Internal relative link and asset path resolution across HTML and CSS files.
 4. Accessibility (image alt attributes) and external link security (rel="noopener noreferrer").
 5. Zero external dependencies, self-hosted fonts, no trackers/CDNs, and safe DOM rendering.
+6. Landing page v0.2.0 release links, engine notes, and canonical manifest naming.
+7. Tool catalog static fallback parity against repository.json (or canonical 7-tool baseline).
 """
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from html.parser import HTMLParser
@@ -60,6 +63,7 @@ class PageInspector(HTMLParser):
         self.meta_description: str | None = None
         self.in_title: bool = False
         self.title_parts: list[str] = []
+        self.has_skip_link: bool = False
         self.has_header: bool = False
         self.has_main_id: bool = False
         self.has_footer: bool = False
@@ -73,6 +77,12 @@ class PageInspector(HTMLParser):
         self._current_script: list[str] = []
         self.has_catalog_container: bool = False
         self.catalog_tool_cards: int = 0
+        self.catalog_tools: dict[str, list[str]] = {}
+        self.catalog_tool_marks: list[str] = []
+        self._current_tool_id: str | None = None
+        self._in_tool_id: bool = False
+        self._in_version_tag: bool = False
+        self._tag_text_parts: list[str] = []
 
     def handle_decl(self, decl: str) -> None:
         if decl.strip().lower() == "doctype html":
@@ -114,6 +124,9 @@ class PageInspector(HTMLParser):
             href = attr_map.get("href") or ""
             target = attr_map.get("target")
             rel = attr_map.get("rel")
+            classes = (attr_map.get("class") or "").split()
+            if "skip-link" in classes and href == "#main":
+                self.has_skip_link = True
             self.links.append((line, href, target, rel))
         elif tag == "link":
             rel_tokens = (attr_map.get("rel") or "").lower().split()
@@ -133,6 +146,20 @@ class PageInspector(HTMLParser):
             classes = (attr_map.get("class") or "").split()
             if "tool-card" in classes:
                 self.catalog_tool_cards += 1
+        elif tag == "h3":
+            classes = (attr_map.get("class") or "").split()
+            if "tool-id" in classes:
+                self._in_tool_id = True
+                self._tag_text_parts = []
+        elif tag == "span":
+            classes = (attr_map.get("class") or "").split()
+            if "version-tag" in classes:
+                self._in_version_tag = True
+                self._tag_text_parts = []
+            if "tool-mark" in classes:
+                mark_label = attr_map.get("aria-label") or ""
+                if mark_label:
+                    self.catalog_tool_marks.append(mark_label)
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
@@ -141,12 +168,27 @@ class PageInspector(HTMLParser):
             self.in_script = False
             self.inline_scripts.append("".join(self._current_script))
             self._current_script = []
+        elif tag == "h3" and self._in_tool_id:
+            self._in_tool_id = False
+            tid = "".join(self._tag_text_parts).strip().lower()
+            self._current_tool_id = tid
+            if tid and tid not in self.catalog_tools:
+                self.catalog_tools[tid] = []
+            self._tag_text_parts = []
+        elif tag == "span" and self._in_version_tag:
+            self._in_version_tag = False
+            ver = "".join(self._tag_text_parts).strip()
+            if ver and self._current_tool_id:
+                self.catalog_tools[self._current_tool_id].append(ver)
+            self._tag_text_parts = []
 
     def handle_data(self, data: str) -> None:
         if self.in_title:
             self.title_parts.append(data)
         if self.in_script:
             self._current_script.append(data)
+        if self._in_tool_id or self._in_version_tag:
+            self._tag_text_parts.append(data)
 
     @property
     def title_text(self) -> str:
@@ -239,6 +281,10 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
         f"{rel_name}: Missing or empty <meta name='description'>",
     )
     results.expect(bool(inspector.title_text), f"{rel_name}: Missing or empty <title>")
+    results.expect(
+        inspector.has_skip_link,
+        f"{rel_name}: Missing <a class='skip-link' href='#main'> accessibility landmark",
+    )
     results.expect(inspector.has_header, f"{rel_name}: Missing <header class='site-header'>")
     results.expect(inspector.has_main_id, f"{rel_name}: Missing <main id='main'> landmark")
     results.expect(inspector.has_footer, f"{rel_name}: Missing <footer class='site-footer'>")
@@ -329,15 +375,95 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                 f"{rel_name}:{line}: Internal anchor '#{fragment}' does not match any element id in {rel_name}",
             )
 
-    # 7. Special check for pages/tools.html static fallback
+    # 7. Landing page checks (v0.2.0 links, manifest naming, Godot version)
+    if rel_name == "index.html":
+        expected_v020_download = (
+            "https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip"
+        )
+        v020_download_links = [
+            href for _, href, _, _ in inspector.links if href == expected_v020_download
+        ]
+        results.expect(
+            len(v020_download_links) >= 2,
+            f"index.html: Expected at least 2 links to '{expected_v020_download}', found {len(v020_download_links)}",
+        )
+        results.expect(
+            "ogs_stack.json" in content,
+            "index.html: Missing canonical 'ogs_stack.json' manifest reference",
+        )
+        results.expect(
+            "ogs_config.json" in content,
+            "index.html: Missing canonical 'ogs_config.json' config reference",
+        )
+        results.expect(
+            "Godot 4.7.2" in content,
+            "index.html: Missing 'Godot 4.7.2' reference in launcher target description",
+        )
+        results.expect(
+            "v0.1.5" not in content,
+            "index.html: Obsolete v0.1.5 release reference found",
+        )
+        results.expect(
+            "<code>stack.json</code>" not in content,
+            "index.html: Obsolete 'stack.json' manifest naming found",
+        )
+
+    # 8. Tool catalog static fallback parity and structure
     if rel_name == "pages/tools.html":
         results.expect(
             inspector.has_catalog_container,
             "pages/tools.html: Missing [data-catalog] section container",
         )
         results.expect(
-            inspector.catalog_tool_cards >= 4,
-            f"pages/tools.html: Expected static fallback tool cards inside [data-catalog], found {inspector.catalog_tool_cards}",
+            inspector.catalog_tool_cards == 7,
+            f"pages/tools.html: Expected 7 static fallback tool cards inside [data-catalog], found {inspector.catalog_tool_cards}",
+        )
+
+        expected_catalog_tools: dict[str, set[str]] = {
+            "godot": {"4.7.2", "4.3"},
+            "gimp": {"3.2.4"},
+            "krita": {"5.3.3", "5.2.15"},
+            "blender": {"5.2", "4.5.7"},
+            "audacity": {"3.7.8", "3.7.7"},
+            "git": {"2.56.0.4"},
+            "vscodium": {"1.143.17232"},
+        }
+
+        # Verify against sibling repository.json if present
+        sibling_repo = REPO_ROOT.parent / "ogs-frozen-stacks" / "repository.json"
+        if sibling_repo.is_file():
+            try:
+                repo_data = json.loads(sibling_repo.read_text(encoding="utf-8"))
+                discovered_tools: dict[str, set[str]] = {}
+                for tool in repo_data.get("tools", []):
+                    tid = tool.get("id")
+                    ver = tool.get("version")
+                    if tid and ver:
+                        discovered_tools.setdefault(tid, set()).add(ver)
+                if discovered_tools:
+                    expected_catalog_tools = discovered_tools
+            except Exception:
+                pass
+
+        results.expect(
+            set(inspector.catalog_tools.keys()) == set(expected_catalog_tools.keys()),
+            f"pages/tools.html: Static catalog tool IDs mismatch. Expected {sorted(expected_catalog_tools.keys())}, found {sorted(inspector.catalog_tools.keys())}",
+        )
+
+        for tool_id, expected_versions in expected_catalog_tools.items():
+            actual_versions = set(inspector.catalog_tools.get(tool_id, []))
+            results.expect(
+                actual_versions == expected_versions,
+                f"pages/tools.html: Tool '{tool_id}' version mismatch. Expected {sorted(expected_versions)}, found {sorted(actual_versions)}",
+            )
+
+        results.expect(
+            "git" in inspector.catalog_tool_marks,
+            "pages/tools.html: Missing .tool-mark monogram for 'git'",
+        )
+        results.expect(
+            "vscodium" in inspector.catalog_tool_marks,
+            "pages/tools.html: Missing .tool-mark monogram for 'vscodium'",
         )
 
 

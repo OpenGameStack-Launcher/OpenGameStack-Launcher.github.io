@@ -6,7 +6,7 @@ This document describes the automated validation architecture for the **Open Gam
 
 ## 1. Philosophy: Zero-Dependency Validation
 
-Consistent with the Open Game Stack principle of **"Sovereignty Over Subscription,"** the website's automated test suite (`tests/validate_site.py`) uses **only the Python 3 standard library** (`html.parser`, `pathlib`, `re`, `sys`, `urllib.parse`). No external packages, Node.js toolchains, or browser drivers are required to run the validation suite locally or in CI.
+Consistent with the Open Game Stack principle of **"Sovereignty Over Subscription,"** the website's automated test suite (`tests/validate_site.py`) uses **only the Python 3 standard library** (`html.parser`, `pathlib`, `re`, `sys`, `urllib.parse`, `json`). No external packages, Node.js toolchains, or browser drivers are required to run the validation suite locally or in CI.
 
 ---
 
@@ -39,6 +39,7 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Every `.html` file declares `<!DOCTYPE html>` and `<html lang="en">`.
    - Every `.html` file includes `<meta charset="UTF-8">`, a responsive `<meta name="viewport">`, a non-empty `<meta name="description">`, and a non-empty `<title>`.
    - Every `.html` file contains `<header class="site-header">`, `<main id="main">`, and `<footer class="site-footer">`.
+   - Every `.html` file contains a skip-to-content accessibility landmark link (`<a class="skip-link" href="#main">`).
 3. **Internal Link & Asset Resolution:**
    - Every local `<a href="...">`, `<link href="...">`, `<script src="...">`, and `<img src="...">` resolves to an existing file in the repository.
    - Same-page `#fragment` links resolve to a matching `id` attribute in that document.
@@ -51,7 +52,16 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Rejects external `<script src="...">` and external `<link rel="stylesheet">` tags.
    - Rejects references to third-party font/asset CDNs and analytics trackers (`fonts.googleapis.com`, `fonts.gstatic.com`, `google-analytics.com`, `googletagmanager.com`, `unpkg.com`, `jsdelivr.net`, `cdnjs.cloudflare.com`, etc.).
    - Rejects `.innerHTML` usage in inline scripts to enforce safe DOM construction (`document.createElement` + `.textContent`).
-   - Confirms `pages/tools.html` includes the `[data-catalog]` container and static fallback `.tool-card` entries.
+6. **Landing Page Release & Manifest Verifications (`index.html`):**
+   - Asserts at least 2 download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
+   - Asserts canonical manifest and config naming (`ogs_stack.json` and `ogs_config.json`).
+   - Asserts Godot engine target reference (`Godot 4.7.2`).
+   - Prohibits obsolete `v0.1.5` release links and legacy un-prefixed `stack.json` naming.
+7. **Tool Catalog Static Fallback Parity (`pages/tools.html`):**
+   - Confirms `pages/tools.html` includes the `[data-catalog]` container.
+   - Confirms exactly 7 static fallback tool cards inside `[data-catalog]`.
+   - Verifies static tool catalog IDs (`godot`, `gimp`, `krita`, `blender`, `audacity`, `git`, `vscodium`) and version sets against sibling `ogs-frozen-stacks/repository.json` (or baseline fallback).
+   - Verifies `.tool-mark` monograms for icon-less tools (`git` and `vscodium`).
 
 ---
 
