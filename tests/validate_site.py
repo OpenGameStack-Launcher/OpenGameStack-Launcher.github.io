@@ -34,6 +34,13 @@ REQUIRED_FILES = [
     "assets/fonts/fonts-local.css",
     "favicon.png",
     "logo.png",
+    "assets/images/Godot.png",
+    "assets/images/Blender.png",
+    "assets/images/Krita.png",
+    "assets/images/GIMP.png",
+    "assets/images/Audacity.png",
+    "assets/images/Git.png",
+    "assets/images/VSCodium.png",
 ]
 
 FORBIDDEN_EXTERNAL_PATTERNS = [
@@ -79,6 +86,8 @@ class PageInspector(HTMLParser):
         self.catalog_tool_cards: int = 0
         self.catalog_tools: dict[str, list[str]] = {}
         self.catalog_tool_marks: list[str] = []
+        self.catalog_tool_images: dict[str, tuple[int, str, str]] = {}
+        self._current_card_icon: tuple[int, str, str] | None = None
         self._current_tool_id: str | None = None
         self._in_tool_id: bool = False
         self._in_version_tag: bool = False
@@ -135,6 +144,9 @@ class PageInspector(HTMLParser):
                 self.stylesheets.append((line, href))
         elif tag == "img":
             self.images.append((line, attr_map.get("src"), attr_map.get("alt")))
+            classes = (attr_map.get("class") or "").split()
+            if "tool-icon" in classes:
+                self._current_card_icon = (line, attr_map.get("src") or "", attr_map.get("alt") or "")
         elif tag == "script":
             self.scripts.append((line, attr_map.get("src")))
             self.in_script = True
@@ -146,6 +158,7 @@ class PageInspector(HTMLParser):
             classes = (attr_map.get("class") or "").split()
             if "tool-card" in classes:
                 self.catalog_tool_cards += 1
+                self._current_card_icon = None
         elif tag == "h3":
             classes = (attr_map.get("class") or "").split()
             if "tool-id" in classes:
@@ -174,6 +187,8 @@ class PageInspector(HTMLParser):
             self._current_tool_id = tid
             if tid and tid not in self.catalog_tools:
                 self.catalog_tools[tid] = []
+            if tid and self._current_card_icon:
+                self.catalog_tool_images[tid] = self._current_card_icon
             self._tag_text_parts = []
         elif tag == "span" and self._in_version_tag:
             self._in_version_tag = False
@@ -483,13 +498,49 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             )
 
         results.expect(
-            "git" in inspector.catalog_tool_marks,
-            "tools/index.html: Missing .tool-mark monogram for 'git'",
+            len(inspector.catalog_tool_marks) == 0,
+            f"tools/index.html: Unexpected .tool-mark monograms found: {inspector.catalog_tool_marks}",
         )
-        results.expect(
-            "vscodium" in inspector.catalog_tool_marks,
-            "tools/index.html: Missing .tool-mark monogram for 'vscodium'",
-        )
+
+        for tool_id in expected_catalog_tools:
+            results.expect(
+                tool_id in inspector.catalog_tool_images,
+                f"tools/index.html: Static catalog tool '{tool_id}' is missing a .tool-icon <img> element",
+            )
+            if tool_id in inspector.catalog_tool_images:
+                icon_line, icon_src, icon_alt = inspector.catalog_tool_images[tool_id]
+                results.expect(
+                    bool(icon_src),
+                    f"tools/index.html:{icon_line}: Tool '{tool_id}' icon missing src attribute",
+                )
+                results.expect(
+                    bool(icon_alt and icon_alt.strip()),
+                    f"tools/index.html:{icon_line}: Tool '{tool_id}' icon missing non-empty alt attribute",
+                )
+                target_img, _ = resolve_local_reference(html_path, icon_src)
+                results.expect(
+                    target_img is not None and target_img.is_file(),
+                    f"tools/index.html:{icon_line}: Tool '{tool_id}' icon src '{icon_src}' does not exist",
+                )
+
+        combined_scripts = "\n".join(inspector.inline_scripts)
+        for tool_id in expected_catalog_tools:
+            tool_pattern = re.compile(
+                rf"{tool_id}\s*:\s*\{{[^}}]*image\s*:\s*['\"]([^'\"]+)['\"]",
+                re.DOTALL,
+            )
+            match = tool_pattern.search(combined_scripts)
+            results.expect(
+                match is not None,
+                f"tools/index.html: Inline toolDetails missing image property for '{tool_id}'",
+            )
+            if match:
+                raw_img_path = match.group(1)
+                target_img, _ = resolve_local_reference(html_path, raw_img_path)
+                results.expect(
+                    target_img is not None and target_img.is_file(),
+                    f"tools/index.html: Inline toolDetails image '{raw_img_path}' for '{tool_id}' does not resolve to an existing file",
+                )
 
 
 def validate_css_file(css_path: Path, results: TestResults) -> None:
