@@ -8,7 +8,7 @@ This document outlines the standard specifications, structure, and workflow for 
 
 Every issue created in this repository must meet the following criteria:
 1. **Self-Contained & Actionable:** Provide all necessary context, design decisions, and acceptance criteria. A contributor should never have to guess design intent or search for unlinked resources.
-2. **Clear Boundaries:** Group requirements logically by affected pages or components (for example, Landing Page `index.html`, Manifesto `pages/manifesto.html`, Tool Catalog `pages/tools.html`, Examples `examples/index.html`, Shared Styles `assets/css/site.css`, Automated Validation `tests/validate_site.py`, Documentation).
+2. **Clear Boundaries:** Group requirements logically by affected pages or components (for example, Landing Page `index.html`, Manifesto `manifesto/index.html`, Tool Catalog `tools/index.html`, Examples `examples/index.html`, Shared Styles `assets/css/site.css`, Automated Validation `tests/validate_site.py`, Documentation).
 3. **Traceability:** Explicitly list any dependencies (`Depends on #<issue_number>`) and note which documentation files need to be synchronized as part of the implementation.
 4. **No Duplicates:** Always search open and closed issues (`gh issue list --state all`) before submitting a new issue.
 
@@ -32,7 +32,7 @@ A concise explanation of the problem, bug, cross-repo sync update, or feature re
 
 ### 2. Technical Scope & Affected Files
 Direct references to the HTML, CSS, asset, or test files that need modification or inspection:
-- `index.html` or `pages/<page_name>.html` or `examples/index.html`
+- `index.html` or `<directory>/index.html` (e.g., `manifesto/index.html`, `tools/index.html`, `examples/index.html`)
 - `assets/css/site.css` or `assets/images/<asset_name>.png`
 - `tests/validate_site.py`
 
@@ -85,7 +85,7 @@ Apply at least one standard GitHub label when creating the issue:
 
 Before publishing an issue via GitHub:
 1. [ ] **Search Existing Issues:** Run `gh issue list --state all --limit 100` inside `C:\Projects\OpenGameStack-Launcher.github.io` to confirm the issue does not already exist or duplicate past work.
-2. [ ] **Inspect Codebase & Sibling Repos:** Verify the exact file paths (`index.html`, `pages/...`, `assets/...`, `tests/validate_site.py`), CSS class names, and current state in `C:\Projects\ogs-frozen-stacks\repository.json` or `C:\Projects\ogs-launcher` when logging cross-repo synchronization issues.
+2. [ ] **Inspect Codebase & Sibling Repos:** Verify the exact file paths (`index.html`, `<directory>/index.html`, `assets/...`, `tests/validate_site.py`), CSS class names, and current state in `C:\Projects\ogs-frozen-stacks\repository.json` or `C:\Projects\ogs-launcher` when logging cross-repo synchronization issues.
 3. [ ] **Clarify Design Choices:** Resolve any open design questions before publishing so the issue body contains firm decisions rather than open questions.
 4. [ ] **Zero-Dependency & Privacy Guardrails:** Ensure acceptance criteria preserve self-hosted assets, `rel="noopener noreferrer"` on external `target="_blank"` links, safe DOM construction (`textContent`), and offline fallback resilience.
 5. [ ] **Include Documentation Acceptance Criteria:** Ensure the mandatory documentation coordination checklist is included per `docs/REVIEWING_AND_MERGING_PRS.md`.

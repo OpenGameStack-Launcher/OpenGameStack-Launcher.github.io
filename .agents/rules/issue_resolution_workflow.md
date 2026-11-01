@@ -24,7 +24,7 @@ When tasked with resolving GitHub issues in `OpenGameStack-Launcher.github.io`, 
 
 ## 3. Implement the Fix
 - Write clean, semantic HTML5, modern CSS3, and defensive vanilla JS meeting every item in the issue's Acceptance Criteria.
-- Preserve OGS Website architectural rules: zero external dependencies or build steps, self-hosted fonts and images, offline-resilient static HTML fallback in `pages/tools.html`, safe DOM creation (`textContent`, never `innerHTML`), and `rel="noopener noreferrer"` on external `target="_blank"` links.
+- Preserve OGS Website architectural rules: zero external dependencies or build steps, self-hosted fonts and images, offline-resilient static HTML fallback in `tools/index.html`, safe DOM creation (`textContent`, never `innerHTML`), and `rel="noopener noreferrer"` on external `target="_blank"` links.
 
 ## 4. Automated Validation & Testing
 - Add or update validation checks in `tests/validate_site.py` when introducing new pages, structural invariants, or catalog requirements.

@@ -27,8 +27,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 REQUIRED_FILES = [
     "CNAME",
     "index.html",
-    "pages/manifesto.html",
-    "pages/tools.html",
+    "manifesto/index.html",
+    "tools/index.html",
     "examples/index.html",
     "assets/css/site.css",
     "assets/fonts/fonts-local.css",
@@ -68,7 +68,7 @@ class PageInspector(HTMLParser):
         self.has_main_id: bool = False
         self.has_footer: bool = False
         self.ids: set[str] = set()
-        self.links: list[tuple[int, str, str | None, str | None]] = []
+        self.links: list[tuple[int, str, str | None, str | None, list[str]]] = []
         self.stylesheets: list[tuple[int, str]] = []
         self.images: list[tuple[int, str | None, str | None]] = []
         self.scripts: list[tuple[int, str | None]] = []
@@ -127,7 +127,7 @@ class PageInspector(HTMLParser):
             classes = (attr_map.get("class") or "").split()
             if "skip-link" in classes and href == "#main":
                 self.has_skip_link = True
-            self.links.append((line, href, target, rel))
+            self.links.append((line, href, target, rel, classes))
         elif tag == "link":
             rel_tokens = (attr_map.get("rel") or "").lower().split()
             href = attr_map.get("href") or ""
@@ -247,6 +247,12 @@ def validate_required_files(results: TestResults) -> None:
             f"CNAME must be 'opengamestack.org', found '{cname_value}'",
         )
 
+    legacy_pages_dir = REPO_ROOT / "pages"
+    results.expect(
+        not legacy_pages_dir.exists(),
+        "Legacy 'pages/' directory must be removed from repository",
+        )
+
 
 def resolve_local_reference(source_file: Path, raw_ref: str) -> tuple[Path | None, str]:
     parsed = urlsplit(raw_ref)
@@ -258,6 +264,8 @@ def resolve_local_reference(source_file: Path, raw_ref: str) -> tuple[Path | Non
         target = (REPO_ROOT / path_part.lstrip("/")).resolve()
     else:
         target = (source_file.parent / path_part).resolve()
+    if target.is_dir() and (target / "index.html").is_file():
+        target = (target / "index.html").resolve()
     return target, fragment
 
 
@@ -343,7 +351,7 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             )
 
     # 6. Anchor links: internal path resolution and external rel="noopener noreferrer"
-    for line, href, target_attr, rel_attr in inspector.links:
+    for line, href, target_attr, rel_attr, classes in inspector.links:
         results.expect(bool(href), f"{rel_name}:{line}: <a> tag has empty href")
         if not href:
             continue
@@ -364,6 +372,23 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                 )
             continue
 
+        is_nav_or_cta = bool(
+            set(classes).intersection(
+                {"site-logo", "site-nav-link", "site-footer-link", "btn", "btn-outline"}
+            )
+        )
+        if is_nav_or_cta:
+            clean_href = href.split("?")[0].split("#")[0]
+            results.expect(
+                "index.html" not in href and not clean_href.endswith(".html"),
+                f"{rel_name}:{line}: Clean URL violation in navigation/CTA link '{href}'. Clean directory URLs required (no .html or index.html).",
+            )
+
+        results.expect(
+            "pages/" not in href,
+            f"{rel_name}:{line}: Legacy 'pages/' reference in link '{href}'",
+        )
+
         target_file, fragment = resolve_local_reference(html_path, href)
         results.expect(
             target_file is not None and target_file.is_file(),
@@ -381,7 +406,7 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip"
         )
         v020_download_links = [
-            href for _, href, _, _ in inspector.links if href == expected_v020_download
+            href for _, href, _, _, _ in inspector.links if href == expected_v020_download
         ]
         results.expect(
             len(v020_download_links) >= 2,
@@ -409,14 +434,14 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
         )
 
     # 8. Tool catalog static fallback parity and structure
-    if rel_name == "pages/tools.html":
+    if rel_name == "tools/index.html":
         results.expect(
             inspector.has_catalog_container,
-            "pages/tools.html: Missing [data-catalog] section container",
+            "tools/index.html: Missing [data-catalog] section container",
         )
         results.expect(
             inspector.catalog_tool_cards == 7,
-            f"pages/tools.html: Expected 7 static fallback tool cards inside [data-catalog], found {inspector.catalog_tool_cards}",
+            f"tools/index.html: Expected 7 static fallback tool cards inside [data-catalog], found {inspector.catalog_tool_cards}",
         )
 
         expected_catalog_tools: dict[str, set[str]] = {
@@ -447,23 +472,23 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
 
         results.expect(
             set(inspector.catalog_tools.keys()) == set(expected_catalog_tools.keys()),
-            f"pages/tools.html: Static catalog tool IDs mismatch. Expected {sorted(expected_catalog_tools.keys())}, found {sorted(inspector.catalog_tools.keys())}",
+            f"tools/index.html: Static catalog tool IDs mismatch. Expected {sorted(expected_catalog_tools.keys())}, found {sorted(inspector.catalog_tools.keys())}",
         )
 
         for tool_id, expected_versions in expected_catalog_tools.items():
             actual_versions = set(inspector.catalog_tools.get(tool_id, []))
             results.expect(
                 actual_versions == expected_versions,
-                f"pages/tools.html: Tool '{tool_id}' version mismatch. Expected {sorted(expected_versions)}, found {sorted(actual_versions)}",
+                f"tools/index.html: Tool '{tool_id}' version mismatch. Expected {sorted(expected_versions)}, found {sorted(actual_versions)}",
             )
 
         results.expect(
             "git" in inspector.catalog_tool_marks,
-            "pages/tools.html: Missing .tool-mark monogram for 'git'",
+            "tools/index.html: Missing .tool-mark monogram for 'git'",
         )
         results.expect(
             "vscodium" in inspector.catalog_tool_marks,
-            "pages/tools.html: Missing .tool-mark monogram for 'vscodium'",
+            "tools/index.html: Missing .tool-mark monogram for 'vscodium'",
         )
 
 

@@ -20,17 +20,17 @@ Walk the diff against each section below. Focus comments on lines that are part 
 
 ### 2. Semantic HTML5, Accessibility & Navigation Consistency
 - Every `.html` page must include `<!DOCTYPE html>`, `<html lang="en">`, `<meta charset="UTF-8">`, `<meta name="viewport" content="width=device-width, initial-scale=1.0">`, a non-empty `<meta name="description">`, and a `<title>`.
-- Confirm `<header class="site-header">`, `<main class="container" id="main">`, and `<footer class="site-footer">` landmarks are consistent across `index.html`, `pages/*.html`, and `examples/*.html`.
+- Confirm `<header class="site-header">`, `<main class="container" id="main">`, and `<footer class="site-footer">` landmarks are consistent across `index.html`, `manifesto/index.html`, `tools/index.html`, and `examples/index.html`.
 - Every `<img>` tag must include a descriptive, non-empty `alt` attribute.
 - Keyboard focus states (`:focus-visible`) and `@media (prefers-reduced-motion: reduce)` rules in `assets/css/site.css` must be preserved.
 
 ### 3. Defensive Security & Safe DOM Construction
 - Every external link (`http://` or `https://`) with `target="_blank"` must include `rel="noopener noreferrer"`.
-- In any inline JavaScript (such as `pages/tools.html`), confirm untrusted data (`repository.json`) is validated before rendering and rendered exclusively via `document.createElement()` and `.textContent`. Flag any use of `.innerHTML`, `outerHTML`, or `insertAdjacentHTML`.
+- In any inline JavaScript (such as `tools/index.html`), confirm untrusted data (`repository.json`) is validated before rendering and rendered exclusively via `document.createElement()` and `.textContent`. Flag any use of `.innerHTML`, `outerHTML`, or `insertAdjacentHTML`.
 
 ### 4. Offline Fallback & Cross-Repo Synchronization
-- **Offline Progressive Enhancement:** Confirm `pages/tools.html` retains a complete static HTML tool catalog inside `<section class="catalog" ... data-catalog>` so the page works without JavaScript or network connectivity.
-- **OGS Frozen Stacks Sync:** When updating tool catalog entries in `pages/tools.html`, verify that the static HTML cards, `categoryOrder`, `categoryDescriptions`, and `toolDetails` match `C:\Projects\ogs-frozen-stacks\repository.json`.
+- **Offline Progressive Enhancement:** Confirm `tools/index.html` retains a complete static HTML tool catalog inside `<section class="catalog" ... data-catalog>` so the page works without JavaScript or network connectivity.
+- **OGS Frozen Stacks Sync:** When updating tool catalog entries in `tools/index.html`, verify that the static HTML cards, `categoryOrder`, `categoryDescriptions`, and `toolDetails` match `C:\Projects\ogs-frozen-stacks\repository.json`.
 - **OGS Launcher Sync:** When updating release links or engine target notes in `index.html`, verify they match the published release in `OpenGameStack-Launcher/ogs-launcher` and use canonical manifest filenames (`ogs_stack.json` and `ogs_config.json`).
 
 ### 5. Styling & Writing Standards
@@ -45,7 +45,7 @@ Walk the diff against each section below. Focus comments on lines that are part 
 
 Report findings grouped by severity:
 
-- **Blocking:** Broken links or missing assets, external CDN/tracker additions, `.innerHTML` usage, missing `rel="noopener noreferrer"`, missing image `alt` text, broken offline fallback in `pages/tools.html`, or failing `tests/validate_site.py`.
+- **Blocking:** Broken links or missing assets, external CDN/tracker additions, `.innerHTML` usage, missing `rel="noopener noreferrer"`, missing image `alt` text, broken offline fallback in `tools/index.html`, or failing `tests/validate_site.py`.
 - **Should Fix:** Out-of-sync catalog/release metadata, inline styles instead of `site.css` classes, missing documentation updates.
 - **Nit:** Copy polish, class naming, or minor readability suggestions.
 

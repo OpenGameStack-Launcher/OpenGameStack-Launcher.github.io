@@ -9,7 +9,7 @@ Welcome to the **Open Game Stack Website** repository (`C:\Projects\OpenGameStac
 All code changes must strictly preserve these four architectural pillars:
 1. **Zero Dependencies & No Build Step:** The website is built exclusively with semantic **HTML5**, modern **CSS3** (`assets/css/site.css`), and progressive-enhancement **vanilla JavaScript**. Never introduce frontend frameworks (React, Vue, Tailwind, etc.), bundlers, or external runtime libraries.
 2. **Privacy-First & Self-Hosted Assets:** Respect user privacy by design. Never add third-party analytics, telemetry scripts, tracking pixels, or external font/CSS CDNs (such as Google Fonts or jsDelivr). All fonts (`assets/fonts/*.woff2`, `assets/fonts/fonts-local.css`) and icons/images (`assets/images/`) must be self-hosted inside the repository.
-3. **Offline-Resilient Progressive Enhancement:** Every page must render complete, readable content even when JavaScript is disabled or remote network requests fail. Specifically, `pages/tools.html` must maintain a complete static HTML tool catalog inside `[data-catalog]` as a fallback alongside its dynamic fetch of `ogs-frozen-stacks/repository.json`.
+3. **Offline-Resilient Progressive Enhancement:** Every page must render complete, readable content even when JavaScript is disabled or remote network requests fail. Specifically, `tools/index.html` must maintain a complete static HTML tool catalog inside `[data-catalog]` as a fallback alongside its dynamic fetch of `ogs-frozen-stacks/repository.json`.
 4. **Defensive DOM & Link Security:** Treat fetched JSON data (`repository.json`) as untrusted input. Always construct DOM nodes with `document.createElement()` and assign text via `.textContent` (never `.innerHTML`). All external links (`target="_blank"`) must include `rel="noopener noreferrer"`.
 
 ---
@@ -21,8 +21,8 @@ This website sits alongside two sibling repositories in the workspace and must s
   - Landing page download links and release notes in `index.html` must reference the current published release tag and asset name from `OpenGameStack-Launcher/ogs-launcher` (for example, `v0.2.0` and the current Godot engine target `Godot 4.7.2`).
   - References to OGS project manifest files in documentation or landing copy must use the canonical filenames (`ogs_stack.json` and `ogs_config.json`).
 - **OGS Frozen Stacks (`C:\Projects\ogs-frozen-stacks`):**
-  - The tool catalog page (`pages/tools.html`) dynamically fetches `https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json`.
-  - Whenever tools, categories (such as `Engine`, `2D`, `3D`, `Audio`, `Code`), or versions are added or updated in `C:\Projects\ogs-frozen-stacks\repository.json`, `pages/tools.html` must be synchronized across:
+  - The tool catalog page (`tools/index.html`) dynamically fetches `https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json`.
+  - Whenever tools, categories (such as `Engine`, `2D`, `3D`, `Audio`, `Code`), or versions are added or updated in `C:\Projects\ogs-frozen-stacks\repository.json`, `tools/index.html` must be synchronized across:
     1. The static HTML fallback cards inside `<section class="catalog" ... data-catalog>`.
     2. The inline JS `categoryOrder`, `categoryDescriptions`, and `toolDetails` maps.
     3. Tool icon assets in `assets/images/` (or verified `.tool-mark` monogram fallback).
@@ -43,7 +43,7 @@ This website sits alongside two sibling repositories in the workspace and must s
 
 ## 4. Tech Stack, Validation & Visual QA Conventions
 
-- **HTML5 & Accessibility (`index.html`, `pages/*.html`, `examples/*.html`):**
+- **HTML5 & Accessibility (`index.html`, `manifesto/index.html`, `tools/index.html`, `examples/index.html`):**
   - Every page must include `<!DOCTYPE html>`, `<html lang="en">`, `<meta charset="UTF-8">`, `<meta name="viewport" content="width=device-width, initial-scale=1.0">`, a descriptive `<meta name="description">`, and a `<title>`.
   - Maintain consistent `<header class="site-header">`, `<main class="container" id="main">`, and `<footer class="site-footer">` landmarks across all pages.
   - Every `<img>` must have a non-empty `alt` attribute.
