@@ -97,7 +97,7 @@ Run all validation commands and commits inside `.worktrees/issue-<number>`.
 ### 1. OGS Website Core Architectural Rules
 * **Zero External Dependencies:** Pure HTML5, CSS3, and vanilla JavaScript. No frontend frameworks, build tools, or external runtime libraries.
 * **Privacy-First & Self-Hosted Assets:** No external font CDNs (`fonts.googleapis.com`), CSS CDNs, analytics, or telemetry scripts. All fonts (`assets/fonts/*.woff2`) and images (`assets/images/*.png`) must live inside the repository.
-* **Offline Fallback Resilience:** `pages/tools.html` must always contain a complete static HTML tool catalog inside `<section class="catalog" ... data-catalog>` so users viewing the site offline or without JavaScript see the full catalog.
+* **Offline Fallback Resilience:** `tools/index.html` must always contain a complete static HTML tool catalog inside `<section class="catalog" ... data-catalog>` so users viewing the site offline or without JavaScript see the full catalog.
 * **Safe DOM Construction:** Never use `.innerHTML`, `outerHTML`, or `insertAdjacentHTML` when rendering data from `repository.json`. Always use `document.createElement()` and `.textContent`.
 * **External Link Hardening:** Every external link (`http://` or `https://`) with `target="_blank"` must include `rel="noopener noreferrer"`.
 

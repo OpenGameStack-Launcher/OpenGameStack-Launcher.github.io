@@ -31,8 +31,8 @@ Before approving or merging any Pull Request, verify the following:
 * [ ] **Zero External Dependencies & Trackers:** No external font CDNs (`fonts.googleapis.com`), JS/CSS CDNs, or analytics/telemetry scripts. All assets are self-hosted.
 * [ ] **Semantic HTML5 & Landmarks:** All pages preserve `<!DOCTYPE html>`, `<html lang="en">`, `<meta charset="UTF-8">`, `<meta name="viewport">`, `<meta name="description">`, `<title>`, `<header class="site-header">`, `<main id="main">`, and `<footer class="site-footer">`.
 * [ ] **Accessibility & Link Security:** Every `<img>` has a non-empty `alt` attribute; every external `target="_blank"` link includes `rel="noopener noreferrer"`.
-* [ ] **Safe DOM & Offline Fallback:** Inline JS uses `document.createElement()` and `.textContent` (never `.innerHTML`), and `pages/tools.html` preserves a complete static HTML tool catalog fallback.
-* [ ] **Cross-Repo Accuracy:** Release links/notes in `index.html` and catalog items in `pages/tools.html` match `ogs-launcher` and `ogs-frozen-stacks/repository.json`.
+* [ ] **Safe DOM & Offline Fallback:** Inline JS uses `document.createElement()` and `.textContent` (never `.innerHTML`), and `tools/index.html` preserves a complete static HTML tool catalog fallback.
+* [ ] **Cross-Repo Accuracy:** Release links/notes in `index.html` and catalog items in `tools/index.html` match `ogs-launcher` and `ogs-frozen-stacks/repository.json`.
 
 ### 3. Validation Verification
 * [ ] **Automated Validation Report:** PR body includes evidence that `python tests/validate_site.py` passes (`tests passed: X`, `tests failed: 0`).

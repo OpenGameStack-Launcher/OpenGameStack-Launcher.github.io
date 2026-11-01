@@ -11,7 +11,7 @@ When reviewing and merging Pull Requests in `OpenGameStack-Launcher.github.io`, 
   ```
 - Audit the changes against:
   - **Acceptance Criteria & Dependencies:** All issue checklist items met; any `Depends on #X` issues closed and merged.
-  - **OGS Website Standards:** Semantic HTML5, shared CSS tokens in `assets/css/site.css`, zero external dependencies/CDNs/trackers, `rel="noopener noreferrer"` on external `target="_blank"` links, non-empty `alt` text on images, safe DOM construction (`textContent` instead of `innerHTML`), and static fallback parity in `pages/tools.html`.
+  - **OGS Website Standards:** Semantic HTML5, shared CSS tokens in `assets/css/site.css`, zero external dependencies/CDNs/trackers, `rel="noopener noreferrer"` on external `target="_blank"` links, non-empty `alt` text on images, safe DOM construction (`textContent` instead of `innerHTML`), and static fallback parity in `tools/index.html`.
   - **Test Coverage:** Adequate validation checks in `tests/validate_site.py`.
 
 ## 2. Worktree Reuse or Creation

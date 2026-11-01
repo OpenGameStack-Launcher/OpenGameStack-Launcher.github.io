@@ -12,10 +12,10 @@ This repository hosts the source code for the Open Game Stack web presence. Cons
 * **No Tracking:** Respects user privacy by design.
 
 ## 📂 Repository Structure
-* `index.html`: The main landing page.
-* `pages/manifesto.html`: The core philosophy and "Declaration of Digital Sovereignty."
-* `pages/tools.html`: The frozen tool catalog with category, tool id, version, and release links.
-* `examples/index.html`: Reference games and showcase projects built with Open Game Stack.
+* `index.html`: The main landing page (`/`).
+* `manifesto/index.html`: The core philosophy and "Declaration of Digital Sovereignty" (`/manifesto/`).
+* `tools/index.html`: The frozen tool catalog with category, tool id, version, and release links (`/tools/`).
+* `examples/index.html`: Reference games and showcase projects built with Open Game Stack (`/examples/`).
 * `assets/css/site.css`: Shared site chrome, typography, and footer/header styles used by every page.
 * `tests/validate_site.py`: Zero-dependency static site validation suite.
 * `docs/`: Canonical workflow guides, testing procedures, and standards.
