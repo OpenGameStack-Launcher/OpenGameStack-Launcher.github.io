@@ -43,7 +43,7 @@ This website sits alongside two sibling repositories in the workspace and must s
 
 ## 4. Tech Stack, Validation & Visual QA Conventions
 
-- **HTML5 & Accessibility (`index.html`, `manifesto/index.html`, `tools/index.html`, `examples/index.html`):**
+- **HTML5 & Accessibility (`index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`):**
   - Every page must include `<!DOCTYPE html>`, `<html lang="en">`, `<meta charset="UTF-8">`, `<meta name="viewport" content="width=device-width, initial-scale=1.0">`, a descriptive `<meta name="description">`, and a `<title>`.
   - Maintain consistent `<header class="site-header">`, `<main class="container" id="main">`, and `<footer class="site-footer">` landmarks across all pages.
   - Every `<img>` must have a non-empty `alt` attribute.

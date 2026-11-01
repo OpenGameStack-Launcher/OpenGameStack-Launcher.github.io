@@ -8,7 +8,7 @@ This document outlines the standard specifications, structure, and workflow for 
 
 Every issue created in this repository must meet the following criteria:
 1. **Self-Contained & Actionable:** Provide all necessary context, design decisions, and acceptance criteria. A contributor should never have to guess design intent or search for unlinked resources.
-2. **Clear Boundaries:** Group requirements logically by affected pages or components (for example, Landing Page `index.html`, Manifesto `manifesto/index.html`, Tool Catalog `tools/index.html`, Examples `examples/index.html`, Shared Styles `assets/css/site.css`, Automated Validation `tests/validate_site.py`, Documentation).
+2. **Clear Boundaries:** Group requirements logically by affected pages or components (for example, Landing Page `index.html`, Mission `mission/index.html`, Tool Catalog `tools/index.html`, Examples `examples/index.html`, Shared Styles `assets/css/site.css`, Automated Validation `tests/validate_site.py`, Documentation).
 3. **Traceability:** Explicitly list any dependencies (`Depends on #<issue_number>`) and note which documentation files need to be synchronized as part of the implementation.
 4. **No Duplicates:** Always search open and closed issues (`gh issue list --state all`) before submitting a new issue.
 
@@ -32,7 +32,7 @@ A concise explanation of the problem, bug, cross-repo sync update, or feature re
 
 ### 2. Technical Scope & Affected Files
 Direct references to the HTML, CSS, asset, or test files that need modification or inspection:
-- `index.html` or `<directory>/index.html` (e.g., `manifesto/index.html`, `tools/index.html`, `examples/index.html`)
+- `index.html` or `<directory>/index.html` (e.g., `mission/index.html`, `tools/index.html`, `examples/index.html`)
 - `assets/css/site.css` or `assets/images/<asset_name>.png`
 - `tests/validate_site.py`
 
@@ -64,7 +64,7 @@ Checklist grouped by page or component responsibility:
 Titles must be concise and use standard prefixes to indicate the area of the website:
 - `Home - <Action/Description>` (e.g., `Home - Update Alpha Download Links to v0.2.0 and Godot 4.7.2`)
 - `Tools - <Action/Description>` (e.g., `Tools - Synchronize Static Catalog and Code Category with ogs-frozen-stacks`)
-- `Manifesto - <Action/Description>` (e.g., `Manifesto - Add Skip Link Landmark to Manifesto Page`)
+- `Mission - <Action/Description>` (e.g., `Mission - Add Skip Link Landmark to Mission Page`)
 - `Examples - <Action/Description>` (e.g., `Examples - Add Project Card Styling for Reference Games`)
 - `Design - <Action/Description>` (e.g., `Design - Improve Mobile Header Navigation Spacing`)
 - `Sync - <Action/Description>` (e.g., `Sync - Align Project Manifest Filename References with ogs_stack.json`)
