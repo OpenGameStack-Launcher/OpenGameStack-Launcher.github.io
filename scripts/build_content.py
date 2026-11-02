@@ -112,6 +112,10 @@ def load_tools_metadata(path: Path | str | None = None) -> dict[str, Any]:
 
 def find_sibling_repository_json() -> Path | None:
     """Finds the sibling ogs-frozen-stacks/repository.json file if present."""
+    if REPO_ROOT.parent.name == ".worktrees":
+        worktree_candidate = REPO_ROOT.parent.parent.parent / "ogs-frozen-stacks" / "repository.json"
+        if worktree_candidate.is_file():
+            return worktree_candidate
     candidate = REPO_ROOT.parent / "ogs-frozen-stacks" / "repository.json"
     if candidate.is_file():
         return candidate
@@ -362,24 +366,76 @@ def validate_tools_metadata(
     return errors
 
 
+def render_catalog_filters_html(categories: list[dict[str, Any]] | None = None) -> str:
+    """Generates accessible filter controls for the two-tier tools catalog."""
+    cat_buttons = [
+        '                <button type="button" class="filter-btn is-active" data-filter-cat="all" aria-pressed="true">All Categories</button>'
+    ]
+    if categories:
+        for cat in categories:
+            cname = escape_html(cat.get("name", ""))
+            cat_buttons.append(
+                f'                <button type="button" class="filter-btn" data-filter-cat="{cname}" aria-pressed="false">{cname}</button>'
+            )
+    else:
+        for cname in CANONICAL_CATEGORY_NAMES:
+            cat_buttons.append(
+                f'                <button type="button" class="filter-btn" data-filter-cat="{cname}" aria-pressed="false">{cname}</button>'
+            )
+    cats_markup = "\n".join(cat_buttons)
+
+    return (
+        f'        <section class="catalog-filters" aria-label="Catalog Filters">\n'
+        f'            <div class="filter-group" role="group" aria-label="Filter by Tier">\n'
+        f'                <span class="filter-group-label">Tier:</span>\n'
+        f'                <button type="button" class="filter-btn is-active" data-filter-tier="all" aria-pressed="true">All Tools</button>\n'
+        f'                <button type="button" class="filter-btn" data-filter-tier="frozen" aria-pressed="false">Frozen in Launcher</button>\n'
+        f'                <button type="button" class="filter-btn" data-filter-tier="radar" aria-pressed="false">Ecosystem Radar</button>\n'
+        f'            </div>\n'
+        f'            <div class="filter-group" role="group" aria-label="Filter by Category">\n'
+        f'                <span class="filter-group-label">Category:</span>\n'
+        f'{cats_markup}\n'
+        f'            </div>\n'
+        f'        </section>'
+    )
+
+
 def render_tool_card_static(tool: dict[str, Any], base_url: str = "..") -> str:
     """Generates the static HTML markup for a single tool card."""
     tid = escape_html(tool.get("id", ""))
     tname = escape_html(tool.get("name", tid))
     tier = escape_html(tool.get("tier", "frozen"))
+    category = escape_html(tool.get("category", ""))
+    license_name = escape_html(tool.get("license", ""))
     image_path = tool.get("image")
     tagline = escape_html(tool.get("tagline", ""))
     summary = escape_html(tool.get("summary", ""))
     description = summary or tagline
+    replaces = tool.get("replaces", [])
     versions = tool.get("versions", [])
     tier_label = "Frozen in Launcher" if tier == "frozen" else "Ecosystem Radar"
 
     if image_path:
         full_img_src = f"{base_url}/{image_path.lstrip('/')}"
-        visual_html = f'<img class="tool-icon" src="{full_img_src}" alt="{tid} logo">'
+        visual_html = f'<img class="tool-icon" src="{full_img_src}" alt="{tname} logo">'
     else:
         initial = (tid[:1] if tid else "T").upper()
         visual_html = f'<span class="tool-mark" aria-label="{tid}">{initial}</span>'
+
+    # Replaces metadata
+    if replaces:
+        chips = "".join(
+            f'                                <span class="replaces-chip">{escape_html(r)}</span>\n'
+            for r in replaces
+        )
+        replaces_markup = (
+            f'                            <div class="tool-replaces">\n'
+            f'                                <span class="replaces-label">Replaces:</span>\n'
+            f'{chips}'
+            f'                            </div>\n'
+        )
+    else:
+        replaces_markup = ""
 
     version_items: list[str] = []
     if tier == "frozen" and versions:
@@ -409,16 +465,18 @@ def render_tool_card_static(tool: dict[str, Any], base_url: str = "..") -> str:
     versions_markup = "\n".join(version_items)
 
     return (
-        f'                    <div class="tool-card">\n'
+        f'                    <div class="tool-card" data-tool-id="{tid}" data-tier="{tier}" data-category="{category}">\n'
         f'                        <div class="tool-visual">\n'
         f'                            {visual_html}\n'
         f'                        </div>\n'
         f'                        <div class="tool-content">\n'
         f'                            <div class="tool-id-row">\n'
         f'                                <h3 class="tool-id">{tid}</h3>\n'
-        f'                                <span class="badge badge-tier-{tier}">{tier_label}</span>\n'
+        f'                                <span class="badge-tier-{tier}">{tier_label}</span>\n'
+        f'                                <span class="badge-license">{license_name}</span>\n'
         f'                            </div>\n'
         f'                            <p class="tool-description">{description}</p>\n'
+        f'{replaces_markup}'
         f'                            <p class="version-label">{version_label}</p>\n'
         f'                            <ul class="version-list">\n'
         f'{versions_markup}\n'
@@ -441,7 +499,7 @@ def render_catalog_category_section(
     cards_html = "\n".join(render_tool_card_static(tool, base_url=base_url) for tool in tools)
 
     return (
-        f'            <article class="category cat-{cat_id}">\n'
+        f'            <article class="category cat-{cat_id}" data-category="{cat_name}">\n'
         f'                <div class="category-head">\n'
         f'                    <h2 class="category-title">{cat_name}</h2>\n'
         f'                    <p class="category-description">{cat_desc}</p>\n'
