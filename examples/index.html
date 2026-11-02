@@ -29,35 +29,74 @@
 
     <main class="container" id="main">
 
-        <div class="layout">
-            <article>
-                <div class="eyebrow">Example Projects</div>
-                <h1>Living Reference Implementations</h1>
+        <section class="hero">
+            <div class="eyebrow">Example Projects</div>
+            <h1>Living Reference Implementations</h1>
+            <p class="intro">These games are living reference implementations of the OpenGameStack philosophy and launcher workflow. They demonstrate how to structure projects for sovereignty, version-control the environment alongside the code, and utilize the OGS launcher for zero-friction development.</p>
+        </section>
 
-                <div class="intro">
-                    These games are living reference implementations of the OpenGameStack philosophy and launcher workflow.
+        <section class="grid" aria-label="Reference Projects">
+            <div class="card project-card">
+                <div class="card-badges" aria-label="Tool stack">
+                    <span class="badge badge-tier-frozen">Godot 4</span>
+                    <span class="badge badge-tier-frozen">Git</span>
+                    <span class="badge badge-tier-frozen">Krita</span>
                 </div>
+                <h3>Sudoku</h3>
+                <p>A classic, responsive Sudoku puzzle game built as an open-source reference implementation of the Open Game Stack. Features clean board generation, multiple difficulty modes, and keyboard navigation.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/OpenGameStack/sudoku" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </span>
+                        <span>Source Code</span>
+                    </a>
+                    <a href="https://audrain.games/sudoku" class="btn btn-sm" target="_blank" rel="noopener noreferrer">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </span>
+                        <span>Play Online</span>
+                    </a>
+                </div>
+            </div>
 
-                <p>They demonstrate how to structure projects for sovereignty, version-control the environment alongside the code, and utilize the OGS launcher for zero-friction development.</p>
-
-                <h2>Sudoku</h2>
-                <p>A classic Sudoku game built with the Open Game Stack.</p>
-                <ul>
-                    <li><a href="https://github.com/OpenGameStack/sudoku" target="_blank" rel="noopener noreferrer">Source Code</a></li>
-                    <li><a href="https://audrain.games/sudoku" target="_blank" rel="noopener noreferrer">Play Online</a></li>
-                </ul>
-
-                <h2>Letter Logic</h2>
-                <p>A word puzzle game built with the Open Game Stack.</p>
-                <ul>
-                    <li><a href="https://github.com/OpenGameStack/letter-logic" target="_blank" rel="noopener noreferrer">Source Code</a></li>
-                    <li><a href="https://audrain.games/letter-logic" target="_blank" rel="noopener noreferrer">Play Online</a></li>
-                </ul>
-            </article>
-        </div>
+            <div class="card project-card">
+                <div class="card-badges" aria-label="Tool stack">
+                    <span class="badge badge-tier-frozen">Godot 4</span>
+                    <span class="badge badge-tier-frozen">Git</span>
+                    <span class="badge badge-tier-frozen">Krita</span>
+                </div>
+                <h3>Letter Logic</h3>
+                <p>A word puzzle game built with the Open Game Stack demonstrating state management, input handling, and sovereign asset pipelines without proprietary dependencies.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/OpenGameStack/letter-logic" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </span>
+                        <span>Source Code</span>
+                    </a>
+                    <a href="https://audrain.games/letter-logic" class="btn btn-sm" target="_blank" rel="noopener noreferrer">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </span>
+                        <span>Play Online</span>
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <footer class="site-footer">
-            <p>&copy; 2026 OpenGameStack.org. Dual-use technology for open simulation.</p>
+            <p>&copy; 2026 OpenGameStack.org. Open-source tools and reproducible workflows for game creators.</p>
 
             <div class="site-footer-links">
                 <a href="../mission/" class="site-footer-link">Mission</a>

@@ -288,6 +288,10 @@ ul {
 }
 
 /* --- BUTTONS (NEON/GLASS) --- */
+.btn-sm {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
 .btn {
     display: inline-flex;
     align-items: center;
@@ -483,6 +487,30 @@ ul {
     color: var(--text-muted);
     font-size: 1.05rem;
     line-height: 1.7;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 2rem;
+}
+
+.project-card .card-actions {
+    margin-top: auto;
+    padding-top: 1.5rem;
 }
 
 /* --- RELEASE PANEL --- */

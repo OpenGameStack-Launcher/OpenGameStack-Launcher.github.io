@@ -12,6 +12,7 @@ Checks:
 7. Tool catalog static fallback parity against repository.json (or canonical 7-tool baseline).
 8. Game studio dark CSS tokens (category accents, surface tokens) and editorial/catalog classes in site.css.
 9. Dedicated /launcher/ page checks and hub navigation consistency.
+10. Sitewide Launcher navigation, Substack footer links, and reframed Mission/Examples pages.
 """
 
 from __future__ import annotations
@@ -432,7 +433,49 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                 f"{rel_name}:{line}: Internal anchor '#{fragment}' does not match any element id in {rel_name}",
             )
 
-    # 7. Landing page checks (v0.2.0 links, manifest naming, Godot version)
+    # 7. Sitewide navigation and footer consistency checks
+    expected_launcher_nav = (
+        "launcher/"
+        if rel_name == "index.html"
+        else ("./" if rel_name == "launcher/index.html" else "../launcher/")
+    )
+    nav_launcher_links = [
+        href
+        for _, href, _, _, classes in inspector.links
+        if "site-nav-link" in classes and href == expected_launcher_nav
+    ]
+    results.expect(
+        len(nav_launcher_links) >= 1,
+        f"{rel_name}: Missing expected .site-nav link to '{expected_launcher_nav}'",
+    )
+
+    substack_url = "https://opengamestack.substack.com/"
+    footer_substack_links = [
+        (line, rel)
+        for line, href, target, rel, classes in inspector.links
+        if "site-footer-link" in classes and href == substack_url
+    ]
+    results.expect(
+        len(footer_substack_links) >= 1,
+        f"{rel_name}: Missing expected .site-footer-links link to '{substack_url}'",
+    )
+    for line, rel in footer_substack_links:
+        rel_tokens = set((rel or "").lower().split())
+        results.expect(
+            {"noopener", "noreferrer"}.issubset(rel_tokens),
+            f"{rel_name}:{line}: Substack footer link must include rel='noopener noreferrer'",
+        )
+
+    results.expect(
+        "Dual-use technology for open simulation." not in content,
+        f"{rel_name}: Obsolete footer tagline 'Dual-use technology for open simulation.' found",
+    )
+    results.expect(
+        "Open-source tools and reproducible workflows for game creators." in content,
+        f"{rel_name}: Missing updated footer tagline 'Open-source tools and reproducible workflows for game creators.'",
+    )
+
+    # 8. Landing page checks (v0.2.0 links, manifest naming, Godot version)
     if rel_name == "index.html":
         expected_v020_download = (
             "https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip"
@@ -527,7 +570,55 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                 f"mission/index.html: Missing expected section anchor id '{anchor_id}'",
             )
 
-    # 8. Tool catalog static fallback parity and structure
+            has_index_link = any(
+                href == f"#{anchor_id}" for _, href, _, _, _ in inspector.links
+            )
+            results.expect(
+                has_index_link,
+                f"mission/index.html: Missing .section-index link to '#{anchor_id}'",
+            )
+        results.expect(
+            "indie" in content.lower() or "studios" in content.lower(),
+            "mission/index.html: Missing indie/studio reframing in mission prose",
+        )
+
+    if rel_name == "examples/index.html":
+        results.expect(
+            inspector.title_text == "Examples | Open Game Stack",
+            f"examples/index.html: Expected title 'Examples | Open Game Stack', found '{inspector.title_text}'",
+        )
+        results.expect(
+            "class=\"grid\"" in content or "class='grid'" in content,
+            "examples/index.html: Missing structured .grid container for project examples",
+        )
+        results.expect(
+            "Sudoku" in content,
+            "examples/index.html: Missing 'Sudoku' reference project card",
+        )
+        results.expect(
+            "Letter Logic" in content,
+            "examples/index.html: Missing 'Letter Logic' reference project card",
+        )
+        for tool_name in ["Godot", "Git", "Krita"]:
+            results.expect(
+                tool_name in content,
+                f"examples/index.html: Missing tool stack badge reference '{tool_name}'",
+            )
+        for required_example_link in [
+            "https://github.com/OpenGameStack/sudoku",
+            "https://audrain.games/sudoku",
+            "https://github.com/OpenGameStack/letter-logic",
+            "https://audrain.games/letter-logic",
+        ]:
+            has_link = any(
+                href == required_example_link for _, href, _, _, _ in inspector.links
+            )
+            results.expect(
+                has_link,
+                f"examples/index.html: Missing expected reference project link '{required_example_link}'",
+            )
+
+    # 9. Tool catalog static fallback parity and structure
     if rel_name == "tools/index.html":
         results.expect(
             inspector.has_catalog_container,
