@@ -1,0 +1,1009 @@
+{
+  "schema_version": 1,
+  "categories": [
+    {
+      "id": "engine",
+      "name": "Engine",
+      "description": "Game engines and runtime frameworks for scene authoring, logic scripting, physics, and multiplatform builds.",
+      "accent_token": "--accent-engine"
+    },
+    {
+      "id": "2d",
+      "name": "2D",
+      "description": "Raster painting, pixel art, vector illustration, and sprite creation tools for game art production.",
+      "accent_token": "--accent-2d"
+    },
+    {
+      "id": "3d",
+      "name": "3D",
+      "description": "Polygon modeling, procedural texturing, UV unwrapping, and animation pipelines for real-time 3D assets.",
+      "accent_token": "--accent-3d"
+    },
+    {
+      "id": "audio",
+      "name": "Audio",
+      "description": "Digital audio workstations, waveform editors, and procedural sound effect generators for game soundscapes.",
+      "accent_token": "--accent-audio"
+    },
+    {
+      "id": "level-design",
+      "name": "Level Design",
+      "description": "Tilemap editors, brush-based level authoring, and environmental layout tools designed for level pipelines.",
+      "accent_token": "--accent-level"
+    },
+    {
+      "id": "code",
+      "name": "Code",
+      "description": "Version control utilities, telemetry-free code editors, and scripting environments for reproducible software workflows.",
+      "accent_token": "--accent-code"
+    }
+  ],
+  "tools": [
+    {
+      "id": "godot",
+      "name": "Godot Engine",
+      "tier": "frozen",
+      "category": "Engine",
+      "tagline": "Lightweight, node-based 2D and 3D open-source game engine.",
+      "summary": "Godot Engine is a versatile open-source game engine featuring a dedicated 2D pipeline, modern Vulkan-powered 3D renderer, and an intuitive scene and node hierarchy. It supports GDScript, C#, and C++ via GDExtension, with zero licensing fees or revenue shares.",
+      "replaces": [
+        "Unity",
+        "Unreal Engine"
+      ],
+      "strengths": [
+        "Node and scene hierarchy architecture",
+        "Fast iteration with zero compilation overhead in GDScript",
+        "Vulkan, D3D12, and OpenGL rendering backends",
+        "Self-contained lightweight executable under 100MB"
+      ],
+      "license": "MIT",
+      "website_url": "https://godotengine.org/",
+      "repo_url": "https://github.com/godotengine/godot",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/Godot.png",
+      "versions": [
+        {
+          "version": "4.7.2",
+          "category": "Engine",
+          "info_url": "https://godotengine.org/releases/4.7/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/godot-4.7.2-win64.zip",
+          "sha256": "731980f9608d61333e5baf54a2ef17210acc7a538446c0cb9969f002aca1e953",
+          "size_bytes": 86013866,
+          "executable_path": "Godot_v4.7.2-stable_win64.exe"
+        },
+        {
+          "version": "4.3",
+          "category": "Engine",
+          "info_url": "https://godotengine.org/releases/4.3/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/godot-4.3-win64.zip",
+          "sha256": "8f2c75b734bd956027ae3ca92c41f78b5d5a255dacc0f20e4e3c523c545ad410",
+          "size_bytes": 57381972,
+          "executable_path": "Godot_v4.3-stable_win64.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "Godot Documentation",
+          "url": "https://docs.godotengine.org/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Godot Asset Library",
+          "url": "https://godotengine.org/asset-library/",
+          "type": "Assets"
+        },
+        {
+          "title": "Godot Community Forum",
+          "url": "https://forum.godotengine.org/",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "blender",
+      "name": "Blender",
+      "tier": "frozen",
+      "category": "3D",
+      "tagline": "Comprehensive 3D modeling, sculpting, rigging, animation, and rendering suite.",
+      "summary": "Blender is the industry-standard open-source 3D production pipeline tool. It provides end-to-end tooling for polygonal modeling, sculpting, UV unwrapping, skeletal rigging, keyframe animation, procedural shader creation, and glTF/FBX export for real-time game engines.",
+      "replaces": [
+        "Autodesk Maya",
+        "Autodesk 3ds Max",
+        "Cinema 4D"
+      ],
+      "strengths": [
+        "Full production pipeline from box modeling to rigging and animation",
+        "Real-time viewport rendering with EEVEE Next and Cycles",
+        "Extensive Python scripting API and glTF 2.0 exporter",
+        "Non-destructive modifier stack and geometry nodes"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://www.blender.org/",
+      "repo_url": "https://projects.blender.org/blender/blender",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/Blender.png",
+      "versions": [
+        {
+          "version": "5.2",
+          "category": "3D",
+          "info_url": "https://www.blender.org/download/releases/5-2/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/blender-5.2-win64.zip",
+          "sha256": "65ca6cd3c6f4243d9cd7f72b0c86175c170565aeb01109ccda8d19a25f91e994",
+          "size_bytes": 412444596,
+          "executable_path": "blender.exe"
+        },
+        {
+          "version": "4.5.7",
+          "category": "3D",
+          "info_url": "https://www.blender.org/download/releases/4-5/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/blender-4.5.7-win64.zip",
+          "sha256": "2311800b9761de4ee1af9ad0c5924b9d5e0fb2dba6c975649e4852612d8a6a40",
+          "size_bytes": 398894622,
+          "executable_path": "blender.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "Blender Manual",
+          "url": "https://docs.blender.org/manual/en/latest/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Blender Studio Tutorials",
+          "url": "https://studio.blender.org/training/",
+          "type": "Tutorials"
+        },
+        {
+          "title": "Blender Artists Community",
+          "url": "https://blenderartists.org/",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "krita",
+      "name": "Krita",
+      "tier": "frozen",
+      "category": "2D",
+      "tagline": "Professional digital painting studio for concept art, textures, and 2D animation.",
+      "summary": "Krita is an open-source painting program designed for illustrators, concept artists, and texture painters. It features sophisticated brush engines, wrap-around seamless texture mode, layer masks, color management, and frame-by-frame 2D animation tools.",
+      "replaces": [
+        "Adobe Photoshop",
+        "Corel Painter",
+        "Clip Studio Paint"
+      ],
+      "strengths": [
+        "Advanced brush engines with stabilizer and color smudge",
+        "Wrap-around tiling mode (W key) for seamless texture authoring",
+        "Non-destructive layer management, filters, and clipping masks",
+        "Integrated frame-by-frame raster animation timeline"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://krita.org/",
+      "repo_url": "https://invent.kde.org/graphics/krita",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/Krita.png",
+      "versions": [
+        {
+          "version": "5.3.3",
+          "category": "2D",
+          "info_url": "https://krita.org/en/posts/2026/krita-5.3.3-released/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/krita-5.3.3-win64.zip",
+          "sha256": "06bc1a8c0e4338122e37ee1d8557e4c5f8f3cd03d52abe2c759a0a8aac4fbc05",
+          "size_bytes": 234071589,
+          "executable_path": "bin/krita.exe"
+        },
+        {
+          "version": "5.2.15",
+          "category": "2D",
+          "info_url": "https://krita.org/en/posts/2026/krita-5.2.15-released/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/krita-5.2.15-win64.zip",
+          "sha256": "b8e61077efffaaaaf0a5cb322a514643d0e1cfe22bcb8a374e421874b4a887ef",
+          "size_bytes": 220183204,
+          "executable_path": "bin/krita.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "Krita Manual",
+          "url": "https://docs.krita.org/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Krita Artists Forum",
+          "url": "https://krita-artists.org/",
+          "type": "Community"
+        },
+        {
+          "title": "Krita Learn Tutorials",
+          "url": "https://krita.org/en/learn/tutorials/",
+          "type": "Tutorials"
+        }
+      ]
+    },
+    {
+      "id": "gimp",
+      "name": "GIMP",
+      "tier": "frozen",
+      "category": "2D",
+      "tagline": "Extensible raster image editor for photo retouching, texturing, and asset batching.",
+      "summary": "GIMP (GNU Image Manipulation Program) provides raster editing, asset cleanup, texture channel manipulation, and format conversion. Equipped with GEGL high-bit-depth color processing and Python scripting, it serves as a workhorse for asset preparation.",
+      "replaces": [
+        "Adobe Photoshop"
+      ],
+      "strengths": [
+        "High bit-depth image processing powered by GEGL",
+        "Extensive channel, mask, and selection toolsets",
+        "Comprehensive file format support including TGA, DDS, and OpenEXR",
+        "Batch automation via Python and Script-Fu"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://www.gimp.org/",
+      "repo_url": "https://gitlab.gnome.org/GNOME/gimp",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/GIMP.png",
+      "versions": [
+        {
+          "version": "3.2.4",
+          "category": "2D",
+          "info_url": "https://www.gimp.org/news/2026/04/19/gimp-3.2.4-released/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/gimp-3.2.4-win64.zip",
+          "sha256": "1e5ace65d0c853955dc806c75fef1ca9db77c23067cfa515a9ad5b32053d021b",
+          "size_bytes": 204646944,
+          "executable_path": "bin/gimp.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "GIMP Documentation",
+          "url": "https://www.gimp.org/docs/",
+          "type": "Documentation"
+        },
+        {
+          "title": "GIMP Tutorials",
+          "url": "https://www.gimp.org/tutorials/",
+          "type": "Tutorials"
+        },
+        {
+          "title": "GEGL Documentation",
+          "url": "https://gegl.org/",
+          "type": "Documentation"
+        }
+      ]
+    },
+    {
+      "id": "audacity",
+      "name": "Audacity",
+      "tier": "frozen",
+      "category": "Audio",
+      "tagline": "Fast, multitrack audio editor and recording tool for dialogue, foley, and sound effects.",
+      "summary": "Audacity is an accessible multitrack audio editor for recording live dialogue, trimming and normalizing sound effects, removing background noise, and exporting game-ready audio assets in OGG, WAV, and MP3 formats.",
+      "replaces": [
+        "Adobe Audition",
+        "Sound Forge"
+      ],
+      "strengths": [
+        "Rapid multitrack waveform editing and clip trimming",
+        "Spectral frequency analysis and surgical noise reduction",
+        "Loudness normalization (LUFS) for broadcast and game audio standards",
+        "Native VST3, LV2, and LADSPA plugin support"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://www.audacityteam.org/",
+      "repo_url": "https://github.com/audacity/audacity",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/Audacity.png",
+      "versions": [
+        {
+          "version": "3.7.8",
+          "category": "Audio",
+          "info_url": "https://www.audacityteam.org/blog/audacity-3-7/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/audacity-3.7.8-win64.zip",
+          "sha256": "824b4cacdf28ebca0a886c24e156012a90f9a3f83c5987f27fc47f1cbd6440d3",
+          "size_bytes": 30836483,
+          "executable_path": "audacity.exe"
+        },
+        {
+          "version": "3.7.7",
+          "category": "Audio",
+          "info_url": "https://www.audacityteam.org/blog/audacity-3-7/",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/audacity-3.7.7-win64.zip",
+          "sha256": "42ccf8eb07117a428f12fe3d5bee49effe64c19727936a5c6dfccff90b3af02d",
+          "size_bytes": 28840346,
+          "executable_path": "audacity.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "Audacity Manual",
+          "url": "https://manual.audacityteam.org/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Audacity Support Forum",
+          "url": "https://forum.audacityteam.org/",
+          "type": "Community"
+        },
+        {
+          "title": "Audacity Tutorials",
+          "url": "https://support.audacityteam.org/tutorials",
+          "type": "Tutorials"
+        }
+      ]
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "tier": "frozen",
+      "category": "Code",
+      "tagline": "Industry-standard distributed version control system for tracking project history.",
+      "summary": "Git tracks revision history for game source code, scripts, configuration files, and project assets. It enables branching strategies, collaborative developer merges, and atomic commit histories for indie studios and open-source contributors.",
+      "replaces": [
+        "Perforce Helix Core",
+        "Plastic SCM",
+        "Subversion"
+      ],
+      "strengths": [
+        "Decentralized branching, merging, and revision tracking",
+        "Cryptographically secured commit tree verification",
+        "Universal interoperability across GitHub, GitLab, and local remotes",
+        "Large file support via Git LFS"
+      ],
+      "license": "GPL-2.0",
+      "website_url": "https://git-scm.com/",
+      "repo_url": "https://github.com/git/git",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/Git.png",
+      "versions": [
+        {
+          "version": "2.56.0.4",
+          "category": "Code",
+          "info_url": "https://github.com/git-for-windows/git/releases/tag/v2.56.0.windows.4",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/git-2.56.0.4-win64.zip",
+          "sha256": "359d6c99ff158e510f15c9378d740cbd4a2723695206f45a86c8adc596a35531",
+          "size_bytes": 156695669,
+          "executable_path": "git-bash.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "Pro Git Book",
+          "url": "https://git-scm.com/book/en/v2",
+          "type": "Documentation"
+        },
+        {
+          "title": "Git Reference Manual",
+          "url": "https://git-scm.com/docs",
+          "type": "Documentation"
+        },
+        {
+          "title": "Git for Windows Releases",
+          "url": "https://github.com/git-for-windows/git/releases",
+          "type": "Releases"
+        }
+      ]
+    },
+    {
+      "id": "vscodium",
+      "name": "VSCodium",
+      "tier": "frozen",
+      "category": "Code",
+      "tagline": "Free/Libre Open Source Software binaries of VS Code with telemetry completely disabled.",
+      "summary": "VSCodium is a community-driven, telemetry-free binary distribution of Microsoft's VS Code editor. It provides a lightweight code editor with rich extension marketplace support for GDScript, C#, Python, shaders, and JSON configurations.",
+      "replaces": [
+        "Microsoft Visual Studio Code",
+        "Sublime Text"
+      ],
+      "strengths": [
+        "Zero telemetry, tracking pixels, or diagnostic profiling by default",
+        "Seamless language support for GDScript, C#, C++, Rust, and Shaders",
+        "Built-in Git diff inspection and integrated terminal",
+        "Vast Open VSX extension registry ecosystem"
+      ],
+      "license": "MIT",
+      "website_url": "https://vscodium.com/",
+      "repo_url": "https://github.com/VSCodium/vscodium",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": "assets/images/VSCodium.png",
+      "versions": [
+        {
+          "version": "1.143.17232",
+          "category": "Code",
+          "info_url": "https://github.com/VSCodium/vscodium/releases/tag/1.143.17232",
+          "archive_url": "https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/vscodium-1.143.17232-win64.zip",
+          "sha256": "a1090868af8ac0ac04c22d79fdd02246fa115a78daf38a741d8db06df1753c1d",
+          "size_bytes": 231406156,
+          "executable_path": "VSCodium.exe"
+        }
+      ],
+      "resources": [
+        {
+          "title": "VSCodium Documentation",
+          "url": "https://vscodium.com/#install",
+          "type": "Documentation"
+        },
+        {
+          "title": "Open VSX Extension Registry",
+          "url": "https://open-vsx.org/",
+          "type": "Extensions"
+        },
+        {
+          "title": "Godot Tools Extension",
+          "url": "https://open-vsx.org/extension/geequlim/godot-tools",
+          "type": "Extension"
+        }
+      ]
+    },
+    {
+      "id": "pixelorama",
+      "name": "Pixelorama",
+      "tier": "radar",
+      "category": "2D",
+      "tagline": "Free and open-source pixel art editor and animation suite built with Godot.",
+      "summary": "Pixelorama is an open-source 2D sprite editor and pixel art animation tool built with the Godot Engine. It provides onion skinning, layer management, animation timelines, custom brushes, and sprite sheet export tailored for indie game developers.",
+      "replaces": [
+        "Aseprite",
+        "Pyxel Edit"
+      ],
+      "strengths": [
+        "Built directly on Godot with seamless cross-platform performance",
+        "Animation timeline with onion skinning and cel management",
+        "Sprite sheet packing and animated GIF/PNG export",
+        "Custom brushes, palettes, and pixel grid alignment"
+      ],
+      "license": "MIT",
+      "website_url": "https://orama-interactive.itch.io/pixelorama",
+      "repo_url": "https://github.com/Orama-Interactive/Pixelorama",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "Web"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "Pixelorama Documentation",
+          "url": "https://orama-interactive.github.io/Pixelorama-Docs/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Pixelorama GitHub Releases",
+          "url": "https://github.com/Orama-Interactive/Pixelorama/releases",
+          "type": "Releases"
+        },
+        {
+          "title": "Orama Interactive Discord",
+          "url": "https://discord.gg/GTMtr8s",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "libresprite",
+      "name": "LibreSprite",
+      "tier": "radar",
+      "category": "2D",
+      "tagline": "Community-driven open-source fork of Aseprite for animated sprites and pixel graphics.",
+      "summary": "LibreSprite is a community-maintained, free and open-source fork of the last GPLv2 release of Aseprite. It provides retro sprite drawing tools, frame management, indexed color palettes, and animation playback for 2D game pipelines.",
+      "replaces": [
+        "Aseprite"
+      ],
+      "strengths": [
+        "Familiar pixel art UI and classic keyboard shortcuts",
+        "Timeline view with layer grouping and tag markers",
+        "Color palette indexing with shade generator and color curves",
+        "Zero proprietary licensing restrictions"
+      ],
+      "license": "GPL-2.0",
+      "website_url": "https://libresprite.github.io/",
+      "repo_url": "https://github.com/LibreSprite/LibreSprite",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "LibreSprite Official Site",
+          "url": "https://libresprite.github.io/",
+          "type": "Documentation"
+        },
+        {
+          "title": "LibreSprite GitHub Releases",
+          "url": "https://github.com/LibreSprite/LibreSprite/releases",
+          "type": "Releases"
+        },
+        {
+          "title": "LibreSprite Community Discord",
+          "url": "https://discord.gg/57vUHEK",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "inkscape",
+      "name": "Inkscape",
+      "tier": "radar",
+      "category": "2D",
+      "tagline": "Vector graphics editor for scalable game UI, icons, logos, and vector illustrations.",
+      "summary": "Inkscape is a vector design application utilizing standard SVG as its native format. It excels at authoring scalable user interface elements, heads-up display graphics, font glyphs, and resolution-independent vector illustrations for game titles.",
+      "replaces": [
+        "Adobe Illustrator",
+        "CorelDRAW",
+        "Affinity Designer"
+      ],
+      "strengths": [
+        "Native W3C SVG file format support for zero-loss scaling",
+        "Powerful Bezier path editing, boolean operations, and node sculpting",
+        "Flexible UI design tools with grid and guide snapping",
+        "Batch PNG and SVG slice exporting for game UI assets"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://inkscape.org/",
+      "repo_url": "https://gitlab.com/inkscape/inkscape",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "Inkscape Manual",
+          "url": "https://inkscape.org/doc/tutorials/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Inkscape Forums",
+          "url": "https://inkscape.org/forums/",
+          "type": "Community"
+        },
+        {
+          "title": "Inkscape Extensions Gallery",
+          "url": "https://inkscape.org/gallery/=extension/",
+          "type": "Extensions"
+        }
+      ]
+    },
+    {
+      "id": "ldtk",
+      "name": "LDtk",
+      "tier": "radar",
+      "category": "Level Design",
+      "tagline": "Modern, intuitive 2D level editor designed with an emphasis on user experience.",
+      "summary": "LDtk (Level Designer Toolkit) is a modern 2D level editor created by Sebastien Benard, lead designer of Dead Cells. Built specifically for indie game developers, it features auto-layer tiling rules, entity definition schemas, multi-world layouts, and native Godot importer plugins.",
+      "replaces": [
+        "Proprietary Level Editors",
+        "Tiled"
+      ],
+      "strengths": [
+        "Intelligent rule-based auto-tiling that updates adjacent tiles dynamically",
+        "First-class Godot importer plugin and JSON schema export",
+        "Multi-room world maps with seamless level linking and visual hierarchy",
+        "Built-in entity definition editor with custom properties and color tagging"
+      ],
+      "license": "MIT",
+      "website_url": "https://ldtk.io/",
+      "repo_url": "https://github.com/deepnight/ldtk",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "LDtk Official Documentation",
+          "url": "https://ldtk.io/docs/",
+          "type": "Documentation"
+        },
+        {
+          "title": "LDtk GitHub Repository",
+          "url": "https://github.com/deepnight/ldtk",
+          "type": "Source Code"
+        },
+        {
+          "title": "LDtk Godot Importer Plugin",
+          "url": "https://github.com/deepnight/ldtk-godot",
+          "type": "Integrations"
+        }
+      ]
+    },
+    {
+      "id": "tiled",
+      "name": "Tiled",
+      "tier": "radar",
+      "category": "Level Design",
+      "tagline": "Flexible and battle-tested 2D tile map editor supporting orthogonal, isometric, and hexagonal maps.",
+      "summary": "Tiled is the industry-standard general-purpose 2D tile map editor with over a decade of production use across commercial and indie hits. It supports orthogonal, isometric, and hexagonal grids, terrain brushes, object layers, and custom collision polygon markup.",
+      "replaces": [
+        "Commercial Map Editors"
+      ],
+      "strengths": [
+        "Supports orthogonal, isometric, staggered, and hexagonal map projections",
+        "Object layers with custom polygon colliders and metadata properties",
+        "Terrain stamping tools and automated rule-based Wang tiles",
+        "Extensible through JavaScript scripting and custom export formats"
+      ],
+      "license": "GPL-2.0",
+      "website_url": "https://www.mapeditor.org/",
+      "repo_url": "https://github.com/mapeditor/tiled",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "Tiled User Manual",
+          "url": "https://doc.mapeditor.org/en/stable/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Tiled Community Forum",
+          "url": "https://discourse.mapeditor.org/",
+          "type": "Community"
+        },
+        {
+          "title": "Tiled GitHub Releases",
+          "url": "https://github.com/mapeditor/tiled/releases",
+          "type": "Releases"
+        }
+      ]
+    },
+    {
+      "id": "trenchbroom",
+      "name": "TrenchBroom",
+      "tier": "radar",
+      "category": "Level Design",
+      "tagline": "Cross-platform brush-based level editor for Quake-engine games and modern retro 3D shooters.",
+      "summary": "TrenchBroom is a modern, responsive 3D level editor tailored for retro shooters and boomer shooters. Using brush-based CSG geometry and entity definition files, it integrates directly with Godot via the Qodot and func_godot plugins for rapid 3D level prototyping.",
+      "replaces": [
+        "Valve Hammer Editor",
+        "Radiant",
+        "Worldcraft"
+      ],
+      "strengths": [
+        "Intuitive 3D viewport navigation and rapid brush vertex manipulation",
+        "Native integration with Godot via the func_godot pipeline",
+        "Texture alignment, projection, and UV manipulation tools in 3D space",
+        "Entity definition support with full attribute and trigger visualization"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://trenchbroom.github.io/",
+      "repo_url": "https://github.com/TrenchBroom/TrenchBroom",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "TrenchBroom Manual",
+          "url": "https://trenchbroom.github.io/manual/latest/",
+          "type": "Documentation"
+        },
+        {
+          "title": "func_godot Documentation",
+          "url": "https://func-godot.github.io/",
+          "type": "Integrations"
+        },
+        {
+          "title": "TrenchBroom Discord",
+          "url": "https://discord.gg/gXqZqXh",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "material-maker",
+      "name": "Material Maker",
+      "tier": "radar",
+      "category": "3D",
+      "tagline": "Procedural PBR texture authoring and 3D painting tool powered by the Godot Engine.",
+      "summary": "Material Maker is a node-based procedural texture generation and 3D model painting tool built on Godot. It enables technical artists to design seamless PBR materials using procedural noises, patterns, and filters, exporting maps directly for real-time game engines.",
+      "replaces": [
+        "Adobe Substance 3D Designer"
+      ],
+      "strengths": [
+        "Node-based procedural workflow with over 150 built-in math and pattern nodes",
+        "Real-time PBR material preview with customizable lighting environments",
+        "Direct export of Albedo, Normal, Roughness, Metallic, and Ambient Occlusion maps",
+        "Built on Godot with complete GLSL shader generation"
+      ],
+      "license": "MIT",
+      "website_url": "https://www.materialmaker.org/",
+      "repo_url": "https://github.com/RodZill4/material-maker",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "Material Maker Documentation",
+          "url": "https://www.materialmaker.org/doc/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Material Maker Online Gallery",
+          "url": "https://www.materialmaker.org/materials",
+          "type": "Materials"
+        },
+        {
+          "title": "Material Maker Discord",
+          "url": "https://discord.gg/PEU2Tg5",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "blockbench",
+      "name": "Blockbench",
+      "tier": "radar",
+      "category": "3D",
+      "tagline": "Boxy, low-poly 3D modeling and animation editor designed for stylized game assets.",
+      "summary": "Blockbench is a 3D modeling software specializing in low-poly, pixel-art textured, and voxel-inspired game assets. It features integrated texture painting, skeletal inverse kinematics animation, and clean glTF export for Godot and indie game engines.",
+      "replaces": [
+        "Cubik Studio",
+        "MagicaVoxel",
+        "Cinema 4D"
+      ],
+      "strengths": [
+        "Pixel-perfect texture painting directly on 3D geometry",
+        "Keyframe and inverse kinematics skeletal animation timeline",
+        "Low-poly and box-model optimization designed for fast real-time performance",
+        "Native glTF and OBJ export with embedded animations"
+      ],
+      "license": "GPL-3.0",
+      "website_url": "https://www.blockbench.net/",
+      "repo_url": "https://github.com/JannisX11/blockbench",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "Web"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "Blockbench Wiki",
+          "url": "https://www.blockbench.net/wiki/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Blockbench Discord Community",
+          "url": "https://discord.gg/blockbench",
+          "type": "Community"
+        },
+        {
+          "title": "Blockbench Plugin Repository",
+          "url": "https://www.blockbench.net/plugins",
+          "type": "Plugins"
+        }
+      ]
+    },
+    {
+      "id": "armorpaint",
+      "name": "ArmorPaint",
+      "tier": "radar",
+      "category": "3D",
+      "tagline": "Stand-alone 3D PBR texture painting software designed for real-time asset pipelines.",
+      "summary": "ArmorPaint is a standalone 3D texture painting application. It allows game artists to paint PBR materials directly onto 3D models with GPU acceleration, ray-tracing support, and node-based material authoring, exporting ready-to-use textures for game engines.",
+      "replaces": [
+        "Adobe Substance 3D Painter",
+        "Mari"
+      ],
+      "strengths": [
+        "Hardware-accelerated viewport painting running on the Armory3D engine",
+        "Node-based material layer brush pipeline",
+        "Seamless baking of curvature, normal, ambient occlusion, and height maps",
+        "Multiplatform performance on desktop and mobile GPUs"
+      ],
+      "license": "Zlib",
+      "website_url": "https://armorpaint.org/",
+      "repo_url": "https://github.com/armory3d/armorpaint",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "ArmorPaint Manual",
+          "url": "https://armorpaint.org/manual/",
+          "type": "Documentation"
+        },
+        {
+          "title": "ArmorPaint Community Forum",
+          "url": "https://forums.armory3d.org/c/armorpaint",
+          "type": "Community"
+        },
+        {
+          "title": "Armory3D GitHub",
+          "url": "https://github.com/armory3d/armory",
+          "type": "Source Code"
+        }
+      ]
+    },
+    {
+      "id": "lmms",
+      "name": "LMMS",
+      "tier": "radar",
+      "category": "Audio",
+      "tagline": "Cross-platform digital audio workstation for composing, sequencing, and synthesizing game soundtracks.",
+      "summary": "LMMS is an open-source digital audio workstation for creating music and game soundtracks. It includes synthesizer plugins, beat and bassline sequencers, piano roll editing, automation tracks, and VST instrument support for indie game musicians.",
+      "replaces": [
+        "FL Studio",
+        "Ableton Live"
+      ],
+      "strengths": [
+        "Beat and bassline step sequencer alongside a flexible piano roll",
+        "Built-in synths including ZynAddSubFX, TripleOscillator, and SID chiptune emulation",
+        "Automation editor for expressive dynamic parameter control",
+        "VST, SoundFont, and LADSPA plugin compatibility"
+      ],
+      "license": "GPL-2.0",
+      "website_url": "https://lmms.io/",
+      "repo_url": "https://github.com/LMMS/lmms",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "LMMS User Manual",
+          "url": "https://lmms.io/documentation/",
+          "type": "Documentation"
+        },
+        {
+          "title": "LMMS Community Sharing Platform",
+          "url": "https://lmms.io/lsp/",
+          "type": "Community"
+        },
+        {
+          "title": "LMMS Discord Server",
+          "url": "https://discord.gg/5HQ5u6D",
+          "type": "Community"
+        }
+      ]
+    },
+    {
+      "id": "ardour",
+      "name": "Ardour",
+      "tier": "radar",
+      "category": "Audio",
+      "tagline": "Professional multitrack recording and digital audio workstation for audio engineers.",
+      "summary": "Ardour is a professional-grade digital audio workstation designed for audio recording, multi-channel mixing, and mastering. It offers sample-accurate editing, flexible routing topologies, surround sound panning, and video timeline synchronization for game scoring.",
+      "replaces": [
+        "Pro Tools",
+        "Logic Pro",
+        "Reaper"
+      ],
+      "strengths": [
+        "Unlimited audio and MIDI tracks with sample-accurate editing",
+        "Comprehensive non-destructive mixing console with flexible bus routing",
+        "Synchronized video playback timeline for scoring game cinematics",
+        "Full VST3, LV2, and AU plugin hosting support"
+      ],
+      "license": "GPL-2.0",
+      "website_url": "https://ardour.org/",
+      "repo_url": "https://github.com/Ardour/ardour",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "Ardour Reference Manual",
+          "url": "https://manual.ardour.org/",
+          "type": "Documentation"
+        },
+        {
+          "title": "Ardour Community Forums",
+          "url": "https://discourse.ardour.org/",
+          "type": "Community"
+        },
+        {
+          "title": "Ardour Quick Start Guide",
+          "url": "https://ardour.org/tutorials.html",
+          "type": "Tutorials"
+        }
+      ]
+    },
+    {
+      "id": "sfxr",
+      "name": "sfxr / jsfxr",
+      "tier": "radar",
+      "category": "Audio",
+      "tagline": "Instant retro 8-bit sound effects generator for arcade games and game jams.",
+      "summary": "sfxr (and its web counterpart jsfxr) is a procedural 8-bit sound synthesizer created by Tomas Pettersson for rapid sound design. It generates pickups, explosions, laser shots, and jump effects with one-click randomization and waveform export.",
+      "replaces": [
+        "Commercial SFX Generators"
+      ],
+      "strengths": [
+        "One-click algorithmic sound generation for pickups, explosions, and jumps",
+        "Parametric waveform synthesis with frequency slides and duty cycle modulation",
+        "Instant WAV export optimized for low-latency game playback",
+        "Lightweight, zero-install instant workflow"
+      ],
+      "license": "MIT",
+      "website_url": "https://sfxr.me/",
+      "repo_url": "https://github.com/chr15m/jsfxr",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "Web"
+      ],
+      "image": null,
+      "versions": [],
+      "resources": [
+        {
+          "title": "jsfxr Web Interface",
+          "url": "https://sfxr.me/",
+          "type": "Tool"
+        },
+        {
+          "title": "Original DrPetter sfxr Site",
+          "url": "https://www.drpetter.se/project_sfxr.html",
+          "type": "Documentation"
+        },
+        {
+          "title": "jsfxr GitHub Repository",
+          "url": "https://github.com/chr15m/jsfxr",
+          "type": "Source Code"
+        }
+      ]
+    }
+  ]
+}
