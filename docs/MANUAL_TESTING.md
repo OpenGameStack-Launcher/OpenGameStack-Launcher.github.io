@@ -79,6 +79,12 @@ Open `http://127.0.0.1:8000` in your browser. When finished, stop the server (`C
   - `Play Online` button (`.btn btn-sm`) includes SVG play icon and opens the respective playable web demo (`https://audrain.games/sudoku`, `https://audrain.games/letter-logic`) in a new tab with `rel="noopener noreferrer"`.
 - [ ] **Responsive Grid Layout:** On desktop viewports, cards render in a 2-column grid; on mobile viewports (`<= 768px`), cards stack vertically with full-width button rows.
 
+### 6. Tool Metadata & Content Builder Verification (`content/tools.json` & `scripts/build_content.py`)
+- [ ] **CLI Schema & Upstream Parity Check:** Run `python scripts/build_content.py --check` in PowerShell. Confirm exit code `0` and success output: `[PASS] Tools metadata validation succeeded: 6 categories, 19 tools (7 frozen, 12 radar).`.
+- [ ] **Tier-1 Frozen Tools Schema Inspection:** Verify `content/tools.json` defines all 7 Tier-1 tools (`godot`, `gimp`, `krita`, `blender`, `audacity`, `git`, `vscodium`) with `tier: "frozen"`, non-empty version lists, positive `size_bytes`, 64-character hex `sha256` checksums, and secure `https://` archive and info URLs matching `ogs-frozen-stacks/repository.json`.
+- [ ] **Tier-2 Ecosystem Radar Tools Schema Inspection:** Verify `content/tools.json` defines all 12 Tier-2 tools (`pixelorama`, `libresprite`, `inkscape`, `ldtk`, `tiled`, `trenchbroom`, `material-maker`, `blockbench`, `armorpaint`, `lmms`, `ardour`, `sfxr`) with `tier: "radar"`, rich summaries, replacement targets, strengths, licenses, and verified `https://` website and source repository URLs.
+- [ ] **Curated Learning Resources Inspection:** Verify all tools include curated learning resource objects with non-empty `title`, `type` (`Documentation`, `Tutorial`, `Assets`, `Community`), and secure `https://` URLs.
+
 ---
 
 ## 3. Cross-Cutting Visual & Accessibility Checks

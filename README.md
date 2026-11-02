@@ -24,6 +24,8 @@ The site styling (`assets/css/site.css`) implements a Modern Game Studio and Edi
 * `mission/index.html`: The core philosophy, creator sovereignty, and "Declaration of Digital Sovereignty" (`/mission/`).
 * `tools/index.html`: The frozen tool catalog with category, tool id, version, and release links (`/tools/`).
 * `examples/index.html`: Living reference implementations and structured project showcase (Sudoku, Letter Logic) built with Open Game Stack (`/examples/`).
+* `content/tools.json`: Canonical structured metadata catalog for Tier-1 (Launcher frozen) and Tier-2 (Ecosystem Radar) tools.
+* `scripts/build_content.py`: Zero-dependency Python 3 content builder, metadata validator, and static HTML generator.
 * `assets/css/site.css`: Modern game studio dark UI, shared chrome, semantic category tokens, editorial typography, and responsive styles.
 * `tests/validate_site.py`: Zero-dependency static site validation suite.
 * `docs/`: Canonical workflow guides, testing procedures, and standards.
@@ -34,19 +36,36 @@ The site styling (`assets/css/site.css`) implements a Modern Game Studio and Edi
 ## 🚀 Local Development
 Because we do not use complex build tools (React, Vue, etc.), running this site locally is instant.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/OpenGameStack-Launcher/OpenGameStack-Launcher.github.io.git
-    ```
-2.  **Open the file:**
-    Simply double-click `index.html` or drag it into your browser.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/OpenGameStack-Launcher/OpenGameStack-Launcher.github.io.git
+   ```
+2. **Open the file:**
+   Simply double-click `index.html` or drag it into your browser. Alternatively, serve via Python:
+   ```powershell
+   python -m http.server 8000 --bind 127.0.0.1
+   ```
+
+### Automated Site Validation & Tool Metadata Checks
+
+Run the automated static site validation suite (zero dependencies, Python standard library only):
+
+```powershell
+python tests/validate_site.py
+```
+
+Validate canonical tool metadata schema integrity and parity against upstream frozen stacks:
+
+```powershell
+python scripts/build_content.py --check
+```
 
 ## 🤝 Contributing
 We welcome contributions to improve the messaging or design.
-1.  Fork the repository.
-2.  Create a feature branch (`git checkout -b feature/AmazingFeature`).
-3.  Commit your changes.
-4.  Open a Pull Request.
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes.
+4. Open a Pull Request.
 
 ## 📜 License
 This project is licensed under the **MIT License** (see the [LICENSE](LICENSE) file for details).

@@ -20,20 +20,33 @@ python tests/validate_site.py
 
 ### Expected Output
 ```text
-OGS Website Validation Summary: 793 checks run | tests passed: 793 | tests failed: 0
+OGS Website Validation Summary: 1214 checks run | tests passed: 1214 | tests failed: 0
 All static website validation checks passed.
 ```
 
 The script exits with code `0` when all checks pass and `1` if any check fails.
 
+### Running the Tool Metadata and Content Builder Check
+
+To validate canonical tool metadata in `content/tools.json` and verify schema integrity and parity against sibling `ogs-frozen-stacks/repository.json`:
+
+```powershell
+python scripts/build_content.py --check
+```
+
+### Expected Output
+```text
+[PASS] Tools metadata validation succeeded: 6 categories, 19 tools (7 frozen, 12 radar).
+```
+
 ---
 
 ## 3. Validation Coverage (`tests/validate_site.py`)
 
-`tests/validate_site.py` enforces the following categories of checks across all HTML and CSS files in the repository:
+`tests/validate_site.py` enforces the following categories of checks across all HTML, CSS, JSON, and script files in the repository:
 
 1. **Required Repository Files & Custom Domain (`CNAME`):**
-   - Verifies that `CNAME`, `index.html`, `launcher/index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
+   - Verifies that `CNAME`, `index.html`, `launcher/index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `content/tools.json`, `scripts/build_content.py`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
    - Verifies that all 7 tool PNG icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`) exist in `REQUIRED_FILES`.
    - Confirms that legacy `pages/` and `manifesto/` directories do not exist.
    - Confirms `CNAME` equals `opengamestack.org`.
@@ -94,8 +107,17 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
 12. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
     - Verifies required surface tokens (`--bg-dark`, `--bg-surface`, `--card-bg`, `--card-border`).
     - Verifies required semantic category accent properties (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
+    - Verifies required category accent alias variables (`--accent-engine`, `--accent-2d`, `--accent-3d`, `--accent-audio`, `--accent-level`, `--accent-code`).
     - Verifies required editorial typography, catalog filter, table, and callout classes (`.prose`, `.article-body`, `.catalog-filters`, `.filter-btn`, `.badge-tier-frozen`, `.badge-tier-radar`, `.spec-table`, `.version-table`, `.code-block`, `.code-header`, `.callout`).
     - Verifies project card and button utility classes (`.btn-sm`, `.project-card`, `.card-badges`, `.card-actions`).
+13. **Canonical Tool Metadata Schema Integrity & Zero-Dependency Builder Parity (`content/tools.json` & `scripts/build_content.py`):**
+    - Verifies JSON structure and schema validity of `content/tools.json`.
+    - Confirms existence and completeness of 6 canonical tool categories (`Engine`, `2D`, `3D`, `Audio`, `Level Design`, `Code`).
+    - Validates 7 Tier-1 Launcher frozen tools with exact version, archive, sha256 checksum, size, and executable path parity against upstream `ogs-frozen-stacks/repository.json`.
+    - Validates 12 Tier-2 Ecosystem Radar tools (`pixelorama`, `libresprite`, `inkscape`, `ldtk`, `tiled`, `trenchbroom`, `material-maker`, `blockbench`, `armorpaint`, `lmms`, `ardour`, `sfxr`).
+    - Confirms all required metadata fields (`id`, `name`, `tier`, `category`, `tagline`, `summary`, `replaces`, `strengths`, `license`, `website_url`, `repo_url`, `platforms`, `resources`) are non-empty across all 19 tools.
+    - Validates secure `https://` schemes across all website, repository, archive, info, and learning resource URLs.
+    - Integrates schema integrity verification via `scripts/build_content.py validate_tools_metadata()`.
 
 ---
 
