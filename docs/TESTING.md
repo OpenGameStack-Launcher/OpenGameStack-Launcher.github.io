@@ -20,7 +20,7 @@ python tests/validate_site.py
 
 ### Expected Output
 ```text
-OGS Website Validation Summary: <N> checks run | tests passed: <N> | tests failed: 0
+OGS Website Validation Summary: 571 checks run | tests passed: 571 | tests failed: 0
 All static website validation checks passed.
 ```
 
@@ -72,6 +72,10 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Verifies that `mission/index.html` title text equals `Mission | Open Game Stack`.
    - Verifies that `mission/index.html` preserves required section anchor IDs (`#sovereignty`, `#environment`, `#dual-use`, `#stability`).
    - Verifies that `index.html` includes the secondary CTA button with text `The Mission` pointing to `mission/`.
+9. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
+   - Verifies required surface tokens (`--bg-dark`, `--bg-surface`, `--card-bg`, `--card-border`).
+   - Verifies required semantic category accent properties (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
+   - Verifies required editorial typography, catalog filter, table, and callout classes (`.prose`, `.article-body`, `.catalog-filters`, `.filter-btn`, `.badge-tier-frozen`, `.badge-tier-radar`, `.spec-table`, `.version-table`, `.code-block`, `.code-header`, `.callout`).
 
 ---
 
