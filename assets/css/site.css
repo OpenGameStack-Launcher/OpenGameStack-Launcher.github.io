@@ -30,6 +30,13 @@
     --cat-audio: #a78bfa;    /* Violet */
     --cat-level: #f472b6;    /* Rose */
     --cat-code: #60a5fa;     /* Blue */
+
+    --accent-engine: var(--cat-engine);
+    --accent-2d: var(--cat-2d);
+    --accent-3d: var(--cat-3d);
+    --accent-audio: var(--cat-audio);
+    --accent-level: var(--cat-level);
+    --accent-code: var(--cat-code);
 }
 
 /* --- RESET & BASICS --- */

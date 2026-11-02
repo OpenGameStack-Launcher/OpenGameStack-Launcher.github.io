@@ -13,6 +13,7 @@ Checks:
 8. Game studio dark CSS tokens (category accents, surface tokens) and editorial/catalog classes in site.css.
 9. Dedicated /launcher/ page checks and hub navigation consistency.
 10. Sitewide Launcher navigation, Substack footer links, and reframed Mission/Examples pages.
+11. Canonical tool metadata schema integrity and zero-dependency builder parity.
 """
 
 from __future__ import annotations
@@ -34,6 +35,8 @@ REQUIRED_FILES = [
     "mission/index.html",
     "tools/index.html",
     "examples/index.html",
+    "content/tools.json",
+    "scripts/build_content.py",
     "assets/css/site.css",
     "assets/fonts/fonts-local.css",
     "favicon.png",
@@ -787,10 +790,164 @@ def validate_css_file(css_path: Path, results: TestResults) -> None:
             )
 
 
+def validate_tools_metadata_and_builder(results: TestResults) -> None:
+    tools_json_path = REPO_ROOT / "content" / "tools.json"
+    results.expect(tools_json_path.is_file(), "content/tools.json file must exist")
+    if not tools_json_path.is_file():
+        return
+
+    # 1. Parse JSON
+    try:
+        data = json.loads(tools_json_path.read_text(encoding="utf-8"))
+        results.expect(isinstance(data, dict), "content/tools.json root must be a JSON object")
+    except Exception as exc:
+        results.expect(False, f"content/tools.json failed to parse as valid JSON: {exc}")
+        return
+
+    # 2. Category checks
+    categories = data.get("categories", [])
+    results.expect(isinstance(categories, list), "content/tools.json 'categories' must be an array")
+    expected_categories = {"Engine", "2D", "3D", "Audio", "Level Design", "Code"}
+    found_categories = {c.get("name") for c in categories if isinstance(c, dict)}
+    results.expect(
+        expected_categories.issubset(found_categories),
+        f"content/tools.json missing required categories. Expected {sorted(expected_categories)}, found {sorted(found_categories)}",
+    )
+    for cat in categories:
+        if isinstance(cat, dict):
+            for field in ("id", "name", "description", "accent_token"):
+                results.expect(
+                    bool(cat.get(field)),
+                    f"content/tools.json category '{cat.get('name', 'unknown')}' missing or empty field '{field}'",
+                )
+
+    # 3. Tools checks
+    tools = data.get("tools", [])
+    results.expect(isinstance(tools, list), "content/tools.json 'tools' must be an array")
+    results.expect(len(tools) >= 19, f"content/tools.json expected at least 19 tools, found {len(tools)}")
+
+    expected_frozen = {"godot", "gimp", "krita", "blender", "audacity", "git", "vscodium"}
+    expected_radar = {
+        "pixelorama", "libresprite", "inkscape",
+        "ldtk", "tiled", "trenchbroom",
+        "material-maker", "blockbench", "armorpaint",
+        "lmms", "ardour", "sfxr"
+    }
+
+    tools_by_id: dict[str, dict] = {}
+    for tool in tools:
+        if isinstance(tool, dict):
+            tid = tool.get("id")
+            if tid:
+                tools_by_id[tid] = tool
+
+    # Check Tier-1 frozen tools
+    for fid in expected_frozen:
+        results.expect(fid in tools_by_id, f"content/tools.json missing Tier-1 frozen tool '{fid}'")
+        if fid in tools_by_id:
+            tool = tools_by_id[fid]
+            results.expect(
+                tool.get("tier") == "frozen",
+                f"content/tools.json tool '{fid}' must have tier='frozen' (found {tool.get('tier')!r})",
+            )
+            versions = tool.get("versions", [])
+            results.expect(
+                len(versions) > 0,
+                f"content/tools.json Tier-1 tool '{fid}' must have at least one frozen version",
+            )
+
+    # Check Tier-2 radar tools
+    for rid in expected_radar:
+        results.expect(rid in tools_by_id, f"content/tools.json missing Tier-2 Ecosystem Radar tool '{rid}'")
+        if rid in tools_by_id:
+            tool = tools_by_id[rid]
+            results.expect(
+                tool.get("tier") == "radar",
+                f"content/tools.json tool '{rid}' must have tier='radar' (found {tool.get('tier')!r})",
+            )
+
+    # Check required fields and HTTPS links across all tools
+    required_fields = [
+        "id", "name", "tier", "category", "tagline", "summary",
+        "replaces", "strengths", "license", "website_url", "repo_url",
+        "platforms", "resources"
+    ]
+    for tid, tool in tools_by_id.items():
+        for field in required_fields:
+            val = tool.get(field)
+            has_val = bool(val) if not isinstance(val, (int, float)) else True
+            results.expect(
+                has_val,
+                f"content/tools.json tool '{tid}' missing or empty required field '{field}'",
+            )
+
+        # Assert HTTPS URLs
+        for url_field in ("website_url", "repo_url"):
+            url = tool.get(url_field, "")
+            results.expect(
+                url.startswith("https://"),
+                f"content/tools.json tool '{tid}' {url_field} must start with 'https://' (found {url!r})",
+            )
+
+        resources = tool.get("resources", [])
+        for r_idx, res in enumerate(resources):
+            if isinstance(res, dict):
+                r_url = res.get("url", "")
+                results.expect(
+                    r_url.startswith("https://"),
+                    f"content/tools.json tool '{tid}' resource {r_idx} url must start with 'https://' (found {r_url!r})",
+                )
+
+    # Parity against sibling repository.json if present
+    sibling_repo = REPO_ROOT.parent / "ogs-frozen-stacks" / "repository.json"
+    if sibling_repo.is_file():
+        try:
+            repo_data = json.loads(sibling_repo.read_text(encoding="utf-8"))
+            for repo_tool in repo_data.get("tools", []):
+                rtid = repo_tool.get("id")
+                rver = repo_tool.get("version")
+                results.expect(
+                    rtid in tools_by_id,
+                    f"Sibling repository.json tool '{rtid}' missing from content/tools.json",
+                )
+                if rtid in tools_by_id:
+                    tool_vers = {v.get("version"): v for v in tools_by_id[rtid].get("versions", [])}
+                    results.expect(
+                        rver in tool_vers,
+                        f"Sibling repository.json tool '{rtid}' version '{rver}' missing from content/tools.json",
+                    )
+                    if rver in tool_vers:
+                        match_ver = tool_vers[rver]
+                        for key in ("category", "info_url", "archive_url", "sha256", "size_bytes", "executable_path"):
+                            results.expect(
+                                match_ver.get(key) == repo_tool.get(key),
+                                f"Parity mismatch for '{rtid}' v{rver} field '{key}': expected {repo_tool.get(key)!r}, found {match_ver.get(key)!r}",
+                            )
+        except Exception as exc:
+            results.expect(False, f"Failed checking parity against sibling repository.json: {exc}")
+
+    # 4. Content builder validator integration
+    builder_script = REPO_ROOT / "scripts" / "build_content.py"
+    results.expect(builder_script.is_file(), "scripts/build_content.py must exist")
+    if builder_script.is_file():
+        try:
+            if str(REPO_ROOT) not in sys.path:
+                sys.path.insert(0, str(REPO_ROOT))
+            from scripts.build_content import validate_tools_metadata
+            validation_errors = validate_tools_metadata(data, sibling_repo_path=sibling_repo if sibling_repo.is_file() else None)
+            results.expect(
+                len(validation_errors) == 0,
+                f"scripts/build_content.py validate_tools_metadata reported errors: {validation_errors}",
+            )
+        except Exception as exc:
+            results.expect(False, f"Failed to invoke scripts/build_content.py validation: {exc}")
+
+
 def main() -> int:
     results = TestResults()
 
     validate_required_files(results)
+    validate_tools_metadata_and_builder(results)
 
     html_files = discover_html_files(REPO_ROOT)
     results.expect(len(html_files) >= 5, f"Expected at least 5 HTML files, found {len(html_files)}")
