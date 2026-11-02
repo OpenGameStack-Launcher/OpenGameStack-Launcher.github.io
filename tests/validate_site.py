@@ -11,6 +11,7 @@ Checks:
 6. Landing page v0.2.0 release links, engine notes, and canonical manifest naming.
 7. Tool catalog static fallback parity against repository.json (or canonical 7-tool baseline).
 8. Game studio dark CSS tokens (category accents, surface tokens) and editorial/catalog classes in site.css.
+9. Dedicated /launcher/ page checks and hub navigation consistency.
 """
 
 from __future__ import annotations
@@ -28,6 +29,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 REQUIRED_FILES = [
     "CNAME",
     "index.html",
+    "launcher/index.html",
     "mission/index.html",
     "tools/index.html",
     "examples/index.html",
@@ -473,6 +475,46 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "The Mission" in content,
             "index.html: Missing 'The Mission' CTA button text",
         )
+        for required_link in [
+            "launcher/",
+            "tools/",
+            "mission/",
+            "examples/",
+            "https://opengamestack.substack.com/",
+        ]:
+            has_link = any(href == required_link for _, href, _, _, _ in inspector.links)
+            results.expect(
+                has_link,
+                f"index.html: Missing expected hub link to '{required_link}'",
+            )
+
+    if rel_name == "launcher/index.html":
+        results.expect(
+            inspector.title_text == "Launcher | Open Game Stack",
+            f"launcher/index.html: Expected title 'Launcher | Open Game Stack', found '{inspector.title_text}'",
+        )
+        expected_v020_download = (
+            "https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip"
+        )
+        v020_download_links = [
+            href for _, href, _, _, _ in inspector.links if href == expected_v020_download
+        ]
+        results.expect(
+            len(v020_download_links) >= 2,
+            f"launcher/index.html: Expected at least 2 links to '{expected_v020_download}', found {len(v020_download_links)}",
+        )
+        results.expect(
+            "Godot 4.7.2" in content,
+            "launcher/index.html: Missing 'Godot 4.7.2' reference in desktop runtime description",
+        )
+        results.expect(
+            "ogs_stack.json" in content,
+            "launcher/index.html: Missing canonical 'ogs_stack.json' manifest reference",
+        )
+        results.expect(
+            "ogs_config.json" in content,
+            "launcher/index.html: Missing canonical 'ogs_config.json' config reference",
+        )
 
     if rel_name == "mission/index.html":
         results.expect(
@@ -660,7 +702,7 @@ def main() -> int:
     validate_required_files(results)
 
     html_files = discover_html_files(REPO_ROOT)
-    results.expect(len(html_files) >= 4, f"Expected at least 4 HTML files, found {len(html_files)}")
+    results.expect(len(html_files) >= 5, f"Expected at least 5 HTML files, found {len(html_files)}")
     for html_file in html_files:
         validate_html_file(html_file, results)
 

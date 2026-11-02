@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Open Game Stack: The universal standard for sovereign, version-controlled open source game development.">
+        content="Open Game Stack: The open-source game development hub, tool directory, and reproducible launcher ecosystem. Build games, own your stack.">
 
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="assets/css/site.css">
 
-    <title>Open Game Stack | Sovereign Development</title>
-    </head>
+    <title>Open Game Stack | Sovereign Game Development</title>
+</head>
 
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -21,8 +21,9 @@
             <a href="./" class="site-logo">OPEN <span>GAME STACK</span></a>
             <nav class="site-nav" aria-label="Primary">
                 <a href="./" class="site-nav-link">Home</a>
-                <a href="mission/" class="site-nav-link">Mission</a>
                 <a href="tools/" class="site-nav-link">Tools</a>
+                <a href="launcher/" class="site-nav-link">Launcher</a>
+                <a href="mission/" class="site-nav-link">Mission</a>
                 <a href="examples/" class="site-nav-link">Examples</a>
             </nav>
         </div>
@@ -31,12 +32,34 @@
     <main class="container" id="main">
 
         <section class="hero">
-            <div class="eyebrow">The Framework</div>
+            <div class="eyebrow">The Open Game Dev Hub</div>
             <h1>Build Games.<br>Own the Stack.</h1>
-            <p>The universal standard for sovereign, version-controlled open source game development. Serve indie creators, studios, and defense programs with one unified toolchain.</p>
+            <p>The sovereign hub for open-source game development. Discover vetted creative tools, manage reproducible project stacks, and build games without subscriptions or vendor lock-in.</p>
             <div class="hero-actions">
                 <div class="hero-actions-group hero-actions-primary">
-                    <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip" class="btn" target="_blank" rel="noopener noreferrer">
+                    <a href="tools/" class="btn">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <path d="M4 7h16"></path>
+                                <path d="M4 12h16"></path>
+                                <path d="M4 17h16"></path>
+                            </svg>
+                        </span>
+                        <span>Explore Tools</span>
+                    </a>
+                    <a href="launcher/" class="btn btn-outline">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                        </span>
+                        <span>OGS Launcher</span>
+                    </a>
+                </div>
+                <div class="hero-actions-group hero-actions-secondary">
+                    <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
                         <span class="btn-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" role="img" focusable="false">
                                 <path d="M12 3v11"></path>
@@ -46,18 +69,6 @@
                         </span>
                         <span>Download v0.2.0</span>
                     </a>
-                    <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher" class="btn" target="_blank" rel="noopener noreferrer">
-                        <span class="btn-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" role="img" focusable="false">
-                                <path d="M14 4h6v6"></path>
-                                <path d="m10 14 10-10"></path>
-                                <path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"></path>
-                            </svg>
-                        </span>
-                        <span>View on GitHub</span>
-                    </a>
-                </div>
-                <div class="hero-actions-group hero-actions-secondary">
                     <a href="mission/" class="btn btn-outline">
                         <span class="btn-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" role="img" focusable="false">
@@ -69,52 +80,129 @@
                         </span>
                         <span>The Mission</span>
                     </a>
-                    <a href="tools/" class="btn btn-outline">
-                        <span class="btn-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" role="img" focusable="false">
-                                <path d="M4 7h16"></path>
-                                <path d="M4 12h16"></path>
-                                <path d="M4 17h16"></path>
-                            </svg>
-                        </span>
-                        <span>Browse Frozen Tools</span>
-                    </a>
                 </div>
             </div>
             <p class="hero-note">Current target: Windows 10/11 (x64), built with Godot 4.7.2.</p>
             <div class="hero-badges">
-                <span class="badge">Offline-First</span>
+                <span class="badge">Tool Directory</span>
+                <span class="badge">Sovereign Launcher</span>
                 <span class="badge">LTS Tooling</span>
-                <span class="badge">Dual-Use</span>
-                <span class="badge">Version Locked</span>
+                <span class="badge">Reproducible Stacks</span>
+                <span class="badge">Offline-First</span>
             </div>
         </section>
 
         <section class="grid">
             <div class="card">
-                <h3>For Indie Developers</h3>
-                <p>Your complete game development studio in one launcher. Download Godot, Blender, Krita, and Audacity once, then build as many projects as you want without duplicate tools or version conflicts. Everything you need. Nothing to rent.</p>
+                <h3>For Indie Creators</h3>
+                <p>Your complete game development pipeline with zero subscription fees. Discover the best open-source creative tools and build as many projects as you want without version conflicts or recurring costs.</p>
             </div>
             <div class="card">
-                <h3>For Studios</h3>
-                <p>End "it works on my machine" errors forever. Every team member clones the repo and launches the exact same environment on day one. Version-controlled tools. Team consistency. Easy onboarding.</p>
+                <h3>For Game Studios</h3>
+                <p>End environment drift and onboarding delays forever. Every team member clones your repository, launches the exact same version-locked toolchain via <code>ogs_stack.json</code>, and builds with confidence.</p>
             </div>
             <div class="card">
-                <h3>For Defense & Enterprise</h3>
-                <p>Zero licensing. No vendor kill-switches. Audit the source code. Run offline forever. Archive the entire stack for 20+ year sustainment and long-term missions. Sovereignty guaranteed.</p>
+                <h3>For Defense &amp; Enterprise</h3>
+                <p>Zero telemetry. No vendor kill-switches. Auditable open-source code and offline execution guaranteed. Archive complete project environments for 20+ year sustainment and mission assurance.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">Tool Ecosystem</div>
+            <h2>Featured Open-Source Game Stack Tools</h2>
+            <p class="hero-note">Vetted, sovereign open-source tools across every stage of the game creation pipeline, preserved in version-locked archives.</p>
+            <div class="grid">
+                <div class="card">
+                    <span class="badge badge-tier-frozen">Engine</span>
+                    <h3>Godot Engine</h3>
+                    <p>Lightweight, feature-complete 2D and 3D game engine. Built for rapid iteration with GDScript, C#, and native C++ extension support (v4.7.2 LTS baseline).</p>
+                </div>
+                <div class="card">
+                    <span class="badge badge-tier-frozen">2D Pipeline</span>
+                    <h3>Krita &amp; GIMP</h3>
+                    <p>Professional digital painting, concept illustration, sprite production, and raster texture preparation without software subscriptions.</p>
+                </div>
+                <div class="card">
+                    <span class="badge badge-tier-frozen">3D Pipeline</span>
+                    <h3>Blender</h3>
+                    <p>Full 3D creation suite supporting polygonal modeling, rigging, character animation, procedural materials, and game-ready asset export.</p>
+                </div>
+                <div class="card">
+                    <span class="badge badge-tier-frozen">Audio Production</span>
+                    <h3>Audacity</h3>
+                    <p>Multi-track audio recording, editing, dialogue cleanup, and Foley mastering for clean, production-ready game audio.</p>
+                </div>
+                <div class="card">
+                    <span class="badge badge-tier-frozen">Code &amp; Versioning</span>
+                    <h3>VSCodium &amp; Git</h3>
+                    <p>Telemetry-free code editing paired with distributed version control for deterministic, audit-ready source collaboration.</p>
+                </div>
+            </div>
+            <div class="hero-actions-group">
+                <a href="tools/" class="btn btn-outline">
+                    <span class="btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" role="img" focusable="false">
+                            <path d="M4 7h16"></path>
+                            <path d="M4 12h16"></path>
+                            <path d="M4 17h16"></path>
+                        </svg>
+                    </span>
+                    <span>Browse Full Tool Directory</span>
+                </a>
             </div>
         </section>
 
         <section class="release" id="alpha-download">
             <div class="release-panel">
-                <h2>v0.2.0 Package</h2>
-                <p>Keep it simple: download the latest OGS Launcher v0.2.0 package and start testing the core workflow (project import, tool management, and Seal for Delivery).</p>
+                <div class="eyebrow">The Application</div>
+                <h2>OGS Launcher v0.2.0 Package</h2>
+                <p>Orchestrate your game projects and maintain strict tool version locks across your team with the official OGS desktop launcher.</p>
                 <ul class="release-list">
-                    <li>Download the latest v0.2.0 release from GitHub Releases.</li>
-                    <li>Extract the package to a local folder.</li>
-                    <li>Run the launcher and load an OGS project with <code>ogs_stack.json</code> and <code>ogs_config.json</code>.</li>
+                    <li>Direct portable download for Windows 10/11 (x64), built with Godot 4.7.2.</li>
+                    <li>Automatic project tool provisioning via <code>ogs_stack.json</code> and <code>ogs_config.json</code>.</li>
+                    <li>Offline execution and the complete "Seal for Delivery" packaging workflow.</li>
                 </ul>
-                <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip" class="btn" target="_blank" rel="noopener noreferrer">Get v0.2.0 Package</a>
+                <div class="hero-actions-group">
+                    <a href="https://github.com/OpenGameStack-Launcher/ogs-launcher/releases/download/v0.2.0/OGS-Launcher-win64-0.2.0.zip" class="btn" target="_blank" rel="noopener noreferrer">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <path d="M12 3v11"></path>
+                                <path d="m8 11 4 4 4-4"></path>
+                                <path d="M4 19h16"></path>
+                            </svg>
+                        </span>
+                        <span>Get v0.2.0 Package</span>
+                    </a>
+                    <a href="launcher/" class="btn btn-outline">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                        </span>
+                        <span>Launcher Guide &amp; Details</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="release">
+            <div class="release-panel">
+                <div class="eyebrow">Stay Informed</div>
+                <h2>Weekly Open-Source Game Dev Newsletter</h2>
+                <p>Get the latest open-source game development news, featured engine updates, curated pipeline tutorials, and OGS devlogs delivered every week to your inbox.</p>
+                <div class="hero-actions-group">
+                    <a href="https://opengamestack.substack.com/" class="btn" target="_blank" rel="noopener noreferrer">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </span>
+                        <span>Subscribe on Substack</span>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -124,7 +212,9 @@
             <div class="site-footer-links">
                 <a href="mission/" class="site-footer-link">Mission</a>
                 <a href="tools/" class="site-footer-link">Tools</a>
+                <a href="launcher/" class="site-footer-link">Launcher</a>
                 <a href="examples/" class="site-footer-link">Examples</a>
+                <a href="https://opengamestack.substack.com/" class="site-footer-link" target="_blank" rel="noopener noreferrer">Substack</a>
                 <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
