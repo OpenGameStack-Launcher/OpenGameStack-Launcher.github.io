@@ -21,9 +21,9 @@ The site styling (`assets/css/site.css`) implements a Modern Game Studio and Edi
 ## 📂 Repository Structure
 * `index.html`: The Open Game Stack Hub homepage (`/`).
 * `launcher/index.html`: The dedicated OGS desktop launcher application page (`/launcher/`).
-* `mission/index.html`: The core philosophy and "Declaration of Digital Sovereignty" (`/mission/`).
+* `mission/index.html`: The core philosophy, creator sovereignty, and "Declaration of Digital Sovereignty" (`/mission/`).
 * `tools/index.html`: The frozen tool catalog with category, tool id, version, and release links (`/tools/`).
-* `examples/index.html`: Reference games and showcase projects built with Open Game Stack (`/examples/`).
+* `examples/index.html`: Living reference implementations and structured project showcase (Sudoku, Letter Logic) built with Open Game Stack (`/examples/`).
 * `assets/css/site.css`: Modern game studio dark UI, shared chrome, semantic category tokens, editorial typography, and responsive styles.
 * `tests/validate_site.py`: Zero-dependency static site validation suite.
 * `docs/`: Canonical workflow guides, testing procedures, and standards.
