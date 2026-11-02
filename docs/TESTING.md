@@ -20,7 +20,7 @@ python tests/validate_site.py
 
 ### Expected Output
 ```text
-OGS Website Validation Summary: 752 checks run | tests passed: 752 | tests failed: 0
+OGS Website Validation Summary: 793 checks run | tests passed: 793 | tests failed: 0
 All static website validation checks passed.
 ```
 
@@ -69,19 +69,33 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Verifies that all 7 catalog tools (Godot, Blender, Krita, GIMP, Audacity, Git, VSCodium) have self-hosted `.tool-icon` PNG images in `assets/images/` and verified in `REQUIRED_FILES`.
    - Verifies that obsolete `.tool-mark` monogram checks for `git` and `vscodium` have been replaced by full `.tool-icon` image checks across both static fallback cards and inline `toolDetails`.
    - Verifies that inline `toolDetails` in the hydration script specifies valid local image paths for all 7 catalog tools.
-8. **Mission Page & Hero CTA Verifications (`mission/index.html`, `index.html`):**
+8. **Mission Page Verifications (`mission/index.html`):**
    - Verifies that `mission/index.html` title text equals `Mission | Open Game Stack`.
    - Verifies that `mission/index.html` preserves required section anchor IDs (`#sovereignty`, `#environment`, `#dual-use`, `#stability`).
+   - Verifies that `mission/index.html` includes matching `.section-index` links for all four section anchors.
+   - Verifies that mission prose reframes creator sovereignty around indie game developers and studios.
    - Verifies that `index.html` includes the secondary CTA button with text `The Mission` pointing to `mission/`.
 9. **Dedicated Launcher Page Verifications (`launcher/index.html`):**
    - Verifies that `launcher/index.html` title text equals `Launcher | Open Game Stack`.
    - Asserts at least 2 download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
    - Asserts desktop application runtime reference (`Godot 4.7.2`).
    - Asserts canonical manifest references (`ogs_stack.json` and `ogs_config.json`).
-10. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
+10. **Reference Examples Showcase Verifications (`examples/index.html`):**
+    - Verifies that `examples/index.html` title text equals `Examples | Open Game Stack`.
+    - Confirms structured layout using `.grid` and `.project-card` containers.
+    - Confirms showcase cards for both reference projects (`Sudoku` and `Letter Logic`).
+    - Verifies frozen tool stack badges (`Godot`, `Git`, `Krita`) across project cards.
+    - Verifies required outbound repository and playable web demo links (`https://github.com/OpenGameStack/sudoku`, `https://audrain.games/sudoku`, `https://github.com/OpenGameStack/letter-logic`, `https://audrain.games/letter-logic`) with `target="_blank"` and `rel="noopener noreferrer"`.
+11. **Sitewide Navigation, Footer Consistency & Tagline Enforcement:**
+    - Verifies that primary navigation (`.site-nav`) across all pages includes the appropriate relative link to the Launcher page (`launcher/`, `./`, or `../launcher/`).
+    - Verifies that footer link lists (`.site-footer-links`) across all pages include the official Substack link (`https://opengamestack.substack.com/`) with `rel="noopener noreferrer"`.
+    - Enforces the sitewide footer copyright tagline: `Open-source tools and reproducible workflows for game creators.`.
+    - Prohibits obsolete footer copyright copy (`Dual-use technology for open simulation.`) on all pages.
+12. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
     - Verifies required surface tokens (`--bg-dark`, `--bg-surface`, `--card-bg`, `--card-border`).
     - Verifies required semantic category accent properties (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
     - Verifies required editorial typography, catalog filter, table, and callout classes (`.prose`, `.article-body`, `.catalog-filters`, `.filter-btn`, `.badge-tier-frozen`, `.badge-tier-radar`, `.spec-table`, `.version-table`, `.code-block`, `.code-header`, `.callout`).
+    - Verifies project card and button utility classes (`.btn-sm`, `.project-card`, `.card-badges`, `.card-actions`).
 
 ---
 
