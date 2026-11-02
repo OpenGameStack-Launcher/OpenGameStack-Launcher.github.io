@@ -48,6 +48,18 @@ REQUIRED_FILES = [
     "assets/images/Audacity.png",
     "assets/images/Git.png",
     "assets/images/VSCodium.png",
+    "assets/images/pixelorama.png",
+    "assets/images/libresprite.png",
+    "assets/images/inkscape.svg",
+    "assets/images/ldtk.svg",
+    "assets/images/tiled.png",
+    "assets/images/trenchbroom.png",
+    "assets/images/material-maker.png",
+    "assets/images/blockbench.png",
+    "assets/images/armorpaint.png",
+    "assets/images/lmms.png",
+    "assets/images/ardour.png",
+    "assets/images/sfxr.png",
 ]
 
 FORBIDDEN_EXTERNAL_PATTERNS = [
@@ -253,6 +265,18 @@ def discover_css_files(root: Path) -> list[Path]:
     return css_files
 
 
+def find_sibling_repository_json() -> Path | None:
+    """Finds sibling ogs-frozen-stacks/repository.json if present."""
+    if REPO_ROOT.parent.name == ".worktrees":
+        worktree_candidate = REPO_ROOT.parent.parent.parent / "ogs-frozen-stacks" / "repository.json"
+        if worktree_candidate.is_file():
+            return worktree_candidate
+    candidate = REPO_ROOT.parent / "ogs-frozen-stacks" / "repository.json"
+    if candidate.is_file():
+        return candidate
+    return None
+
+
 def validate_required_files(results: TestResults) -> None:
     for rel_path in REQUIRED_FILES:
         full_path = REPO_ROOT / rel_path
@@ -260,6 +284,13 @@ def validate_required_files(results: TestResults) -> None:
             full_path.is_file(),
             f"Missing required repository file: {rel_path}",
         )
+        if full_path.is_file():
+            parent_files = {f.name for f in full_path.parent.iterdir()}
+            expected_name = Path(rel_path).name
+            results.expect(
+                expected_name in parent_files,
+                f"File '{rel_path}' casing mismatch on disk: expected '{expected_name}'",
+            )
 
     cname_path = REPO_ROOT / "CNAME"
     if cname_path.is_file():
@@ -628,8 +659,8 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "tools/index.html: Missing [data-catalog] section container",
         )
         results.expect(
-            inspector.catalog_tool_cards == 7,
-            f"tools/index.html: Expected 7 static fallback tool cards inside [data-catalog], found {inspector.catalog_tool_cards}",
+            inspector.catalog_tool_cards == 19,
+            f"tools/index.html: Expected 19 static fallback tool cards inside [data-catalog], found {inspector.catalog_tool_cards}",
         )
 
         expected_catalog_tools: dict[str, set[str]] = {
@@ -640,11 +671,23 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "audacity": {"3.7.8", "3.7.7"},
             "git": {"2.56.0.4"},
             "vscodium": {"1.143.17232"},
+            "pixelorama": set(),
+            "libresprite": set(),
+            "inkscape": set(),
+            "ldtk": set(),
+            "tiled": set(),
+            "trenchbroom": set(),
+            "material-maker": set(),
+            "blockbench": set(),
+            "armorpaint": set(),
+            "lmms": set(),
+            "ardour": set(),
+            "sfxr": set(),
         }
 
         # Verify against sibling repository.json if present
-        sibling_repo = REPO_ROOT.parent / "ogs-frozen-stacks" / "repository.json"
-        if sibling_repo.is_file():
+        sibling_repo = find_sibling_repository_json()
+        if sibling_repo and sibling_repo.is_file():
             try:
                 repo_data = json.loads(sibling_repo.read_text(encoding="utf-8"))
                 discovered_tools: dict[str, set[str]] = {}
@@ -653,8 +696,9 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                     ver = tool.get("version")
                     if tid and ver:
                         discovered_tools.setdefault(tid, set()).add(ver)
-                if discovered_tools:
-                    expected_catalog_tools = discovered_tools
+                for tid, vers in discovered_tools.items():
+                    if tid in expected_catalog_tools:
+                        expected_catalog_tools[tid] = vers
             except Exception:
                 pass
 
@@ -695,11 +739,18 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                     target_img is not None and target_img.is_file(),
                     f"tools/index.html:{icon_line}: Tool '{tool_id}' icon src '{icon_src}' does not exist",
                 )
+                if target_img and target_img.is_file():
+                    parent_files = {f.name for f in target_img.parent.iterdir()}
+                    results.expect(
+                        target_img.name in parent_files,
+                        f"tools/index.html:{icon_line}: Tool '{tool_id}' icon src '{icon_src}' casing mismatch on disk",
+                    )
 
         combined_scripts = "\n".join(inspector.inline_scripts)
         for tool_id in expected_catalog_tools:
+            escaped_tid = re.escape(tool_id)
             tool_pattern = re.compile(
-                rf"{tool_id}\s*:\s*\{{[^}}]*image\s*:\s*['\"]([^'\"]+)['\"]",
+                rf"(?:['\"]?{escaped_tid}['\"]?)\s*:\s*\{{[^}}]*image\s*:\s*['\"]([^'\"]+)['\"]",
                 re.DOTALL,
             )
             match = tool_pattern.search(combined_scripts)
@@ -714,6 +765,36 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
                     target_img is not None and target_img.is_file(),
                     f"tools/index.html: Inline toolDetails image '{raw_img_path}' for '{tool_id}' does not resolve to an existing file",
                 )
+                if target_img and target_img.is_file():
+                    parent_files = {f.name for f in target_img.parent.iterdir()}
+                    results.expect(
+                        target_img.name in parent_files,
+                        f"tools/index.html: Inline toolDetails image '{raw_img_path}' for '{tool_id}' casing mismatch on disk",
+                    )
+
+        # Validate accessible two-tier filter controls
+        results.expect(
+            "catalog-filters" in content,
+            "tools/index.html: Missing .catalog-filters container",
+        )
+        for tier_val in ["all", "frozen", "radar"]:
+            results.expect(
+                f'data-filter-tier="{tier_val}"' in content,
+                f"tools/index.html: Missing tier filter button for '{tier_val}'",
+            )
+        for cat_name in ["Engine", "2D", "3D", "Audio", "Level Design", "Code"]:
+            results.expect(
+                f'data-filter-cat="{cat_name}"' in content,
+                f"tools/index.html: Missing category filter button for '{cat_name}'",
+            )
+        results.expect(
+            'role="group"' in content,
+            "tools/index.html: Missing accessible role='group' on filter groups",
+        )
+        results.expect(
+            'aria-pressed="true"' in content and 'aria-pressed="false"' in content,
+            "tools/index.html: Missing aria-pressed attributes on filter buttons",
+        )
 
 
 def validate_css_file(css_path: Path, results: TestResults) -> None:
@@ -899,8 +980,8 @@ def validate_tools_metadata_and_builder(results: TestResults) -> None:
                 )
 
     # Parity against sibling repository.json if present
-    sibling_repo = REPO_ROOT.parent / "ogs-frozen-stacks" / "repository.json"
-    if sibling_repo.is_file():
+    sibling_repo = find_sibling_repository_json()
+    if sibling_repo and sibling_repo.is_file():
         try:
             repo_data = json.loads(sibling_repo.read_text(encoding="utf-8"))
             for repo_tool in repo_data.get("tools", []):
@@ -934,7 +1015,7 @@ def validate_tools_metadata_and_builder(results: TestResults) -> None:
             if str(REPO_ROOT) not in sys.path:
                 sys.path.insert(0, str(REPO_ROOT))
             from scripts.build_content import validate_tools_metadata
-            validation_errors = validate_tools_metadata(data, sibling_repo_path=sibling_repo if sibling_repo.is_file() else None)
+            validation_errors = validate_tools_metadata(data, sibling_repo_path=sibling_repo if (sibling_repo and sibling_repo.is_file()) else None)
             results.expect(
                 len(validation_errors) == 0,
                 f"scripts/build_content.py validate_tools_metadata reported errors: {validation_errors}",

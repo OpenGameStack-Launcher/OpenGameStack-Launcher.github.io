@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Open Game Stack tool catalog: frozen, versioned game development tools with upstream release links.">
+        content="Open Game Stack tool directory: two-tier catalog of frozen launcher tools and ecosystem radar open-source game development tools.">
     <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="stylesheet" href="../assets/css/site.css">
     <title>Tools | Open Game Stack</title>
@@ -19,7 +19,7 @@
             <a href="../" class="site-logo">OPEN <span>GAME STACK</span></a>
             <nav class="site-nav" aria-label="Primary">
                 <a href="../" class="site-nav-link">Home</a>
-                <a href="./" class="site-nav-link">Tools</a>
+                <a href="./" class="site-nav-link">Tools</a>
                 <a href="../launcher/" class="site-nav-link">Launcher</a>
                 <a href="../mission/" class="site-nav-link">Mission</a>
                 <a href="../examples/" class="site-nav-link">Examples</a>
@@ -29,248 +29,598 @@
     <main class="container" id="main">
 
         <section class="hero">
-            <div class="eyebrow">Tool Catalog</div>
-            <h1>Frozen Tool Stack</h1>
-            <p class="intro">The current mirrored tool catalog is organized by category, then tool id, then available version.
-                Each version links to the official release information and the frozen archive package.</p>
+            <div class="eyebrow">Tool Directory</div>
+            <h1>Open-Source Game Development Stack</h1>
+            <p class="intro">
+                A curated two-tier directory of sovereign, telemetry-free creative tools for game creators.
+                Every tool is evaluated for indie production readiness, open licensing, and long-term pipeline independence.
+            </p>
+            <div class="hero-badges">
+                <span class="badge-tier-frozen">Tier 1: Frozen in Launcher</span>
+                <span class="badge-tier-radar">Tier 2: Ecosystem Radar</span>
+            </div>
+            <div class="tier-explanations">
+                <p>
+                    <strong>Tier 1: Frozen in Launcher</strong> tools are pre-configured, verified, and frozen into reproducible offline archives distributed directly through the Open Game Stack Launcher.
+                </p>
+                <p>
+                    <strong>Tier 2: Ecosystem Radar</strong> tools represent vetted open-source game development tools tracked across 2D, 3D, audio, and level design for community adoption and future launcher integration.
+                </p>
+            </div>
+        </section>
+
+        <section class="catalog-filters" aria-label="Catalog Filters">
+            <div class="filter-group" role="group" aria-label="Filter by Tier">
+                <span class="filter-group-label">Tier:</span>
+                <button type="button" class="filter-btn is-active" data-filter-tier="all" aria-pressed="true">All Tools</button>
+                <button type="button" class="filter-btn" data-filter-tier="frozen" aria-pressed="false">Frozen in Launcher</button>
+                <button type="button" class="filter-btn" data-filter-tier="radar" aria-pressed="false">Ecosystem Radar</button>
+            </div>
+            <div class="filter-group" role="group" aria-label="Filter by Category">
+                <span class="filter-group-label">Category:</span>
+                <button type="button" class="filter-btn is-active" data-filter-cat="all" aria-pressed="true">All Categories</button>
+                <button type="button" class="filter-btn" data-filter-cat="Engine" aria-pressed="false">Engine</button>
+                <button type="button" class="filter-btn" data-filter-cat="2D" aria-pressed="false">2D</button>
+                <button type="button" class="filter-btn" data-filter-cat="3D" aria-pressed="false">3D</button>
+                <button type="button" class="filter-btn" data-filter-cat="Audio" aria-pressed="false">Audio</button>
+                <button type="button" class="filter-btn" data-filter-cat="Level Design" aria-pressed="false">Level Design</button>
+                <button type="button" class="filter-btn" data-filter-cat="Code" aria-pressed="false">Code</button>
+            </div>
         </section>
 
         <section class="catalog" aria-label="Open Game Stack tools" data-catalog>
-            <article class="category">
+            <article class="category cat-engine" data-category="Engine">
                 <div class="category-head">
                     <h2 class="category-title">Engine</h2>
-                    <p class="category-description">Core runtime and editor technology used to build, run, and export
-                        game projects.</p>
+                    <p class="category-description">Game engines and runtime frameworks for scene authoring, logic scripting, physics, and multiplatform builds.</p>
                 </div>
                 <div class="tool-list">
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="godot" data-tier="frozen" data-category="Engine">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/Godot.png" alt="godot logo">
+                            <img class="tool-icon" src="../assets/images/Godot.png" alt="Godot Engine logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">godot</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">MIT</span>
                             </div>
-                            <p class="tool-description">Open source 2D and 3D game engine used for gameplay scripting,
-                                scene authoring, and platform export workflows.</p>
+                            <p class="tool-description">Godot Engine is a versatile open-source game engine featuring a dedicated 2D pipeline, modern Vulkan-powered 3D renderer, and an intuitive scene and node hierarchy. It supports GDScript, C#, and C++ via GDExtension, with zero licensing fees or revenue shares.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Unity</span>
+                                <span class="replaces-chip">Unreal Engine</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">4.7.2</span>
-                                    <a class="release-link" href="https://godotengine.org/releases/4.7/" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/godot-4.7.2-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
-                                <li class="version-item">
-                                    <span class="version-tag">4.3</span>
-                                    <a class="release-link" href="https://godotengine.org/releases/4.3/" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/godot-4.3-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">4.7.2</span>
+                            <a class="release-link" href="https://godotengine.org/releases/4.7/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/godot-4.7.2-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                        <li class="version-item">
+                            <span class="version-tag">4.3</span>
+                            <a class="release-link" href="https://godotengine.org/releases/4.3/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/godot-4.3-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </article>
 
-            <article class="category">
+            <article class="category cat-2d" data-category="2D">
                 <div class="category-head">
                     <h2 class="category-title">2D</h2>
-                    <p class="category-description">Two-dimensional art tools for illustration, texture creation, and
-                        concept development.</p>
+                    <p class="category-description">Raster painting, pixel art, vector illustration, and sprite creation tools for game art production.</p>
                 </div>
                 <div class="tool-list">
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="gimp" data-tier="frozen" data-category="2D">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/GIMP.png" alt="gimp logo">
+                            <img class="tool-icon" src="../assets/images/GIMP.png" alt="GIMP logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">gimp</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">GPL-3.0</span>
                             </div>
-                            <p class="tool-description">Image editor for raster artwork, texture preparation, compositing, and production-ready game assets.</p>
+                            <p class="tool-description">GIMP (GNU Image Manipulation Program) provides raster editing, asset cleanup, texture channel manipulation, and format conversion. Equipped with GEGL high-bit-depth color processing and Python scripting, it serves as a workhorse for asset preparation.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Adobe Photoshop</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">3.2.4</span>
-                                    <a class="release-link" href="https://www.gimp.org/news/2026/04/19/gimp-3.2.4-released/" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/gimp-3.2.4-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">3.2.4</span>
+                            <a class="release-link" href="https://www.gimp.org/news/2026/04/19/gimp-3.2.4-released/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/gimp-3.2.4-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="krita" data-tier="frozen" data-category="2D">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/Krita.png" alt="krita logo">
+                            <img class="tool-icon" src="../assets/images/Krita.png" alt="Krita logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">krita</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">GPL-3.0</span>
                             </div>
-                            <p class="tool-description">Digital painting and illustration application for concept art,
-                                texture maps, and sprite content production.</p>
+                            <p class="tool-description">Krita is an open-source painting program designed for illustrators, concept artists, and texture painters. It features sophisticated brush engines, wrap-around seamless texture mode, layer masks, color management, and frame-by-frame 2D animation tools.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Adobe Photoshop</span>
+                                <span class="replaces-chip">Corel Painter</span>
+                                <span class="replaces-chip">Clip Studio Paint</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">5.3.3</span>
-                                    <a class="release-link"
-                                        href="https://krita.org/en/posts/2026/krita-5.3.3-released/" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/krita-5.3.3-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
-                                <li class="version-item">
-                                    <span class="version-tag">5.2.15</span>
-                                    <a class="release-link"
-                                        href="https://krita.org/en/posts/2026/krita-5.2.15-released/" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/krita-5.2.15-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">5.3.3</span>
+                            <a class="release-link" href="https://krita.org/en/posts/2026/krita-5.3.3-released/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/krita-5.3.3-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                        <li class="version-item">
+                            <span class="version-tag">5.2.15</span>
+                            <a class="release-link" href="https://krita.org/en/posts/2026/krita-5.2.15-released/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/krita-5.2.15-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="inkscape" data-tier="radar" data-category="2D">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/inkscape.svg" alt="Inkscape logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">inkscape</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-3.0</span>
+                            </div>
+                            <p class="tool-description">Inkscape is a vector design application utilizing standard SVG as its native format. It excels at authoring scalable user interface elements, heads-up display graphics, font glyphs, and resolution-independent vector illustrations for game titles.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Adobe Illustrator</span>
+                                <span class="replaces-chip">CorelDRAW</span>
+                                <span class="replaces-chip">Affinity Designer</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://inkscape.org/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://gitlab.com/inkscape/inkscape" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="libresprite" data-tier="radar" data-category="2D">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/libresprite.png" alt="LibreSprite logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">libresprite</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-2.0</span>
+                            </div>
+                            <p class="tool-description">LibreSprite is a community-maintained, free and open-source fork of the last GPLv2 release of Aseprite. It provides retro sprite drawing tools, frame management, indexed color palettes, and animation playback for 2D game pipelines.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Aseprite</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://libresprite.github.io/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/LibreSprite/LibreSprite" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="pixelorama" data-tier="radar" data-category="2D">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/pixelorama.png" alt="Pixelorama logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">pixelorama</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">MIT</span>
+                            </div>
+                            <p class="tool-description">Pixelorama is an open-source 2D sprite editor and pixel art animation tool built with the Godot Engine. It provides onion skinning, layer management, animation timelines, custom brushes, and sprite sheet export tailored for indie game developers.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Aseprite</span>
+                                <span class="replaces-chip">Pyxel Edit</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://orama-interactive.itch.io/pixelorama" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/Orama-Interactive/Pixelorama" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </article>
 
-            <article class="category">
+            <article class="category cat-3d" data-category="3D">
                 <div class="category-head">
                     <h2 class="category-title">3D</h2>
-                    <p class="category-description">Three-dimensional content creation tools for modeling, rigging,
-                        animation, simulation, and rendering.</p>
+                    <p class="category-description">Polygon modeling, procedural texturing, UV unwrapping, and animation pipelines for real-time 3D assets.</p>
                 </div>
                 <div class="tool-list">
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="blender" data-tier="frozen" data-category="3D">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/Blender.png" alt="blender logo">
+                            <img class="tool-icon" src="../assets/images/Blender.png" alt="Blender logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">blender</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">GPL-3.0</span>
                             </div>
-                            <p class="tool-description">Full 3D content pipeline tool for mesh creation, UV editing,
-                                animation, and asset export into game projects.</p>
+                            <p class="tool-description">Blender is the industry-standard open-source 3D production pipeline tool. It provides end-to-end tooling for polygonal modeling, sculpting, UV unwrapping, skeletal rigging, keyframe animation, procedural shader creation, and glTF/FBX export for real-time game engines.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Autodesk Maya</span>
+                                <span class="replaces-chip">Autodesk 3ds Max</span>
+                                <span class="replaces-chip">Cinema 4D</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">5.2</span>
-                                    <a class="release-link" href="https://www.blender.org/download/releases/5-2/"
-                                        target="_blank" rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/blender-5.2-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
-                                <li class="version-item">
-                                    <span class="version-tag">4.5.7</span>
-                                    <a class="release-link" href="https://www.blender.org/download/releases/4-5/"
-                                        target="_blank" rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/blender-4.5.7-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">5.2</span>
+                            <a class="release-link" href="https://www.blender.org/download/releases/5-2/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/blender-5.2-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                        <li class="version-item">
+                            <span class="version-tag">4.5.7</span>
+                            <a class="release-link" href="https://www.blender.org/download/releases/4-5/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/blender-4.5.7-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="armorpaint" data-tier="radar" data-category="3D">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/armorpaint.png" alt="ArmorPaint logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">armorpaint</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">Zlib</span>
+                            </div>
+                            <p class="tool-description">ArmorPaint is a standalone 3D texture painting application. It allows game artists to paint PBR materials directly onto 3D models with GPU acceleration, ray-tracing support, and node-based material authoring, exporting ready-to-use textures for game engines.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Adobe Substance 3D Painter</span>
+                                <span class="replaces-chip">Mari</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://armorpaint.org/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/armory3d/armorpaint" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="blockbench" data-tier="radar" data-category="3D">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/blockbench.png" alt="Blockbench logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">blockbench</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-3.0</span>
+                            </div>
+                            <p class="tool-description">Blockbench is a 3D modeling software specializing in low-poly, pixel-art textured, and voxel-inspired game assets. It features integrated texture painting, skeletal inverse kinematics animation, and clean glTF export for Godot and indie game engines.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Cubik Studio</span>
+                                <span class="replaces-chip">MagicaVoxel</span>
+                                <span class="replaces-chip">Cinema 4D</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://www.blockbench.net/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/JannisX11/blockbench" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="material-maker" data-tier="radar" data-category="3D">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/material-maker.png" alt="Material Maker logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">material-maker</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">MIT</span>
+                            </div>
+                            <p class="tool-description">Material Maker is a node-based procedural texture generation and 3D model painting tool built on Godot. It enables technical artists to design seamless PBR materials using procedural noises, patterns, and filters, exporting maps directly for real-time game engines.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Adobe Substance 3D Designer</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://www.materialmaker.org/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/RodZill4/material-maker" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </article>
 
-            <article class="category">
+            <article class="category cat-audio" data-category="Audio">
                 <div class="category-head">
                     <h2 class="category-title">Audio</h2>
-                    <p class="category-description">Sound production and editing tools for dialogue cleanup, effects,
-                        and final mix preparation.</p>
+                    <p class="category-description">Digital audio workstations, waveform editors, and procedural sound effect generators for game soundscapes.</p>
                 </div>
                 <div class="tool-list">
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="audacity" data-tier="frozen" data-category="Audio">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/Audacity.png" alt="audacity logo">
+                            <img class="tool-icon" src="../assets/images/Audacity.png" alt="Audacity logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">audacity</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">GPL-3.0</span>
                             </div>
-                            <p class="tool-description">Audio recording and waveform editing utility for voice work, SFX
-                                trimming, normalization, and mastering passes.</p>
+                            <p class="tool-description">Audacity is an accessible multitrack audio editor for recording live dialogue, trimming and normalizing sound effects, removing background noise, and exporting game-ready audio assets in OGG, WAV, and MP3 formats.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Adobe Audition</span>
+                                <span class="replaces-chip">Sound Forge</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">3.7.8</span>
-                                    <a class="release-link" href="https://www.audacityteam.org/blog/audacity-3-7/"
-                                        target="_blank" rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/audacity-3.7.8-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
-                                <li class="version-item">
-                                    <span class="version-tag">3.7.7</span>
-                                    <a class="release-link" href="https://www.audacityteam.org/blog/audacity-3-7/"
-                                        target="_blank" rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/audacity-3.7.7-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">3.7.8</span>
+                            <a class="release-link" href="https://www.audacityteam.org/blog/audacity-3-7/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/audacity-3.7.8-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                        <li class="version-item">
+                            <span class="version-tag">3.7.7</span>
+                            <a class="release-link" href="https://www.audacityteam.org/blog/audacity-3-7/" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/audacity-3.7.7-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="ardour" data-tier="radar" data-category="Audio">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/ardour.png" alt="Ardour logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">ardour</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-2.0</span>
+                            </div>
+                            <p class="tool-description">Ardour is a professional-grade digital audio workstation designed for audio recording, multi-channel mixing, and mastering. It offers sample-accurate editing, flexible routing topologies, surround sound panning, and video timeline synchronization for game scoring.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Pro Tools</span>
+                                <span class="replaces-chip">Logic Pro</span>
+                                <span class="replaces-chip">Reaper</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://ardour.org/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/Ardour/ardour" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="lmms" data-tier="radar" data-category="Audio">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/lmms.png" alt="LMMS logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">lmms</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-2.0</span>
+                            </div>
+                            <p class="tool-description">LMMS is an open-source digital audio workstation for creating music and game soundtracks. It includes synthesizer plugins, beat and bassline sequencers, piano roll editing, automation tracks, and VST instrument support for indie game musicians.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">FL Studio</span>
+                                <span class="replaces-chip">Ableton Live</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://lmms.io/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/LMMS/lmms" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="sfxr" data-tier="radar" data-category="Audio">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/sfxr.png" alt="sfxr / jsfxr logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">sfxr</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">MIT</span>
+                            </div>
+                            <p class="tool-description">sfxr (and its web counterpart jsfxr) is a procedural 8-bit sound synthesizer created by Tomas Pettersson for rapid sound design. It generates pickups, explosions, laser shots, and jump effects with one-click randomization and waveform export.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Commercial SFX Generators</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://sfxr.me/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/chr15m/jsfxr" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </article>
 
-            <article class="category">
+            <article class="category cat-level-design" data-category="Level Design">
                 <div class="category-head">
-                    <h2 class="category-title">Code</h2>
-                    <p class="category-description">Source control and code editing tools for gameplay programming, configuration, and versioned project workflows.</p>
+                    <h2 class="category-title">Level Design</h2>
+                    <p class="category-description">Tilemap editors, brush-based level authoring, and environmental layout tools designed for level pipelines.</p>
                 </div>
                 <div class="tool-list">
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="ldtk" data-tier="radar" data-category="Level Design">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/Git.png" alt="git logo">
+                            <img class="tool-icon" src="../assets/images/ldtk.svg" alt="LDtk logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">ldtk</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">MIT</span>
+                            </div>
+                            <p class="tool-description">LDtk (Level Designer Toolkit) is a modern 2D level editor created by Sebastien Benard, lead designer of Dead Cells. Built specifically for indie game developers, it features auto-layer tiling rules, entity definition schemas, multi-world layouts, and native Godot importer plugins.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Proprietary Level Editors</span>
+                                <span class="replaces-chip">Tiled</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://ldtk.io/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/deepnight/ldtk" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="tiled" data-tier="radar" data-category="Level Design">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/tiled.png" alt="Tiled logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">tiled</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-2.0</span>
+                            </div>
+                            <p class="tool-description">Tiled is the industry-standard general-purpose 2D tile map editor with over a decade of production use across commercial and indie hits. It supports orthogonal, isometric, and hexagonal grids, terrain brushes, object layers, and custom collision polygon markup.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Commercial Map Editors</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://www.mapeditor.org/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/mapeditor/tiled" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tool-card" data-tool-id="trenchbroom" data-tier="radar" data-category="Level Design">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/trenchbroom.png" alt="TrenchBroom logo">
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-id-row">
+                                <h3 class="tool-id">trenchbroom</h3>
+                                <span class="badge-tier-radar">Ecosystem Radar</span>
+                                <span class="badge-license">GPL-3.0</span>
+                            </div>
+                            <p class="tool-description">TrenchBroom is a modern, responsive 3D level editor tailored for retro shooters and boomer shooters. Using brush-based CSG geometry and entity definition files, it integrates directly with Godot via the Qodot and func_godot plugins for rapid 3D level prototyping.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Valve Hammer Editor</span>
+                                <span class="replaces-chip">Radiant</span>
+                                <span class="replaces-chip">Worldcraft</span>
+                            </div>
+                            <p class="version-label">Links</p>
+                            <ul class="version-list">
+                        <li class="version-item">
+                            <a class="release-link" href="https://trenchbroom.github.io/" target="_blank" rel="noopener noreferrer">Project homepage</a>
+                            <a class="archive-link" href="https://github.com/TrenchBroom/TrenchBroom" target="_blank" rel="noopener noreferrer">Source repository</a>
+                        </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="category cat-code" data-category="Code">
+                <div class="category-head">
+                    <h2 class="category-title">Code</h2>
+                    <p class="category-description">Version control utilities, telemetry-free code editors, and scripting environments for reproducible software workflows.</p>
+                </div>
+                <div class="tool-list">
+                    <div class="tool-card" data-tool-id="git" data-tier="frozen" data-category="Code">
+                        <div class="tool-visual">
+                            <img class="tool-icon" src="../assets/images/Git.png" alt="Git logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">git</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">GPL-2.0</span>
                             </div>
-                            <p class="tool-description">Distributed version control system for tracking project revisions, branching, and team collaboration.</p>
+                            <p class="tool-description">Git tracks revision history for game source code, scripts, configuration files, and project assets. It enables branching strategies, collaborative developer merges, and atomic commit histories for indie studios and open-source contributors.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Perforce Helix Core</span>
+                                <span class="replaces-chip">Plastic SCM</span>
+                                <span class="replaces-chip">Subversion</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">2.56.0.4</span>
-                                    <a class="release-link" href="https://github.com/git-for-windows/git/releases/tag/v2.56.0.windows.4" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/git-2.56.0.4-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">2.56.0.4</span>
+                            <a class="release-link" href="https://github.com/git-for-windows/git/releases/tag/v2.56.0.windows.4" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/git-2.56.0.4-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="tool-card">
+                    <div class="tool-card" data-tool-id="vscodium" data-tier="frozen" data-category="Code">
                         <div class="tool-visual">
-                            <img class="tool-icon" src="../assets/images/VSCodium.png" alt="vscodium logo">
+                            <img class="tool-icon" src="../assets/images/VSCodium.png" alt="VSCodium logo">
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
                                 <h3 class="tool-id">vscodium</h3>
+                                <span class="badge-tier-frozen">Frozen in Launcher</span>
+                                <span class="badge-license">MIT</span>
                             </div>
-                            <p class="tool-description">Open-source code editor with telemetry disabled for gameplay programming and configuration editing.</p>
+                            <p class="tool-description">VSCodium is a community-driven, telemetry-free binary distribution of Microsoft&#x27;s VS Code editor. It provides a lightweight code editor with rich extension marketplace support for GDScript, C#, Python, shaders, and JSON configurations.</p>
+                            <div class="tool-replaces">
+                                <span class="replaces-label">Replaces:</span>
+                                <span class="replaces-chip">Microsoft Visual Studio Code</span>
+                                <span class="replaces-chip">Sublime Text</span>
+                            </div>
                             <p class="version-label">Version</p>
                             <ul class="version-list">
-                                <li class="version-item">
-                                    <span class="version-tag">1.143.17232</span>
-                                    <a class="release-link" href="https://github.com/VSCodium/vscodium/releases/tag/1.143.17232" target="_blank"
-                                        rel="noopener noreferrer">Official release page</a>
-                                    <a class="archive-link"
-                                        href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/vscodium-1.143.17232-win64.zip"
-                                        target="_blank" rel="noopener noreferrer">Frozen archive</a>
-                                </li>
+                        <li class="version-item">
+                            <span class="version-tag">1.143.17232</span>
+                            <a class="release-link" href="https://github.com/VSCodium/vscodium/releases/tag/1.143.17232" target="_blank" rel="noopener noreferrer">Official release page</a>
+                            <a class="archive-link" href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/vscodium-1.143.17232-win64.zip" target="_blank" rel="noopener noreferrer">Frozen archive</a>
+                        </li>
                             </ul>
                         </div>
                     </div>
@@ -302,43 +652,152 @@
             const catalog = document.querySelector('[data-catalog]');
             const repositoryUrl = 'https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json';
             const categoryDescriptions = {
-                'Engine': 'Core runtime and editor technology used to build, run, and export game projects.',
-                '2D': 'Two-dimensional art tools for illustration, texture creation, and concept development.',
-                '3D': 'Three-dimensional content creation tools for modeling, rigging, animation, simulation, and rendering.',
-                'Audio': 'Sound production and editing tools for dialogue cleanup, effects, and final mix preparation.',
-                'Code': 'Source control and code editing tools for gameplay programming, configuration, and versioned project workflows.'
+                'Engine': 'Game engines and runtime frameworks for scene authoring, logic scripting, physics, and multiplatform builds.',
+                '2D': 'Raster painting, pixel art, vector illustration, and sprite creation tools for game art production.',
+                '3D': 'Polygon modeling, procedural texturing, UV unwrapping, and animation pipelines for real-time 3D assets.',
+                'Audio': 'Digital audio workstations, waveform editors, and procedural sound effect generators for game soundscapes.',
+                'Level Design': 'Tilemap editors, brush-based level authoring, and environmental layout tools designed for level pipelines.',
+                'Code': 'Version control utilities, telemetry-free code editors, and scripting environments for reproducible software workflows.'
             };
             const toolDetails = {
-                godot: {
-                    description: 'Open source 2D and 3D game engine used for gameplay scripting, scene authoring, and platform export workflows.',
+                'godot': {
+                    description: 'Lightweight, node-based 2D and 3D open-source game engine.',
                     image: '../assets/images/Godot.png'
                 },
-                blender: {
-                    description: 'Full 3D content pipeline tool for mesh creation, UV editing, animation, and asset export into game projects.',
+                'blender': {
+                    description: 'Comprehensive 3D modeling, sculpting, rigging, animation, and rendering suite.',
                     image: '../assets/images/Blender.png'
                 },
-                krita: {
-                    description: 'Digital painting and illustration application for concept art, texture maps, and sprite content production.',
+                'krita': {
+                    description: 'Professional digital painting studio for concept art, textures, and 2D animation.',
                     image: '../assets/images/Krita.png'
                 },
-                gimp: {
-                    description: 'Image editor for raster artwork, texture preparation, compositing, and production-ready game assets.',
+                'gimp': {
+                    description: 'Extensible raster image editor for photo retouching, texturing, and asset batching.',
                     image: '../assets/images/GIMP.png'
                 },
-                audacity: {
-                    description: 'Audio recording and waveform editing utility for voice work, SFX trimming, normalization, and mastering passes.',
+                'audacity': {
+                    description: 'Fast, multitrack audio editor and recording tool for dialogue, foley, and sound effects.',
                     image: '../assets/images/Audacity.png'
                 },
-                git: {
-                    description: 'Distributed version control system for tracking project revisions, branching, and team collaboration.',
+                'git': {
+                    description: 'Industry-standard distributed version control system for tracking project history.',
                     image: '../assets/images/Git.png'
                 },
-                vscodium: {
-                    description: 'Open-source code editor with telemetry disabled for gameplay programming and configuration editing.',
+                'vscodium': {
+                    description: 'Free/Libre Open Source Software binaries of VS Code with telemetry completely disabled.',
                     image: '../assets/images/VSCodium.png'
+                },
+                'pixelorama': {
+                    description: 'Free and open-source pixel art editor and animation suite built with Godot.',
+                    image: '../assets/images/pixelorama.png'
+                },
+                'libresprite': {
+                    description: 'Community-driven open-source fork of Aseprite for animated sprites and pixel graphics.',
+                    image: '../assets/images/libresprite.png'
+                },
+                'inkscape': {
+                    description: 'Vector graphics editor for scalable game UI, icons, logos, and vector illustrations.',
+                    image: '../assets/images/inkscape.svg'
+                },
+                'ldtk': {
+                    description: 'Modern, intuitive 2D level editor designed with an emphasis on user experience.',
+                    image: '../assets/images/ldtk.svg'
+                },
+                'tiled': {
+                    description: 'Flexible and battle-tested 2D tile map editor supporting orthogonal, isometric, and hexagonal maps.',
+                    image: '../assets/images/tiled.png'
+                },
+                'trenchbroom': {
+                    description: 'Cross-platform brush-based level editor for Quake-engine games and modern retro 3D shooters.',
+                    image: '../assets/images/trenchbroom.png'
+                },
+                'material-maker': {
+                    description: 'Procedural PBR texture authoring and 3D painting tool powered by the Godot Engine.',
+                    image: '../assets/images/material-maker.png'
+                },
+                'blockbench': {
+                    description: 'Boxy, low-poly 3D modeling and animation editor designed for stylized game assets.',
+                    image: '../assets/images/blockbench.png'
+                },
+                'armorpaint': {
+                    description: 'Stand-alone 3D PBR texture painting software designed for real-time asset pipelines.',
+                    image: '../assets/images/armorpaint.png'
+                },
+                'lmms': {
+                    description: 'Cross-platform digital audio workstation for composing, sequencing, and synthesizing game soundtracks.',
+                    image: '../assets/images/lmms.png'
+                },
+                'ardour': {
+                    description: 'Professional multitrack recording and digital audio workstation for audio engineers.',
+                    image: '../assets/images/ardour.png'
+                },
+                'sfxr': {
+                    description: 'Instant retro 8-bit sound effects generator for arcade games and game jams.',
+                    image: '../assets/images/sfxr.png'
                 }
             };
-            const categoryOrder = ['Engine', '2D', '3D', 'Audio', 'Code'];
+            const categoryOrder = ['Engine', '2D', '3D', 'Audio', 'Level Design', 'Code'];
+
+            let activeTier = 'all';
+            let activeCategory = 'all';
+
+            const tierButtons = document.querySelectorAll('[data-filter-tier]');
+            const catButtons = document.querySelectorAll('[data-filter-cat]');
+            const categoryArticles = document.querySelectorAll('[data-catalog] .category');
+
+            const applyFilters = () => {
+                for (const catArticle of categoryArticles) {
+                    const catName = catArticle.getAttribute('data-category') || '';
+                    const catMatches = (activeCategory === 'all' || catName.toLowerCase() === activeCategory.toLowerCase());
+                    let visibleCount = 0;
+
+                    const cards = catArticle.querySelectorAll('.tool-card');
+                    for (const card of cards) {
+                        const cardTier = card.getAttribute('data-tier') || '';
+                        const cardCat = card.getAttribute('data-category') || catName;
+                        const tierMatches = (activeTier === 'all' || cardTier.toLowerCase() === activeTier.toLowerCase());
+                        const itemCatMatches = (activeCategory === 'all' || cardCat.toLowerCase() === activeCategory.toLowerCase());
+
+                        if (tierMatches && itemCatMatches) {
+                            card.style.display = '';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+
+                    if (catMatches && visibleCount > 0) {
+                        catArticle.style.display = '';
+                    } else {
+                        catArticle.style.display = 'none';
+                    }
+                }
+            };
+
+            for (const btn of tierButtons) {
+                btn.addEventListener('click', () => {
+                    activeTier = btn.getAttribute('data-filter-tier') || 'all';
+                    for (const b of tierButtons) {
+                        const isMatch = (b === btn);
+                        b.classList.toggle('is-active', isMatch);
+                        b.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+                    }
+                    applyFilters();
+                });
+            }
+
+            for (const btn of catButtons) {
+                btn.addEventListener('click', () => {
+                    activeCategory = btn.getAttribute('data-filter-cat') || 'all';
+                    for (const b of catButtons) {
+                        const isMatch = (b === btn);
+                        b.classList.toggle('is-active', isMatch);
+                        b.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+                    }
+                    applyFilters();
+                });
+            }
 
             const isValidCatalog = (data) => data
                 && Array.isArray(data.tools)
@@ -359,110 +818,51 @@
                 return link;
             };
 
-            const renderCatalog = (tools) => {
-                const groupedTools = new Map();
-                for (const tool of tools) {
-                    if (!groupedTools.has(tool.category)) {
-                        groupedTools.set(tool.category, new Map());
-                    }
-                    const categoryTools = groupedTools.get(tool.category);
-                    if (!categoryTools.has(tool.id)) {
-                        categoryTools.set(tool.id, []);
-                    }
-                    categoryTools.get(tool.id).push(tool);
-                }
-
-                const categories = [...groupedTools.keys()].sort((left, right) => {
-                    const leftIndex = categoryOrder.indexOf(left);
-                    const rightIndex = categoryOrder.indexOf(right);
-                    return (leftIndex === -1 ? categoryOrder.length : leftIndex)
-                        - (rightIndex === -1 ? categoryOrder.length : rightIndex)
-                        || left.localeCompare(right);
-                });
-                const fragment = document.createDocumentFragment();
-
-                for (const categoryName of categories) {
-                    const category = document.createElement('article');
-                    category.className = 'category';
-                    const header = document.createElement('div');
-                    header.className = 'category-head';
-                    const title = document.createElement('h2');
-                    title.className = 'category-title';
-                    title.textContent = categoryName;
-                    const description = document.createElement('p');
-                    description.className = 'category-description';
-                    description.textContent = categoryDescriptions[categoryName] || 'Open-source tools available as versioned frozen archives.';
-                    header.append(title, description);
-
-                    const toolList = document.createElement('div');
-                    toolList.className = 'tool-list';
-                    const categoryTools = groupedTools.get(categoryName);
-                    for (const toolId of [...categoryTools.keys()].sort()) {
-                        const versions = categoryTools.get(toolId).sort((left, right) => right.version.localeCompare(left.version, undefined, { numeric: true }));
-                        const details = toolDetails[toolId] || {};
-                        const card = document.createElement('div');
-                        card.className = 'tool-card';
-                        const visual = document.createElement('div');
-                        visual.className = 'tool-visual';
-                        if (details.image) {
-                            const image = document.createElement('img');
-                            image.className = 'tool-icon';
-                            image.src = details.image;
-                            image.alt = `${toolId} logo`;
-                            visual.append(image);
-                        } else {
-                            const mark = document.createElement('span');
-                            mark.className = 'tool-mark';
-                            mark.textContent = toolId.slice(0, 1).toUpperCase();
-                            mark.setAttribute('aria-label', toolId);
-                            visual.append(mark);
-                        }
-
-                        const content = document.createElement('div');
-                        content.className = 'tool-content';
-                        const idRow = document.createElement('div');
-                        idRow.className = 'tool-id-row';
-                        const id = document.createElement('h3');
-                        id.className = 'tool-id';
-                        id.textContent = toolId;
-                        idRow.append(id);
-                        const toolDescription = document.createElement('p');
-                        toolDescription.className = 'tool-description';
-                        toolDescription.textContent = details.description || 'Open-source tool available as a versioned frozen archive.';
-                        const versionLabel = document.createElement('p');
-                        versionLabel.className = 'version-label';
-                        versionLabel.textContent = 'Version';
-                        const versionList = document.createElement('ul');
-                        versionList.className = 'version-list';
-                        for (const version of versions) {
-                            const item = document.createElement('li');
-                            item.className = 'version-item';
-                            const tag = document.createElement('span');
-                            tag.className = 'version-tag';
-                            tag.textContent = version.version;
-                            item.append(tag, createLink('release-link', version.info_url, 'Official release page'), createLink('archive-link', version.archive_url, 'Frozen archive'));
-                            versionList.append(item);
-                        }
-                        content.append(idRow, toolDescription, versionLabel, versionList);
-                        card.append(visual, content);
-                        toolList.append(card);
-                    }
-                    category.append(header, toolList);
-                    fragment.append(category);
-                }
-                catalog.replaceChildren(fragment);
-            };
-
             fetch(repositoryUrl, { cache: 'no-cache' })
                 .then((response) => response.ok ? response.json() : Promise.reject(new Error('Catalog unavailable')))
                 .then((data) => {
                     if (!isValidCatalog(data)) {
                         throw new Error('Catalog data is invalid');
                     }
-                    renderCatalog(data.tools);
+                    const toolsById = new Map();
+                    for (const tool of data.tools) {
+                        if (!toolsById.has(tool.id)) {
+                            toolsById.set(tool.id, []);
+                        }
+                        toolsById.get(tool.id).push(tool);
+                    }
+
+                    for (const [toolId, versions] of toolsById.entries()) {
+                        const card = catalog.querySelector(`.tool-card[data-tool-id="${toolId}"]`);
+                        if (!card) {
+                            continue;
+                        }
+                        const versionList = card.querySelector('.version-list');
+                        if (!versionList) {
+                            continue;
+                        }
+                        versions.sort((a, b) => b.version.localeCompare(a.version, undefined, { numeric: true }));
+                        const fragment = document.createDocumentFragment();
+                        for (const ver of versions) {
+                            const item = document.createElement('li');
+                            item.className = 'version-item';
+                            const tag = document.createElement('span');
+                            tag.className = 'version-tag';
+                            tag.textContent = ver.version;
+                            item.append(
+                                tag,
+                                createLink('release-link', ver.info_url, 'Official release page'),
+                                createLink('archive-link', ver.archive_url, 'Frozen archive')
+                            );
+                            fragment.append(item);
+                        }
+                        versionList.replaceChildren(fragment);
+                    }
+
+                    applyFilters();
                 })
                 .catch(() => {
-                    // Leave the static catalog in place when the remote catalog cannot load.
+                    // Leave the static fallback catalog in place
                 });
         })();
     </script>
