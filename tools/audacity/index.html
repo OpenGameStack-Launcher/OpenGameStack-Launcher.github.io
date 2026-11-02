@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Audacity deep-dive profile in the Open Game Stack tool directory. Role in pipeline, frozen launcher releases, vital signs, and learning resources.">
+    <title>Audacity | Open Game Stack Tools</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a href="../../" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../../" class="site-nav-link">Home</a>
+                <a href="../" class="site-nav-link active">Tools</a>
+                <a href="../../launcher/" class="site-nav-link">Launcher</a>
+                <a href="../../mission/" class="site-nav-link">Mission</a>
+                <a href="../../examples/" class="site-nav-link">Examples</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../" class="back-link">&larr; Back to Tools Catalog</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span class="breadcrumb-current">Audacity</span>
+        </nav>
+
+        <article class="article-body">
+            <header class="tool-profile-header">
+                <div class="tool-profile-visual">
+                    <img class="tool-icon" src="../../assets/images/Audacity.png" alt="Audacity logo">
+                </div>
+                <div class="tool-profile-info">
+                    <div class="tool-id-row">
+                        <h1 class="tool-profile-title">Audacity</h1>
+                        <span class="badge-tier-frozen">Frozen in Launcher</span>
+                        <span class="badge-license">GPL-3.0</span>
+                    </div>
+                    <p class="tool-profile-tagline">Fast, multitrack audio editor and recording tool for dialogue, foley, and sound effects.</p>
+                    <div class="tool-profile-links">
+                        <a class="btn btn-outline" href="https://www.audacityteam.org/" target="_blank" rel="noopener noreferrer">Official Website</a>
+                        <a class="btn btn-outline" href="https://github.com/audacity/audacity" target="_blank" rel="noopener noreferrer">Source Repository</a>
+                    </div>
+                </div>
+            </header>
+
+            <section class="prose" id="role">
+                <h2>Role in the Game Stack</h2>
+                <p>Audacity is an accessible multitrack audio editor for recording live dialogue, trimming and normalizing sound effects, removing background noise, and exporting game-ready audio assets in OGG, WAV, and MP3 formats.</p>
+                <h3>Key Capabilities &amp; Strengths</h3>
+                <ul>
+                    <li>Rapid multitrack waveform editing and clip trimming</li>
+                    <li>Spectral frequency analysis and surgical noise reduction</li>
+                    <li>Loudness normalization (LUFS) for broadcast and game audio standards</li>
+                    <li>Native VST3, LV2, and LADSPA plugin support</li>
+                </ul>
+                <div class="callout callout-info">
+                    <div class="callout-title">Replaces Proprietary Software</div>
+                    <p>Within sovereign and telemetry-free creative pipelines, Audacity serves as a direct open-source alternative to proprietary software.</p>
+                    <div class="tool-replaces">
+                        <span class="replaces-label">Replaces:</span>
+                        <span class="replaces-chip">Adobe Audition</span> <span class="replaces-chip">Sound Forge</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="prose" id="launcher-integration">
+                <h2>OGS Launcher Integration &amp; Frozen Releases</h2>
+                <p>The Open Game Stack Launcher packages verified, immutable builds of Audacity. These releases are cached locally and launched without network access, vendor telemetry, or external licensing servers.</p>
+                <div class="table-container">
+                    <table class="version-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Size</th>
+                                <th>SHA-256 Checksum</th>
+                                <th>Executable</th>
+                                <th>Notes</th>
+                                <th>Archive</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>3.7.8</code></td>
+                            <td>29.4 MB</td>
+                            <td><code>824b4cacdf28ebca0a886c24e156012a90f9a3f83c5987f27fc47f1cbd6440d3</code></td>
+                            <td><code>audacity.exe</code></td>
+                            <td><a href="https://www.audacityteam.org/blog/audacity-3-7/" target="_blank" rel="noopener noreferrer">Release Notes</a></td>
+                            <td><a href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/audacity-3.7.8-win64.zip" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>
+                        </tr>
+                        <tr>
+                            <td><code>3.7.7</code></td>
+                            <td>27.5 MB</td>
+                            <td><code>42ccf8eb07117a428f12fe3d5bee49effe64c19727936a5c6dfccff90b3af02d</code></td>
+                            <td><code>audacity.exe</code></td>
+                            <td><a href="https://www.audacityteam.org/blog/audacity-3-7/" target="_blank" rel="noopener noreferrer">Release Notes</a></td>
+                            <td><a href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v1.0/audacity-3.7.7-win64.zip" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Project Manifest Configuration (<code>ogs_stack.json</code>)</h3>
+                <p>Pin Audacity to this frozen version in your project repository by declaring it inside your <code>ogs_stack.json</code> manifest:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">ogs_stack.json</span>
+                    </div>
+                    <pre><code>{
+  &quot;name&quot;: &quot;MyGameProject&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;tools&quot;: [
+    {
+      &quot;id&quot;: &quot;audacity&quot;,
+      &quot;version&quot;: &quot;3.7.8&quot;,
+      &quot;category&quot;: &quot;Audio&quot;
+    }
+  ]
+}</code></pre>
+                </div>
+            </section>
+
+            <section class="prose" id="vital-signs">
+                <h2>Open-Source Vital Signs</h2>
+                <p>Project health, licensing, and cross-platform runtime support for Audacity:</p>
+                <div class="table-container">
+                    <table class="spec-table">
+                        <tbody>
+                            <tr><th>Software License</th><td><code>GPL-3.0</code></td></tr>
+                            <tr><th>Supported Platforms</th><td><span class="badge">Windows</span> <span class="badge">Linux</span> <span class="badge">macOS</span></td></tr>
+                            <tr><th>Stack Category</th><td><span class="badge-tier-frozen">Audio</span></td></tr>
+                            <tr><th>Official Website</th><td><a href="https://www.audacityteam.org/" target="_blank" rel="noopener noreferrer">https://www.audacityteam.org/</a></td></tr>
+                            <tr><th>Source Repository</th><td><a href="https://github.com/audacity/audacity" target="_blank" rel="noopener noreferrer">https://github.com/audacity/audacity</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="prose" id="resources">
+                <h2>Getting Started &amp; Learning Resources</h2>
+                <p>Official documentation, tutorials, and community hubs to help game developers master Audacity:</p>
+                <ul class="resource-list">
+                    <li><strong>[Documentation]</strong> <a href="https://manual.audacityteam.org/" target="_blank" rel="noopener noreferrer">Audacity Manual</a></li>
+                    <li><strong>[Community]</strong> <a href="https://forum.audacityteam.org/" target="_blank" rel="noopener noreferrer">Audacity Support Forum</a></li>
+                    <li><strong>[Tutorials]</strong> <a href="https://support.audacityteam.org/tutorials" target="_blank" rel="noopener noreferrer">Audacity Tutorials</a></li>
+                </ul>
+            </section>
+        </article>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 OpenGameStack.org. Open-source tools and reproducible workflows for game creators.</p>
+
+            <div class="site-footer-links">
+                <a href="../../mission/" class="site-footer-link">Mission</a>
+                <a href="../" class="site-footer-link">Tools</a>
+                <a href="../../launcher/" class="site-footer-link">Launcher</a>
+                <a href="../../examples/" class="site-footer-link">Examples</a>
+                <a href="https://opengamestack.substack.com/" class="site-footer-link" target="_blank" rel="noopener noreferrer">Substack</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
+            </div>
+
+            <p class="site-footer-note">
+                Maintained by the Open Game Stack Initiative.
+            </p>
+        </footer>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git deep-dive profile in the Open Game Stack tool directory. Role in pipeline, frozen launcher releases, vital signs, and learning resources.">
+    <title>Git | Open Game Stack Tools</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a href="../../" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../../" class="site-nav-link">Home</a>
+                <a href="../" class="site-nav-link active">Tools</a>
+                <a href="../../launcher/" class="site-nav-link">Launcher</a>
+                <a href="../../mission/" class="site-nav-link">Mission</a>
+                <a href="../../examples/" class="site-nav-link">Examples</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../" class="back-link">&larr; Back to Tools Catalog</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span class="breadcrumb-current">Git</span>
+        </nav>
+
+        <article class="article-body">
+            <header class="tool-profile-header">
+                <div class="tool-profile-visual">
+                    <img class="tool-icon" src="../../assets/images/Git.png" alt="Git logo">
+                </div>
+                <div class="tool-profile-info">
+                    <div class="tool-id-row">
+                        <h1 class="tool-profile-title">Git</h1>
+                        <span class="badge-tier-frozen">Frozen in Launcher</span>
+                        <span class="badge-license">GPL-2.0</span>
+                    </div>
+                    <p class="tool-profile-tagline">Industry-standard distributed version control system for tracking project history.</p>
+                    <div class="tool-profile-links">
+                        <a class="btn btn-outline" href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Official Website</a>
+                        <a class="btn btn-outline" href="https://github.com/git/git" target="_blank" rel="noopener noreferrer">Source Repository</a>
+                    </div>
+                </div>
+            </header>
+
+            <section class="prose" id="role">
+                <h2>Role in the Game Stack</h2>
+                <p>Git tracks revision history for game source code, scripts, configuration files, and project assets. It enables branching strategies, collaborative developer merges, and atomic commit histories for indie studios and open-source contributors.</p>
+                <h3>Key Capabilities &amp; Strengths</h3>
+                <ul>
+                    <li>Decentralized branching, merging, and revision tracking</li>
+                    <li>Cryptographically secured commit tree verification</li>
+                    <li>Universal interoperability across GitHub, GitLab, and local remotes</li>
+                    <li>Large file support via Git LFS</li>
+                </ul>
+                <div class="callout callout-info">
+                    <div class="callout-title">Replaces Proprietary Software</div>
+                    <p>Within sovereign and telemetry-free creative pipelines, Git serves as a direct open-source alternative to proprietary software.</p>
+                    <div class="tool-replaces">
+                        <span class="replaces-label">Replaces:</span>
+                        <span class="replaces-chip">Perforce Helix Core</span> <span class="replaces-chip">Plastic SCM</span> <span class="replaces-chip">Subversion</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="prose" id="launcher-integration">
+                <h2>OGS Launcher Integration &amp; Frozen Releases</h2>
+                <p>The Open Game Stack Launcher packages verified, immutable builds of Git. These releases are cached locally and launched without network access, vendor telemetry, or external licensing servers.</p>
+                <div class="table-container">
+                    <table class="version-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Size</th>
+                                <th>SHA-256 Checksum</th>
+                                <th>Executable</th>
+                                <th>Notes</th>
+                                <th>Archive</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>2.56.0.4</code></td>
+                            <td>149.4 MB</td>
+                            <td><code>359d6c99ff158e510f15c9378d740cbd4a2723695206f45a86c8adc596a35531</code></td>
+                            <td><code>git-bash.exe</code></td>
+                            <td><a href="https://github.com/git-for-windows/git/releases/tag/v2.56.0.windows.4" target="_blank" rel="noopener noreferrer">Release Notes</a></td>
+                            <td><a href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/git-2.56.0.4-win64.zip" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Project Manifest Configuration (<code>ogs_stack.json</code>)</h3>
+                <p>Pin Git to this frozen version in your project repository by declaring it inside your <code>ogs_stack.json</code> manifest:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">ogs_stack.json</span>
+                    </div>
+                    <pre><code>{
+  &quot;name&quot;: &quot;MyGameProject&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;tools&quot;: [
+    {
+      &quot;id&quot;: &quot;git&quot;,
+      &quot;version&quot;: &quot;2.56.0.4&quot;,
+      &quot;category&quot;: &quot;Code&quot;
+    }
+  ]
+}</code></pre>
+                </div>
+            </section>
+
+            <section class="prose" id="vital-signs">
+                <h2>Open-Source Vital Signs</h2>
+                <p>Project health, licensing, and cross-platform runtime support for Git:</p>
+                <div class="table-container">
+                    <table class="spec-table">
+                        <tbody>
+                            <tr><th>Software License</th><td><code>GPL-2.0</code></td></tr>
+                            <tr><th>Supported Platforms</th><td><span class="badge">Windows</span> <span class="badge">Linux</span> <span class="badge">macOS</span></td></tr>
+                            <tr><th>Stack Category</th><td><span class="badge-tier-frozen">Code</span></td></tr>
+                            <tr><th>Official Website</th><td><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">https://git-scm.com/</a></td></tr>
+                            <tr><th>Source Repository</th><td><a href="https://github.com/git/git" target="_blank" rel="noopener noreferrer">https://github.com/git/git</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="prose" id="resources">
+                <h2>Getting Started &amp; Learning Resources</h2>
+                <p>Official documentation, tutorials, and community hubs to help game developers master Git:</p>
+                <ul class="resource-list">
+                    <li><strong>[Documentation]</strong> <a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener noreferrer">Pro Git Book</a></li>
+                    <li><strong>[Documentation]</strong> <a href="https://git-scm.com/docs" target="_blank" rel="noopener noreferrer">Git Reference Manual</a></li>
+                    <li><strong>[Releases]</strong> <a href="https://github.com/git-for-windows/git/releases" target="_blank" rel="noopener noreferrer">Git for Windows Releases</a></li>
+                </ul>
+            </section>
+        </article>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 OpenGameStack.org. Open-source tools and reproducible workflows for game creators.</p>
+
+            <div class="site-footer-links">
+                <a href="../../mission/" class="site-footer-link">Mission</a>
+                <a href="../" class="site-footer-link">Tools</a>
+                <a href="../../launcher/" class="site-footer-link">Launcher</a>
+                <a href="../../examples/" class="site-footer-link">Examples</a>
+                <a href="https://opengamestack.substack.com/" class="site-footer-link" target="_blank" rel="noopener noreferrer">Substack</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
+            </div>
+
+            <p class="site-footer-note">
+                Maintained by the Open Game Stack Initiative.
+            </p>
+        </footer>
+    </main>
+</body>
+
+</html>

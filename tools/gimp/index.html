@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GIMP deep-dive profile in the Open Game Stack tool directory. Role in pipeline, frozen launcher releases, vital signs, and learning resources.">
+    <title>GIMP | Open Game Stack Tools</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a href="../../" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../../" class="site-nav-link">Home</a>
+                <a href="../" class="site-nav-link active">Tools</a>
+                <a href="../../launcher/" class="site-nav-link">Launcher</a>
+                <a href="../../mission/" class="site-nav-link">Mission</a>
+                <a href="../../examples/" class="site-nav-link">Examples</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../" class="back-link">&larr; Back to Tools Catalog</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span class="breadcrumb-current">GIMP</span>
+        </nav>
+
+        <article class="article-body">
+            <header class="tool-profile-header">
+                <div class="tool-profile-visual">
+                    <img class="tool-icon" src="../../assets/images/GIMP.png" alt="GIMP logo">
+                </div>
+                <div class="tool-profile-info">
+                    <div class="tool-id-row">
+                        <h1 class="tool-profile-title">GIMP</h1>
+                        <span class="badge-tier-frozen">Frozen in Launcher</span>
+                        <span class="badge-license">GPL-3.0</span>
+                    </div>
+                    <p class="tool-profile-tagline">Extensible raster image editor for photo retouching, texturing, and asset batching.</p>
+                    <div class="tool-profile-links">
+                        <a class="btn btn-outline" href="https://www.gimp.org/" target="_blank" rel="noopener noreferrer">Official Website</a>
+                        <a class="btn btn-outline" href="https://gitlab.gnome.org/GNOME/gimp" target="_blank" rel="noopener noreferrer">Source Repository</a>
+                    </div>
+                </div>
+            </header>
+
+            <section class="prose" id="role">
+                <h2>Role in the Game Stack</h2>
+                <p>GIMP (GNU Image Manipulation Program) provides raster editing, asset cleanup, texture channel manipulation, and format conversion. Equipped with GEGL high-bit-depth color processing and Python scripting, it serves as a workhorse for asset preparation.</p>
+                <h3>Key Capabilities &amp; Strengths</h3>
+                <ul>
+                    <li>High bit-depth image processing powered by GEGL</li>
+                    <li>Extensive channel, mask, and selection toolsets</li>
+                    <li>Comprehensive file format support including TGA, DDS, and OpenEXR</li>
+                    <li>Batch automation via Python and Script-Fu</li>
+                </ul>
+                <div class="callout callout-info">
+                    <div class="callout-title">Replaces Proprietary Software</div>
+                    <p>Within sovereign and telemetry-free creative pipelines, GIMP serves as a direct open-source alternative to proprietary software.</p>
+                    <div class="tool-replaces">
+                        <span class="replaces-label">Replaces:</span>
+                        <span class="replaces-chip">Adobe Photoshop</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="prose" id="launcher-integration">
+                <h2>OGS Launcher Integration &amp; Frozen Releases</h2>
+                <p>The Open Game Stack Launcher packages verified, immutable builds of GIMP. These releases are cached locally and launched without network access, vendor telemetry, or external licensing servers.</p>
+                <div class="table-container">
+                    <table class="version-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Size</th>
+                                <th>SHA-256 Checksum</th>
+                                <th>Executable</th>
+                                <th>Notes</th>
+                                <th>Archive</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>3.2.4</code></td>
+                            <td>195.2 MB</td>
+                            <td><code>1e5ace65d0c853955dc806c75fef1ca9db77c23067cfa515a9ad5b32053d021b</code></td>
+                            <td><code>bin/gimp.exe</code></td>
+                            <td><a href="https://www.gimp.org/news/2026/04/19/gimp-3.2.4-released/" target="_blank" rel="noopener noreferrer">Release Notes</a></td>
+                            <td><a href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v2.0/gimp-3.2.4-win64.zip" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Project Manifest Configuration (<code>ogs_stack.json</code>)</h3>
+                <p>Pin GIMP to this frozen version in your project repository by declaring it inside your <code>ogs_stack.json</code> manifest:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">ogs_stack.json</span>
+                    </div>
+                    <pre><code>{
+  &quot;name&quot;: &quot;MyGameProject&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;tools&quot;: [
+    {
+      &quot;id&quot;: &quot;gimp&quot;,
+      &quot;version&quot;: &quot;3.2.4&quot;,
+      &quot;category&quot;: &quot;2D&quot;
+    }
+  ]
+}</code></pre>
+                </div>
+            </section>
+
+            <section class="prose" id="vital-signs">
+                <h2>Open-Source Vital Signs</h2>
+                <p>Project health, licensing, and cross-platform runtime support for GIMP:</p>
+                <div class="table-container">
+                    <table class="spec-table">
+                        <tbody>
+                            <tr><th>Software License</th><td><code>GPL-3.0</code></td></tr>
+                            <tr><th>Supported Platforms</th><td><span class="badge">Windows</span> <span class="badge">Linux</span> <span class="badge">macOS</span></td></tr>
+                            <tr><th>Stack Category</th><td><span class="badge-tier-frozen">2D</span></td></tr>
+                            <tr><th>Official Website</th><td><a href="https://www.gimp.org/" target="_blank" rel="noopener noreferrer">https://www.gimp.org/</a></td></tr>
+                            <tr><th>Source Repository</th><td><a href="https://gitlab.gnome.org/GNOME/gimp" target="_blank" rel="noopener noreferrer">https://gitlab.gnome.org/GNOME/gimp</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="prose" id="resources">
+                <h2>Getting Started &amp; Learning Resources</h2>
+                <p>Official documentation, tutorials, and community hubs to help game developers master GIMP:</p>
+                <ul class="resource-list">
+                    <li><strong>[Documentation]</strong> <a href="https://www.gimp.org/docs/" target="_blank" rel="noopener noreferrer">GIMP Documentation</a></li>
+                    <li><strong>[Tutorials]</strong> <a href="https://www.gimp.org/tutorials/" target="_blank" rel="noopener noreferrer">GIMP Tutorials</a></li>
+                    <li><strong>[Documentation]</strong> <a href="https://gegl.org/" target="_blank" rel="noopener noreferrer">GEGL Documentation</a></li>
+                </ul>
+            </section>
+        </article>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 OpenGameStack.org. Open-source tools and reproducible workflows for game creators.</p>
+
+            <div class="site-footer-links">
+                <a href="../../mission/" class="site-footer-link">Mission</a>
+                <a href="../" class="site-footer-link">Tools</a>
+                <a href="../../launcher/" class="site-footer-link">Launcher</a>
+                <a href="../../examples/" class="site-footer-link">Examples</a>
+                <a href="https://opengamestack.substack.com/" class="site-footer-link" target="_blank" rel="noopener noreferrer">Substack</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
+            </div>
+
+            <p class="site-footer-note">
+                Maintained by the Open Game Stack Initiative.
+            </p>
+        </footer>
+    </main>
+</body>
+
+</html>

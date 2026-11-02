@@ -7,7 +7,8 @@ Features:
 1. Validates canonical tool metadata in content/tools.json against schema requirements.
 2. Verifies exact version and metadata parity against sibling ogs-frozen-stacks/repository.json.
 3. Provides modular, reusable HTML rendering helpers for catalog sections and tool detail pages.
-4. Provides a UTF-8 file writing utility guaranteeing consistent encoding without BOM.
+4. Generates dedicated deep-dive profile pages for all Tier-1 Launcher tools.
+5. Provides a UTF-8 file writing utility guaranteeing consistent encoding without BOM.
 """
 
 from __future__ import annotations
@@ -451,6 +452,8 @@ def render_tool_card_static(tool: dict[str, Any], base_url: str = "..") -> str:
                 f'                        </li>'
             )
         version_label = "Version"
+        title_markup = f'<h3 class="tool-id"><a href="./{tid}/" class="tool-title-link">{tid}</a></h3>'
+        profile_link_markup = f'\n                                <a href="./{tid}/" class="tool-profile-link">Deep Dive &rarr;</a>'
     else:
         web_url = escape_html(tool.get("website_url", ""))
         repo_url = escape_html(tool.get("repo_url", ""))
@@ -461,6 +464,8 @@ def render_tool_card_static(tool: dict[str, Any], base_url: str = "..") -> str:
             f'                        </li>'
         )
         version_label = "Links"
+        title_markup = f'<h3 class="tool-id">{tid}</h3>'
+        profile_link_markup = ""
 
     versions_markup = "\n".join(version_items)
 
@@ -471,9 +476,10 @@ def render_tool_card_static(tool: dict[str, Any], base_url: str = "..") -> str:
         f'                        </div>\n'
         f'                        <div class="tool-content">\n'
         f'                            <div class="tool-id-row">\n'
-        f'                                <h3 class="tool-id">{tid}</h3>\n'
+        f'                                {title_markup}\n'
         f'                                <span class="badge-tier-{tier}">{tier_label}</span>\n'
-        f'                                <span class="badge-license">{license_name}</span>\n'
+        f'                                <span class="badge-license">{license_name}</span>'
+        f'{profile_link_markup}\n'
         f'                            </div>\n'
         f'                            <p class="tool-description">{description}</p>\n'
         f'{replaces_markup}'
@@ -553,11 +559,13 @@ def render_tool_profile_page(
     website_url = escape_html(tool.get("website_url", ""))
     repo_url = escape_html(tool.get("repo_url", ""))
     cat_name = escape_html(category.get("name", tool.get("category", "")))
-    cat_id = escape_html(category.get("id", "general"))
     tier_label = "Frozen in Launcher" if tier == "frozen" else "Ecosystem Radar"
-    meta_desc = escape_html(f"{tname} profile in the Open Game Stack tool directory. {tagline}")
+    meta_desc = escape_html(
+        f"{tname} deep-dive profile in the Open Game Stack tool directory. "
+        f"Role in pipeline, frozen launcher releases, vital signs, and learning resources."
+    )
 
-    # Visual header
+    # Visual header icon
     image_path = tool.get("image")
     if image_path:
         full_img_src = f"{base_url}/{image_path.lstrip('/')}"
@@ -567,66 +575,63 @@ def render_tool_profile_page(
         icon_html = f'<span class="tool-mark" aria-label="{tname}">{initial}</span>'
 
     # Replaces chips
-    replaces_chips = "".join(
-        f'<span class="badge">{escape_html(r)}</span>' for r in tool.get("replaces", [])
+    replaces_chips = " ".join(
+        f'<span class="replaces-chip">{escape_html(r)}</span>' for r in tool.get("replaces", [])
     )
 
     # Platforms chips
-    platforms_chips = "".join(
+    platforms_chips = " ".join(
         f'<span class="badge">{escape_html(p)}</span>' for p in tool.get("platforms", [])
     )
 
     # Strengths list
-    strengths_items = "".join(
-        f'<li>{escape_html(s)}</li>' for s in tool.get("strengths", [])
+    strengths_items = "\n".join(
+        f'                    <li>{escape_html(s)}</li>' for s in tool.get("strengths", [])
     )
 
-    # Versions table (if frozen)
+    # Versions table and ogs_stack.json snippet
     versions = tool.get("versions", [])
-    if tier == "frozen" and versions:
-        version_rows = []
-        for ver in versions:
-            v_str = escape_html(ver.get("version", ""))
-            v_size = f"{ver.get('size_bytes', 0) / (1024 * 1024):.1f} MB"
-            v_sha = escape_html(ver.get("sha256", "")[:16] + "...")
-            v_info = escape_html(ver.get("info_url", ""))
-            v_arch = escape_html(ver.get("archive_url", ""))
-            version_rows.append(
-                f'                        <tr>\n'
-                f'                            <td><code>{v_str}</code></td>\n'
-                f'                            <td>{v_size}</td>\n'
-                f'                            <td><code title="{escape_html(ver.get("sha256", ""))}">{v_sha}</code></td>\n'
-                f'                            <td><a href="{v_info}" target="_blank" rel="noopener noreferrer">Release Notes</a></td>\n'
-                f'                            <td><a href="{v_arch}" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>\n'
-                f'                        </tr>'
-            )
-        version_rows_str = "\n".join(version_rows)
-        versions_section = (
-            f'            <section class="prose">\n'
-            f'                <h2>Frozen Releases</h2>\n'
-            f'                <p>These versioned builds are frozen and guaranteed to install reproducibly through the Open Game Stack Launcher.</p>\n'
-            f'                <table class="version-table">\n'
-            f'                    <thead>\n'
-            f'                        <tr><th>Version</th><th>Size</th><th>SHA-256</th><th>Notes</th><th>Archive</th></tr>\n'
-            f'                    </thead>\n'
-            f'                    <tbody>\n'
-            f'{version_rows_str}\n'
-            f'                    </tbody>\n'
-            f'                </table>\n'
-            f'            </section>\n'
+    version_rows: list[str] = []
+    latest_version = versions[0].get("version", "1.0.0") if versions else "1.0.0"
+
+    for ver in versions:
+        v_str = escape_html(ver.get("version", ""))
+        v_size = f"{ver.get('size_bytes', 0) / (1024 * 1024):.1f} MB"
+        v_sha = escape_html(ver.get("sha256", ""))
+        v_exe = escape_html(ver.get("executable_path", ""))
+        v_info = escape_html(ver.get("info_url", ""))
+        v_arch = escape_html(ver.get("archive_url", ""))
+        version_rows.append(
+            f'                        <tr>\n'
+            f'                            <td><code>{v_str}</code></td>\n'
+            f'                            <td>{v_size}</td>\n'
+            f'                            <td><code>{v_sha}</code></td>\n'
+            f'                            <td><code>{v_exe}</code></td>\n'
+            f'                            <td><a href="{v_info}" target="_blank" rel="noopener noreferrer">Release Notes</a></td>\n'
+            f'                            <td><a href="{v_arch}" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>\n'
+            f'                        </tr>'
         )
-    else:
-        versions_section = (
-            f'            <section class="callout">\n'
-            f'                <h3>Ecosystem Radar Status</h3>\n'
-            f'                <p>This tool is actively tracked on our Ecosystem Radar as a recommended open-source asset creation or level authoring companion for game developers.</p>\n'
-            f'            </section>\n'
-        )
+    version_rows_str = "\n".join(version_rows)
+
+    manifest_json = json.dumps(
+        {
+            "name": "MyGameProject",
+            "version": "1.0.0",
+            "tools": [
+                {
+                    "id": tid,
+                    "version": latest_version,
+                    "category": cat_name,
+                }
+            ],
+        },
+        indent=2,
+    )
+    manifest_code = escape_html(manifest_json)
 
     # Resources list
-    resources = tool.get("resources", [])
-    resource_items = []
-    for r in resources:
+    resource_items: list[str] = []
+    for r in tool.get("resources", []):
         r_title = escape_html(r.get("title", ""))
         r_url = escape_html(r.get("url", ""))
         r_type = escape_html(r.get("type", "Resource"))
@@ -642,30 +647,32 @@ def render_tool_profile_page(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{meta_desc}">
-    <title>{tname} | Open Game Stack</title>
-    <link rel="stylesheet" href="{base_url}/assets/css/site.css">
+    <title>{tname} | Open Game Stack Tools</title>
     <link rel="icon" type="image/png" href="{base_url}/favicon.png">
+    <link rel="stylesheet" href="{base_url}/assets/css/site.css">
 </head>
 
 <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-        <a class="site-logo" href="{base_url}/">
-            <img class="site-logo-icon" src="{base_url}/logo.png" alt="Open Game Stack logo">
-            <span class="site-logo-text">Open Game Stack</span>
-        </a>
-        <nav class="site-nav" aria-label="Main Navigation">
-            <a class="site-nav-link" href="{base_url}/launcher/">Launcher</a>
-            <a class="site-nav-link active" href="{base_url}/tools/">Tools</a>
-            <a class="site-nav-link" href="{base_url}/mission/">Mission</a>
-            <a class="site-nav-link" href="{base_url}/examples/">Examples</a>
-        </nav>
+        <div class="header-container">
+            <a href="{base_url}/" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="{base_url}/" class="site-nav-link">Home</a>
+                <a href="../" class="site-nav-link active">Tools</a>
+                <a href="{base_url}/launcher/" class="site-nav-link">Launcher</a>
+                <a href="{base_url}/mission/" class="site-nav-link">Mission</a>
+                <a href="{base_url}/examples/" class="site-nav-link">Examples</a>
+            </nav>
+        </div>
     </header>
 
     <main class="container" id="main">
         <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="{base_url}/tools/">Tools</a> &gt; <span>{tname}</span>
+            <a href="../" class="back-link">&larr; Back to Tools Catalog</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span class="breadcrumb-current">{tname}</span>
         </nav>
 
         <article class="article-body">
@@ -676,8 +683,8 @@ def render_tool_profile_page(
                 <div class="tool-profile-info">
                     <div class="tool-id-row">
                         <h1 class="tool-profile-title">{tname}</h1>
-                        <span class="badge badge-tier-{tier}">{tier_label}</span>
-                        <span class="badge badge-cat-{cat_id}">{cat_name}</span>
+                        <span class="badge-tier-{tier}">{tier_label}</span>
+                        <span class="badge-license">{license_name}</span>
                     </div>
                     <p class="tool-profile-tagline">{tagline}</p>
                     <div class="tool-profile-links">
@@ -687,57 +694,124 @@ def render_tool_profile_page(
                 </div>
             </header>
 
-            <section class="prose">
-                <h2>Overview</h2>
+            <section class="prose" id="role">
+                <h2>Role in the Game Stack</h2>
                 <p>{summary}</p>
-            </section>
-
-            <section class="prose">
-                <h2>Key Capabilities</h2>
+                <h3>Key Capabilities &amp; Strengths</h3>
                 <ul>
-                    {strengths_items}
+{strengths_items}
                 </ul>
+                <div class="callout callout-info">
+                    <div class="callout-title">Replaces Proprietary Software</div>
+                    <p>Within sovereign and telemetry-free creative pipelines, {tname} serves as a direct open-source alternative to proprietary software.</p>
+                    <div class="tool-replaces">
+                        <span class="replaces-label">Replaces:</span>
+                        {replaces_chips}
+                    </div>
+                </div>
             </section>
 
-            <section class="spec-table-container">
-                <table class="spec-table">
-                    <tbody>
-                        <tr><th>Category</th><td>{cat_name}</td></tr>
-                        <tr><th>License</th><td><code>{license_name}</code></td></tr>
-                        <tr><th>Supported Platforms</th><td>{platforms_chips}</td></tr>
-                        <tr><th>Replaces</th><td>{replaces_chips}</td></tr>
-                    </tbody>
-                </table>
+            <section class="prose" id="launcher-integration">
+                <h2>OGS Launcher Integration &amp; Frozen Releases</h2>
+                <p>The Open Game Stack Launcher packages verified, immutable builds of {tname}. These releases are cached locally and launched without network access, vendor telemetry, or external licensing servers.</p>
+                <div class="table-container">
+                    <table class="version-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Size</th>
+                                <th>SHA-256 Checksum</th>
+                                <th>Executable</th>
+                                <th>Notes</th>
+                                <th>Archive</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+{version_rows_str}
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Project Manifest Configuration (<code>ogs_stack.json</code>)</h3>
+                <p>Pin {tname} to this frozen version in your project repository by declaring it inside your <code>ogs_stack.json</code> manifest:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">ogs_stack.json</span>
+                    </div>
+                    <pre><code>{manifest_code}</code></pre>
+                </div>
             </section>
 
-{versions_section}
-            <section class="prose">
-                <h2>Curated Learning Resources</h2>
-                <ul>
+            <section class="prose" id="vital-signs">
+                <h2>Open-Source Vital Signs</h2>
+                <p>Project health, licensing, and cross-platform runtime support for {tname}:</p>
+                <div class="table-container">
+                    <table class="spec-table">
+                        <tbody>
+                            <tr><th>Software License</th><td><code>{license_name}</code></td></tr>
+                            <tr><th>Supported Platforms</th><td>{platforms_chips}</td></tr>
+                            <tr><th>Stack Category</th><td><span class="badge-tier-{tier}">{cat_name}</span></td></tr>
+                            <tr><th>Official Website</th><td><a href="{website_url}" target="_blank" rel="noopener noreferrer">{website_url}</a></td></tr>
+                            <tr><th>Source Repository</th><td><a href="{repo_url}" target="_blank" rel="noopener noreferrer">{repo_url}</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="prose" id="resources">
+                <h2>Getting Started &amp; Learning Resources</h2>
+                <p>Official documentation, tutorials, and community hubs to help game developers master {tname}:</p>
+                <ul class="resource-list">
 {resources_html}
                 </ul>
             </section>
         </article>
-    </main>
 
-    <footer class="site-footer">
-        <div class="site-footer-content">
-            <p class="site-footer-tagline">Open-source tools and reproducible workflows for game creators.</p>
-            <nav class="site-footer-links" aria-label="Footer Navigation">
-                <a class="site-footer-link" href="{base_url}/launcher/">Launcher</a>
-                <a class="site-footer-link" href="{base_url}/tools/">Tools</a>
-                <a class="site-footer-link" href="{base_url}/mission/">Mission</a>
-                <a class="site-footer-link" href="{base_url}/examples/">Examples</a>
-                <a class="site-footer-link" href="https://opengamestack.substack.com/" target="_blank" rel="noopener noreferrer">Newsletter</a>
-                <a class="site-footer-link" href="https://github.com/OpenGameStack-Launcher" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </nav>
-            <p class="site-footer-copy">&copy; 2026 Open Game Stack contributors. Sovereign and independent.</p>
-        </div>
-    </footer>
+        <footer class="site-footer">
+            <p>&copy; 2026 OpenGameStack.org. Open-source tools and reproducible workflows for game creators.</p>
+
+            <div class="site-footer-links">
+                <a href="{base_url}/mission/" class="site-footer-link">Mission</a>
+                <a href="../" class="site-footer-link">Tools</a>
+                <a href="{base_url}/launcher/" class="site-footer-link">Launcher</a>
+                <a href="{base_url}/examples/" class="site-footer-link">Examples</a>
+                <a href="https://opengamestack.substack.com/" class="site-footer-link" target="_blank" rel="noopener noreferrer">Substack</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
+            </div>
+
+            <p class="site-footer-note">
+                Maintained by the Open Game Stack Initiative.
+            </p>
+        </footer>
+    </main>
 </body>
 
 </html>
 """
+
+
+def build_all_profile_pages(
+    tools_data: dict[str, Any],
+    output_root: Path | None = None,
+) -> list[Path]:
+    """Generates static HTML5 profile pages for all 7 Tier-1 Launcher tools."""
+    root = output_root or REPO_ROOT
+    categories = {c["name"]: c for c in tools_data.get("categories", [])}
+    tools = tools_data.get("tools", [])
+    generated_files: list[Path] = []
+
+    for tool in tools:
+        tid = tool.get("id")
+        if tool.get("tier") == "frozen" and tid in CANONICAL_FROZEN_IDS:
+            cat_name = tool.get("category", "")
+            category = categories.get(cat_name, {"name": cat_name, "id": "general"})
+            page_html = render_tool_profile_page(tool, category, base_url="../..")
+            target_path = root / "tools" / tid / "index.html"
+            write_file_utf8(target_path, page_html)
+            generated_files.append(target_path)
+
+    return generated_files
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -749,6 +823,11 @@ def main(argv: list[str] | None = None) -> int:
         "--check",
         action="store_true",
         help="Validate content/tools.json schema integrity and repository parity without building",
+    )
+    parser.add_argument(
+        "--build",
+        action="store_true",
+        help="Generate dedicated deep-dive profile pages for all 7 Tier-1 Launcher tools",
     )
     parser.add_argument(
         "--tools-file",
@@ -788,6 +867,17 @@ def main(argv: list[str] | None = None) -> int:
         f"[PASS] Tools metadata validation succeeded: "
         f"{category_count} categories, {tool_count} tools ({frozen_count} frozen, {radar_count} radar)."
     )
+
+    if args.check and not args.build:
+        return 0
+
+    # Build profile pages
+    generated = build_all_profile_pages(data)
+    print(f"[PASS] Successfully generated {len(generated)} tool profile pages:")
+    for path in generated:
+        rel = path.relative_to(REPO_ROOT).as_posix()
+        print(f"  - {rel}")
+
     return 0
 
 

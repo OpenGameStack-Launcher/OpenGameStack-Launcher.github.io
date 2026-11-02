@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VSCodium deep-dive profile in the Open Game Stack tool directory. Role in pipeline, frozen launcher releases, vital signs, and learning resources.">
+    <title>VSCodium | Open Game Stack Tools</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a href="../../" class="site-logo">OPEN <span>GAME STACK</span></a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../../" class="site-nav-link">Home</a>
+                <a href="../" class="site-nav-link active">Tools</a>
+                <a href="../../launcher/" class="site-nav-link">Launcher</a>
+                <a href="../../mission/" class="site-nav-link">Mission</a>
+                <a href="../../examples/" class="site-nav-link">Examples</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../" class="back-link">&larr; Back to Tools Catalog</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span class="breadcrumb-current">VSCodium</span>
+        </nav>
+
+        <article class="article-body">
+            <header class="tool-profile-header">
+                <div class="tool-profile-visual">
+                    <img class="tool-icon" src="../../assets/images/VSCodium.png" alt="VSCodium logo">
+                </div>
+                <div class="tool-profile-info">
+                    <div class="tool-id-row">
+                        <h1 class="tool-profile-title">VSCodium</h1>
+                        <span class="badge-tier-frozen">Frozen in Launcher</span>
+                        <span class="badge-license">MIT</span>
+                    </div>
+                    <p class="tool-profile-tagline">Free/Libre Open Source Software binaries of VS Code with telemetry completely disabled.</p>
+                    <div class="tool-profile-links">
+                        <a class="btn btn-outline" href="https://vscodium.com/" target="_blank" rel="noopener noreferrer">Official Website</a>
+                        <a class="btn btn-outline" href="https://github.com/VSCodium/vscodium" target="_blank" rel="noopener noreferrer">Source Repository</a>
+                    </div>
+                </div>
+            </header>
+
+            <section class="prose" id="role">
+                <h2>Role in the Game Stack</h2>
+                <p>VSCodium is a community-driven, telemetry-free binary distribution of Microsoft&#x27;s VS Code editor. It provides a lightweight code editor with rich extension marketplace support for GDScript, C#, Python, shaders, and JSON configurations.</p>
+                <h3>Key Capabilities &amp; Strengths</h3>
+                <ul>
+                    <li>Zero telemetry, tracking pixels, or diagnostic profiling by default</li>
+                    <li>Seamless language support for GDScript, C#, C++, Rust, and Shaders</li>
+                    <li>Built-in Git diff inspection and integrated terminal</li>
+                    <li>Vast Open VSX extension registry ecosystem</li>
+                </ul>
+                <div class="callout callout-info">
+                    <div class="callout-title">Replaces Proprietary Software</div>
+                    <p>Within sovereign and telemetry-free creative pipelines, VSCodium serves as a direct open-source alternative to proprietary software.</p>
+                    <div class="tool-replaces">
+                        <span class="replaces-label">Replaces:</span>
+                        <span class="replaces-chip">Microsoft Visual Studio Code</span> <span class="replaces-chip">Sublime Text</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="prose" id="launcher-integration">
+                <h2>OGS Launcher Integration &amp; Frozen Releases</h2>
+                <p>The Open Game Stack Launcher packages verified, immutable builds of VSCodium. These releases are cached locally and launched without network access, vendor telemetry, or external licensing servers.</p>
+                <div class="table-container">
+                    <table class="version-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Size</th>
+                                <th>SHA-256 Checksum</th>
+                                <th>Executable</th>
+                                <th>Notes</th>
+                                <th>Archive</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>1.143.17232</code></td>
+                            <td>220.7 MB</td>
+                            <td><code>a1090868af8ac0ac04c22d79fdd02246fa115a78daf38a741d8db06df1753c1d</code></td>
+                            <td><code>VSCodium.exe</code></td>
+                            <td><a href="https://github.com/VSCodium/vscodium/releases/tag/1.143.17232" target="_blank" rel="noopener noreferrer">Release Notes</a></td>
+                            <td><a href="https://github.com/OpenGameStack-Launcher/ogs-frozen-stacks/releases/download/v3.0/vscodium-1.143.17232-win64.zip" target="_blank" rel="noopener noreferrer">Download ZIP</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Project Manifest Configuration (<code>ogs_stack.json</code>)</h3>
+                <p>Pin VSCodium to this frozen version in your project repository by declaring it inside your <code>ogs_stack.json</code> manifest:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">ogs_stack.json</span>
+                    </div>
+                    <pre><code>{
+  &quot;name&quot;: &quot;MyGameProject&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;tools&quot;: [
+    {
+      &quot;id&quot;: &quot;vscodium&quot;,
+      &quot;version&quot;: &quot;1.143.17232&quot;,
+      &quot;category&quot;: &quot;Code&quot;
+    }
+  ]
+}</code></pre>
+                </div>
+            </section>
+
+            <section class="prose" id="vital-signs">
+                <h2>Open-Source Vital Signs</h2>
+                <p>Project health, licensing, and cross-platform runtime support for VSCodium:</p>
+                <div class="table-container">
+                    <table class="spec-table">
+                        <tbody>
+                            <tr><th>Software License</th><td><code>MIT</code></td></tr>
+                            <tr><th>Supported Platforms</th><td><span class="badge">Windows</span> <span class="badge">Linux</span> <span class="badge">macOS</span></td></tr>
+                            <tr><th>Stack Category</th><td><span class="badge-tier-frozen">Code</span></td></tr>
+                            <tr><th>Official Website</th><td><a href="https://vscodium.com/" target="_blank" rel="noopener noreferrer">https://vscodium.com/</a></td></tr>
+                            <tr><th>Source Repository</th><td><a href="https://github.com/VSCodium/vscodium" target="_blank" rel="noopener noreferrer">https://github.com/VSCodium/vscodium</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="prose" id="resources">
+                <h2>Getting Started &amp; Learning Resources</h2>
+                <p>Official documentation, tutorials, and community hubs to help game developers master VSCodium:</p>
+                <ul class="resource-list">
+                    <li><strong>[Documentation]</strong> <a href="https://vscodium.com/#install" target="_blank" rel="noopener noreferrer">VSCodium Documentation</a></li>
+                    <li><strong>[Extensions]</strong> <a href="https://open-vsx.org/" target="_blank" rel="noopener noreferrer">Open VSX Extension Registry</a></li>
+                    <li><strong>[Extension]</strong> <a href="https://open-vsx.org/extension/geequlim/godot-tools" target="_blank" rel="noopener noreferrer">Godot Tools Extension</a></li>
+                </ul>
+            </section>
+        </article>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 OpenGameStack.org. Open-source tools and reproducible workflows for game creators.</p>
+
+            <div class="site-footer-links">
+                <a href="../../mission/" class="site-footer-link">Mission</a>
+                <a href="../" class="site-footer-link">Tools</a>
+                <a href="../../launcher/" class="site-footer-link">Launcher</a>
+                <a href="../../examples/" class="site-footer-link">Examples</a>
+                <a href="https://opengamestack.substack.com/" class="site-footer-link" target="_blank" rel="noopener noreferrer">Substack</a>
+                <a href="https://github.com/OpenGameStack-Launcher" class="site-footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/company/open-game-stack-org" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:contact@opengamestack.org" class="site-footer-link">Email</a>
+            </div>
+
+            <p class="site-footer-note">
+                Maintained by the Open Game Stack Initiative.
+            </p>
+        </footer>
+    </main>
+</body>
+
+</html>
