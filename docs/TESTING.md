@@ -20,7 +20,7 @@ python tests/validate_site.py
 
 ### Expected Output
 ```text
-OGS Website Validation Summary: 571 checks run | tests passed: 571 | tests failed: 0
+OGS Website Validation Summary: 752 checks run | tests passed: 752 | tests failed: 0
 All static website validation checks passed.
 ```
 
@@ -33,7 +33,7 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
 `tests/validate_site.py` enforces the following categories of checks across all HTML and CSS files in the repository:
 
 1. **Required Repository Files & Custom Domain (`CNAME`):**
-   - Verifies that `CNAME`, `index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
+   - Verifies that `CNAME`, `index.html`, `launcher/index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
    - Verifies that all 7 tool PNG icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`) exist in `REQUIRED_FILES`.
    - Confirms that legacy `pages/` and `manifesto/` directories do not exist.
    - Confirms `CNAME` equals `opengamestack.org`.
@@ -43,7 +43,7 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Every `.html` file contains `<header class="site-header">`, `<main id="main">`, and `<footer class="site-footer">`.
    - Every `.html` file contains a skip-to-content accessibility landmark link (`<a class="skip-link" href="#main">`).
 3. **Internal Link & Asset Resolution:**
-   - Every local `<a href="...">`, `<link href="...">`, `<script src="...">`, and `<img src="...">` resolves to an existing file in the repository. Directory targets containing `index.html` (such as `mission/`, `../tools/`, `./`) resolve cleanly to the underlying `index.html` file.
+   - Every local `<a href="...">`, `<link href="...">`, `<script src="...">`, and `<img src="...">` resolves to an existing file in the repository. Directory targets containing `index.html` (such as `launcher/`, `tools/`, `mission/`, `./`) resolve cleanly to the underlying `index.html` file.
    - Confirms that no active HTML files contain links or references to legacy `manifesto.html`, `manifesto/`, or `/manifesto/`.
    - Primary navigation (`site-logo`, `site-nav-link`), footer links (`site-footer-link`), and internal CTA buttons (`btn`, `btn-outline`) are strictly prohibited from exposing `index.html`, legacy `pages/`, or `.html` file extensions, enforcing clean directory URLs.
    - Same-page `#fragment` links resolve to a matching `id` attribute in that document.
@@ -56,8 +56,9 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Rejects external `<script src="...">` and external `<link rel="stylesheet">` tags.
    - Rejects references to third-party font/asset CDNs and analytics trackers (`fonts.googleapis.com`, `fonts.gstatic.com`, `google-analytics.com`, `googletagmanager.com`, `unpkg.com`, `jsdelivr.net`, `cdnjs.cloudflare.com`, etc.).
    - Rejects `.innerHTML` usage in inline scripts to enforce safe DOM construction (`document.createElement` + `.textContent`).
-6. **Landing Page Release & Manifest Verifications (`index.html`):**
-   - Asserts at least 2 download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
+6. **Hub Landing Page Verifications (`index.html`):**
+   - Asserts hub navigation and callout links to `launcher/`, `tools/`, `mission/`, `examples/`, and Substack (`https://opengamestack.substack.com/`).
+   - Asserts download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
    - Asserts canonical manifest and config naming (`ogs_stack.json` and `ogs_config.json`).
    - Asserts Godot engine target reference (`Godot 4.7.2`).
    - Prohibits obsolete `v0.1.5` release links and legacy un-prefixed `stack.json` naming.
@@ -72,10 +73,15 @@ The script exits with code `0` when all checks pass and `1` if any check fails.
    - Verifies that `mission/index.html` title text equals `Mission | Open Game Stack`.
    - Verifies that `mission/index.html` preserves required section anchor IDs (`#sovereignty`, `#environment`, `#dual-use`, `#stability`).
    - Verifies that `index.html` includes the secondary CTA button with text `The Mission` pointing to `mission/`.
-9. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
-   - Verifies required surface tokens (`--bg-dark`, `--bg-surface`, `--card-bg`, `--card-border`).
-   - Verifies required semantic category accent properties (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
-   - Verifies required editorial typography, catalog filter, table, and callout classes (`.prose`, `.article-body`, `.catalog-filters`, `.filter-btn`, `.badge-tier-frozen`, `.badge-tier-radar`, `.spec-table`, `.version-table`, `.code-block`, `.code-header`, `.callout`).
+9. **Dedicated Launcher Page Verifications (`launcher/index.html`):**
+   - Verifies that `launcher/index.html` title text equals `Launcher | Open Game Stack`.
+   - Asserts at least 2 download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
+   - Asserts desktop application runtime reference (`Godot 4.7.2`).
+   - Asserts canonical manifest references (`ogs_stack.json` and `ogs_config.json`).
+10. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
+    - Verifies required surface tokens (`--bg-dark`, `--bg-surface`, `--card-bg`, `--card-border`).
+    - Verifies required semantic category accent properties (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
+    - Verifies required editorial typography, catalog filter, table, and callout classes (`.prose`, `.article-body`, `.catalog-filters`, `.filter-btn`, `.badge-tier-frozen`, `.badge-tier-radar`, `.spec-table`, `.version-table`, `.code-block`, `.code-header`, `.callout`).
 
 ---
 
