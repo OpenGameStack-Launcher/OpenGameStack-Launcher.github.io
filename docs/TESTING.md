@@ -20,7 +20,7 @@ python tests/validate_site.py
 
 ### Expected Output
 ```text
-OGS Website Validation Summary: 1214 checks run | tests passed: 1214 | tests failed: 0
+OGS Website Validation Summary: 1563 checks run | tests passed: 1563 | tests failed: 0
 All static website validation checks passed.
 ```
 
@@ -45,9 +45,9 @@ python scripts/build_content.py --check
 
 `tests/validate_site.py` enforces the following categories of checks across all HTML, CSS, JSON, and script files in the repository:
 
-1. **Required Repository Files & Custom Domain (`CNAME`):**
+1. **Required Repository Files, Assets & Custom Domain (`CNAME`):**
    - Verifies that `CNAME`, `index.html`, `launcher/index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `content/tools.json`, `scripts/build_content.py`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
-   - Verifies that all 7 tool PNG icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`) exist in `REQUIRED_FILES`.
+   - Verifies that all 19 tool logos and icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`, `pixelorama.png`, `libresprite.png`, `inkscape.svg`, `ldtk.svg`, `tiled.png`, `trenchbroom.png`, `material-maker.png`, `blockbench.png`, `armorpaint.png`, `lmms.png`, `ardour.png`, `sfxr.png`) exist in `REQUIRED_FILES` with exact case-sensitivity verified on disk.
    - Confirms that legacy `pages/` and `manifesto/` directories do not exist.
    - Confirms `CNAME` equals `opengamestack.org`.
 2. **HTML5 Document Structure & Landmarks:**
@@ -77,11 +77,12 @@ python scripts/build_content.py --check
    - Prohibits obsolete `v0.1.5` release links and legacy un-prefixed `stack.json` naming.
 7. **Tool Catalog Static Fallback Parity & Consistency (`tools/index.html`):**
    - Confirms `tools/index.html` includes the `[data-catalog]` container.
-   - Confirms exactly 7 static fallback tool cards inside `[data-catalog]`.
-   - Verifies static tool catalog IDs (`godot`, `gimp`, `krita`, `blender`, `audacity`, `git`, `vscodium`) and version sets against sibling `ogs-frozen-stacks/repository.json` (or baseline fallback).
-   - Verifies that all 7 catalog tools (Godot, Blender, Krita, GIMP, Audacity, Git, VSCodium) have self-hosted `.tool-icon` PNG images in `assets/images/` and verified in `REQUIRED_FILES`.
-   - Verifies that obsolete `.tool-mark` monogram checks for `git` and `vscodium` have been replaced by full `.tool-icon` image checks across both static fallback cards and inline `toolDetails`.
-   - Verifies that inline `toolDetails` in the hydration script specifies valid local image paths for all 7 catalog tools.
+   - Confirms all 19 static fallback tool cards inside `[data-catalog]` (7 Tier-1 Frozen in Launcher tools and 12 Tier-2 Ecosystem Radar tools across 6 categories).
+   - Verifies static tool catalog IDs and Tier-1 version sets against sibling `ogs-frozen-stacks/repository.json` (or baseline fallback).
+   - Verifies that all 19 catalog tools have self-hosted image assets in `assets/images/` verified in `REQUIRED_FILES` with exact case matching.
+   - Verifies zero generic `.tool-mark` monogram elements across both static fallback cards and inline `toolDetails`, requiring official tool images for every entry.
+   - Verifies accessible filter controls in `.catalog-filters`, including `role="group"` ARIA attributes, semantic filter buttons (`.filter-btn`), and `aria-pressed` states for tier and category selection.
+   - Verifies that inline `toolDetails` in the hydration script specifies valid local image paths for all 19 catalog tools.
 8. **Mission Page Verifications (`mission/index.html`):**
    - Verifies that `mission/index.html` title text equals `Mission | Open Game Stack`.
    - Verifies that `mission/index.html` preserves required section anchor IDs (`#sovereignty`, `#environment`, `#dual-use`, `#stability`).

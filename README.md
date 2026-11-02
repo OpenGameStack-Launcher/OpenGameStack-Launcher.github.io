@@ -11,6 +11,11 @@ This repository hosts the source code for the Open Game Stack web presence, serv
 * **No Build Steps:** What you see is what you get.
 * **No Tracking:** Respects user privacy by design.
 
+## 🛠️ Two-Tier Open-Source Tool Directory
+The website features a filterable two-tier directory at `/tools/`:
+* **Tier 1: Frozen in Launcher (7 core tools):** Packaged, frozen, and distributed reproducibly through the OGS Launcher (Godot, Blender, GIMP, Krita, Audacity, Git, VSCodium).
+* **Tier 2: Ecosystem Radar (12 curated tools):** Battle-tested open-source tools serving as future freeze candidates and recommended production companions across 2D, 3D, Audio, and Level Design (Pixelorama, LibreSprite, Inkscape, LDtk, Tiled, TrenchBroom, Material Maker, Blockbench, ArmorPaint, LMMS, Ardour, sfxr).
+
 ## 🎨 Design System & Styling Tokens
 The site styling (`assets/css/site.css`) implements a Modern Game Studio and Editorial Dark UI built with pure CSS custom properties:
 * **Calm Studio Dark Surface Tokens:** Grounded slate surfaces (`--bg-dark: #090d16`, `--bg-surface`, `--card-bg`, `--card-border`) with subtle stationary ambient illumination for fatigue-free reading.
@@ -22,7 +27,7 @@ The site styling (`assets/css/site.css`) implements a Modern Game Studio and Edi
 * `index.html`: The Open Game Stack Hub homepage (`/`).
 * `launcher/index.html`: The dedicated OGS desktop launcher application page (`/launcher/`).
 * `mission/index.html`: The core philosophy, creator sovereignty, and "Declaration of Digital Sovereignty" (`/mission/`).
-* `tools/index.html`: The frozen tool catalog with category, tool id, version, and release links (`/tools/`).
+* `tools/index.html`: The filterable two-tier open-source game development directory (7 Tier-1 Launcher frozen tools and 12 Tier-2 Ecosystem Radar tools) with category filters, tool metadata, versions, and release links (`/tools/`).
 * `examples/index.html`: Living reference implementations and structured project showcase (Sudoku, Letter Logic) built with Open Game Stack (`/examples/`).
 * `content/tools.json`: Canonical structured metadata catalog for Tier-1 (Launcher frozen) and Tier-2 (Ecosystem Radar) tools.
 * `scripts/build_content.py`: Zero-dependency Python 3 content builder, metadata validator, and static HTML generator.
