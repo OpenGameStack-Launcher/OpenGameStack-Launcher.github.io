@@ -5,7 +5,7 @@ The official public website for the **Open Game Stack** initiative, the universa
 **🌐 Live Site:** [opengamestack.org](https://opengamestack.org)
 
 ## ⚡ About This Project
-This repository hosts the source code for the Open Game Stack web presence. Consistent with our philosophy of "Sovereignty Over Subscription," this site is built with **zero dependencies**.
+This repository hosts the source code for the Open Game Stack web presence, serving as the central hub for the open-source game development ecosystem and the official front door for the OGS Launcher desktop application. Consistent with our philosophy of "Sovereignty Over Subscription," this site is built with **zero dependencies**.
 
 * **No Frameworks:** Pure HTML5 and CSS3.
 * **No Build Steps:** What you see is what you get.
@@ -19,7 +19,8 @@ The site styling (`assets/css/site.css`) implements a Modern Game Studio and Edi
 * **Sovereign Privacy & Accessibility:** Self-hosted local fonts (`assets/fonts/`), zero external CDNs or analytics, high-contrast `:focus-visible` outlines, and full `prefers-reduced-motion` compliance.
 
 ## 📂 Repository Structure
-* `index.html`: The main landing page (`/`).
+* `index.html`: The Open Game Stack Hub homepage (`/`).
+* `launcher/index.html`: The dedicated OGS desktop launcher application page (`/launcher/`).
 * `mission/index.html`: The core philosophy and "Declaration of Digital Sovereignty" (`/mission/`).
 * `tools/index.html`: The frozen tool catalog with category, tool id, version, and release links (`/tools/`).
 * `examples/index.html`: Reference games and showcase projects built with Open Game Stack (`/examples/`).
