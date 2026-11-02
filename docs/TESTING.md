@@ -20,7 +20,7 @@ python tests/validate_site.py
 
 ### Expected Output
 ```text
-OGS Website Validation Summary: 1563 checks run | tests passed: 1563 | tests failed: 0
+OGS Website Validation Summary: 2746 checks run | tests passed: 2746 | tests failed: 0
 All static website validation checks passed.
 ```
 
@@ -39,6 +39,14 @@ python scripts/build_content.py --check
 [PASS] Tools metadata validation succeeded: 6 categories, 19 tools (7 frozen, 12 radar).
 ```
 
+### Generating Tool Profile Pages
+
+To build or regenerate static deep-dive HTML profile pages for all Tier-1 Launcher tools:
+
+```powershell
+python scripts/build_content.py --build
+```
+
 ---
 
 ## 3. Validation Coverage (`tests/validate_site.py`)
@@ -47,6 +55,7 @@ python scripts/build_content.py --check
 
 1. **Required Repository Files, Assets & Custom Domain (`CNAME`):**
    - Verifies that `CNAME`, `index.html`, `launcher/index.html`, `mission/index.html`, `tools/index.html`, `examples/index.html`, `content/tools.json`, `scripts/build_content.py`, `assets/css/site.css`, `assets/fonts/fonts-local.css`, `favicon.png`, and `logo.png` exist.
+   - Verifies that all 7 Tier-1 dedicated tool profile pages (`tools/godot/index.html`, `tools/blender/index.html`, `tools/krita/index.html`, `tools/gimp/index.html`, `tools/audacity/index.html`, `tools/git/index.html`, `tools/vscodium/index.html`) exist in `REQUIRED_FILES`.
    - Verifies that all 19 tool logos and icons (`assets/images/Godot.png`, `Blender.png`, `Krita.png`, `GIMP.png`, `Audacity.png`, `Git.png`, `VSCodium.png`, `pixelorama.png`, `libresprite.png`, `inkscape.svg`, `ldtk.svg`, `tiled.png`, `trenchbroom.png`, `material-maker.png`, `blockbench.png`, `armorpaint.png`, `lmms.png`, `ardour.png`, `sfxr.png`) exist in `REQUIRED_FILES` with exact case-sensitivity verified on disk.
    - Confirms that legacy `pages/` and `manifesto/` directories do not exist.
    - Confirms `CNAME` equals `opengamestack.org`.
@@ -55,8 +64,9 @@ python scripts/build_content.py --check
    - Every `.html` file includes `<meta charset="UTF-8">`, a responsive `<meta name="viewport">`, a non-empty `<meta name="description">`, and a non-empty `<title>`.
    - Every `.html` file contains `<header class="site-header">`, `<main id="main">`, and `<footer class="site-footer">`.
    - Every `.html` file contains a skip-to-content accessibility landmark link (`<a class="skip-link" href="#main">`).
-3. **Internal Link & Asset Resolution:**
+3. **Internal Link & Asset Resolution with Case-Exact Disk Verification:**
    - Every local `<a href="...">`, `<link href="...">`, `<script src="...">`, and `<img src="...">` resolves to an existing file in the repository. Directory targets containing `index.html` (such as `launcher/`, `tools/`, `mission/`, `./`) resolve cleanly to the underlying `index.html` file.
+   - Enforces case-exact local file and directory path resolution by verifying directory entries on disk for every path segment, preventing subtle broken links on case-sensitive operating systems like Linux in GitHub Pages.
    - Confirms that no active HTML files contain links or references to legacy `manifesto.html`, `manifesto/`, or `/manifesto/`.
    - Primary navigation (`site-logo`, `site-nav-link`), footer links (`site-footer-link`), and internal CTA buttons (`btn`, `btn-outline`) are strictly prohibited from exposing `index.html`, legacy `pages/`, or `.html` file extensions, enforcing clean directory URLs.
    - Same-page `#fragment` links resolve to a matching `id` attribute in that document.
@@ -78,40 +88,54 @@ python scripts/build_content.py --check
 7. **Tool Catalog Static Fallback Parity & Consistency (`tools/index.html`):**
    - Confirms `tools/index.html` includes the `[data-catalog]` container.
    - Confirms all 19 static fallback tool cards inside `[data-catalog]` (7 Tier-1 Frozen in Launcher tools and 12 Tier-2 Ecosystem Radar tools across 6 categories).
+   - Verifies that all 7 Tier-1 tool cards link directly to their dedicated profile pages (`./<id>/`) via both tool title links (`.tool-title-link`) and action buttons (`.tool-profile-link`).
+   - Verifies that Tier-2 radar tools have no subpage profile links.
    - Verifies static tool catalog IDs and Tier-1 version sets against sibling `ogs-frozen-stacks/repository.json` (or baseline fallback).
    - Verifies that all 19 catalog tools have self-hosted image assets in `assets/images/` verified in `REQUIRED_FILES` with exact case matching.
    - Verifies zero generic `.tool-mark` monogram elements across both static fallback cards and inline `toolDetails`, requiring official tool images for every entry.
    - Verifies accessible filter controls in `.catalog-filters`, including `role="group"` ARIA attributes, semantic filter buttons (`.filter-btn`), and `aria-pressed` states for tier and category selection.
    - Verifies that inline `toolDetails` in the hydration script specifies valid local image paths for all 19 catalog tools.
-8. **Mission Page Verifications (`mission/index.html`):**
+8. **Dedicated Tool Deep-Dive Profile Page Verifications (`tools/<id>/index.html`):**
+   - Verifies that all 7 Tier-1 tools have standalone HTML profile pages (`tools/godot/index.html`, `tools/blender/index.html`, `tools/krita/index.html`, `tools/gimp/index.html`, `tools/audacity/index.html`, `tools/git/index.html`, `tools/vscodium/index.html`).
+   - Verifies page title format (`<Tool Name> - Open Game Stack Profile | Open Game Stack`).
+   - Verifies breadcrumb back-link navigation (`<a href="../" class="back-link">&larr; Back to Tool Catalog</a>`).
+   - Verifies required section anchors: `#role`, `#launcher-integration`, `#vital-signs`, `#resources`.
+   - Verifies frozen release specification table listing exact version, download size, 64-character SHA-256 checksum, and executable path matching `content/tools.json` and sibling `repository.json`.
+   - Verifies `ogs_stack.json` manifest code block with JSON syntax.
+   - Verifies vital signs table containing license, platform badges, category badge, and links.
+   - Verifies curated learning resource links with `target="_blank"` and `rel="noopener noreferrer"`.
+   - Asserts that Tier-2 radar tools do not have profile subpages.
+9. **Mission Page Verifications (`mission/index.html`):**
    - Verifies that `mission/index.html` title text equals `Mission | Open Game Stack`.
    - Verifies that `mission/index.html` preserves required section anchor IDs (`#sovereignty`, `#environment`, `#dual-use`, `#stability`).
    - Verifies that `mission/index.html` includes matching `.section-index` links for all four section anchors.
    - Verifies that mission prose reframes creator sovereignty around indie game developers and studios.
    - Verifies that `index.html` includes the secondary CTA button with text `The Mission` pointing to `mission/`.
-9. **Dedicated Launcher Page Verifications (`launcher/index.html`):**
-   - Verifies that `launcher/index.html` title text equals `Launcher | Open Game Stack`.
-   - Asserts at least 2 download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
-   - Asserts desktop application runtime reference (`Godot 4.7.2`).
-   - Asserts canonical manifest references (`ogs_stack.json` and `ogs_config.json`).
-10. **Reference Examples Showcase Verifications (`examples/index.html`):**
+10. **Dedicated Launcher Page Verifications (`launcher/index.html`):**
+    - Verifies that `launcher/index.html` title text equals `Launcher | Open Game Stack`.
+    - Asserts at least 2 download links pointing to the current published release package (`OGS-Launcher-win64-0.2.0.zip` under `v0.2.0`).
+    - Asserts desktop application runtime reference (`Godot 4.7.2`).
+    - Asserts canonical manifest references (`ogs_stack.json` and `ogs_config.json`).
+11. **Reference Examples Showcase Verifications (`examples/index.html`):**
     - Verifies that `examples/index.html` title text equals `Examples | Open Game Stack`.
     - Confirms structured layout using `.grid` and `.project-card` containers.
     - Confirms showcase cards for both reference projects (`Sudoku` and `Letter Logic`).
     - Verifies frozen tool stack badges (`Godot`, `Git`, `Krita`) across project cards.
     - Verifies required outbound repository and playable web demo links (`https://github.com/OpenGameStack/sudoku`, `https://audrain.games/sudoku`, `https://github.com/OpenGameStack/letter-logic`, `https://audrain.games/letter-logic`) with `target="_blank"` and `rel="noopener noreferrer"`.
-11. **Sitewide Navigation, Footer Consistency & Tagline Enforcement:**
-    - Verifies that primary navigation (`.site-nav`) across all pages includes the appropriate relative link to the Launcher page (`launcher/`, `./`, or `../launcher/`).
+12. **Sitewide Navigation, Footer Consistency & Tagline Enforcement:**
+    - Verifies that primary navigation (`.site-nav`) across all pages includes the appropriate relative link to the Launcher page (`launcher/`, `./`, `../launcher/`, or `../../launcher/` for nested subpages).
+    - Verifies depth-aware navigation resolution for subpages at depth 2 (`tools/<id>/index.html`).
     - Verifies that footer link lists (`.site-footer-links`) across all pages include the official Substack link (`https://opengamestack.substack.com/`) with `rel="noopener noreferrer"`.
     - Enforces the sitewide footer copyright tagline: `Open-source tools and reproducible workflows for game creators.`.
     - Prohibits obsolete footer copyright copy (`Dual-use technology for open simulation.`) on all pages.
-12. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
+13. **Game Studio Dark CSS Tokens & Component Selectors (`assets/css/site.css`):**
     - Verifies required surface tokens (`--bg-dark`, `--bg-surface`, `--card-bg`, `--card-border`).
     - Verifies required semantic category accent properties (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
     - Verifies required category accent alias variables (`--accent-engine`, `--accent-2d`, `--accent-3d`, `--accent-audio`, `--accent-level`, `--accent-code`).
     - Verifies required editorial typography, catalog filter, table, and callout classes (`.prose`, `.article-body`, `.catalog-filters`, `.filter-btn`, `.badge-tier-frozen`, `.badge-tier-radar`, `.spec-table`, `.version-table`, `.code-block`, `.code-header`, `.callout`).
     - Verifies project card and button utility classes (`.btn-sm`, `.project-card`, `.card-badges`, `.card-actions`).
-13. **Canonical Tool Metadata Schema Integrity & Zero-Dependency Builder Parity (`content/tools.json` & `scripts/build_content.py`):**
+    - Verifies tool profile header, breadcrumb, and resource list styling classes (`.breadcrumb`, `.back-link`, `.tool-profile-header`, `.tool-profile-visual`, `.tool-profile-info`, `.tool-profile-title`, `.tool-profile-tagline`, `.tool-profile-links`, `.tool-title-link`, `.tool-profile-link`, `.resource-list`).
+14. **Canonical Tool Metadata Schema Integrity & Zero-Dependency Builder Parity (`content/tools.json` & `scripts/build_content.py`):**
     - Verifies JSON structure and schema validity of `content/tools.json`.
     - Confirms existence and completeness of 6 canonical tool categories (`Engine`, `2D`, `3D`, `Audio`, `Level Design`, `Code`).
     - Validates 7 Tier-1 Launcher frozen tools with exact version, archive, sha256 checksum, size, and executable path parity against upstream `ogs-frozen-stacks/repository.json`.

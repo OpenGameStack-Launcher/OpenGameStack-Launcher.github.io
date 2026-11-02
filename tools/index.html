@@ -81,9 +81,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">godot</h3>
+                                <h3 class="tool-id"><a href="./godot/" class="tool-title-link">godot</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">MIT</span>
+                                <a href="./godot/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">Godot Engine is a versatile open-source game engine featuring a dedicated 2D pipeline, modern Vulkan-powered 3D renderer, and an intuitive scene and node hierarchy. It supports GDScript, C#, and C++ via GDExtension, with zero licensing fees or revenue shares.</p>
                             <div class="tool-replaces">
@@ -121,9 +122,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">gimp</h3>
+                                <h3 class="tool-id"><a href="./gimp/" class="tool-title-link">gimp</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">GPL-3.0</span>
+                                <a href="./gimp/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">GIMP (GNU Image Manipulation Program) provides raster editing, asset cleanup, texture channel manipulation, and format conversion. Equipped with GEGL high-bit-depth color processing and Python scripting, it serves as a workhorse for asset preparation.</p>
                             <div class="tool-replaces">
@@ -146,9 +148,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">krita</h3>
+                                <h3 class="tool-id"><a href="./krita/" class="tool-title-link">krita</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">GPL-3.0</span>
+                                <a href="./krita/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">Krita is an open-source painting program designed for illustrators, concept artists, and texture painters. It features sophisticated brush engines, wrap-around seamless texture mode, layer masks, color management, and frame-by-frame 2D animation tools.</p>
                             <div class="tool-replaces">
@@ -262,9 +265,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">blender</h3>
+                                <h3 class="tool-id"><a href="./blender/" class="tool-title-link">blender</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">GPL-3.0</span>
+                                <a href="./blender/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">Blender is the industry-standard open-source 3D production pipeline tool. It provides end-to-end tooling for polygonal modeling, sculpting, UV unwrapping, skeletal rigging, keyframe animation, procedural shader creation, and glTF/FBX export for real-time game engines.</p>
                             <div class="tool-replaces">
@@ -378,9 +382,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">audacity</h3>
+                                <h3 class="tool-id"><a href="./audacity/" class="tool-title-link">audacity</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">GPL-3.0</span>
+                                <a href="./audacity/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">Audacity is an accessible multitrack audio editor for recording live dialogue, trimming and normalizing sound effects, removing background noise, and exporting game-ready audio assets in OGG, WAV, and MP3 formats.</p>
                             <div class="tool-replaces">
@@ -577,9 +582,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">git</h3>
+                                <h3 class="tool-id"><a href="./git/" class="tool-title-link">git</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">GPL-2.0</span>
+                                <a href="./git/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">Git tracks revision history for game source code, scripts, configuration files, and project assets. It enables branching strategies, collaborative developer merges, and atomic commit histories for indie studios and open-source contributors.</p>
                             <div class="tool-replaces">
@@ -604,9 +610,10 @@
                         </div>
                         <div class="tool-content">
                             <div class="tool-id-row">
-                                <h3 class="tool-id">vscodium</h3>
+                                <h3 class="tool-id"><a href="./vscodium/" class="tool-title-link">vscodium</a></h3>
                                 <span class="badge-tier-frozen">Frozen in Launcher</span>
                                 <span class="badge-license">MIT</span>
+                                <a href="./vscodium/" class="tool-profile-link">Deep Dive &rarr;</a>
                             </div>
                             <p class="tool-description">VSCodium is a community-driven, telemetry-free binary distribution of Microsoft&#x27;s VS Code editor. It provides a lightweight code editor with rich extension marketplace support for GDScript, C#, Python, shaders, and JSON configurations.</p>
                             <div class="tool-replaces">
@@ -836,6 +843,22 @@
                         const card = catalog.querySelector(`.tool-card[data-tool-id="${toolId}"]`);
                         if (!card) {
                             continue;
+                        }
+                        const toolIdHeading = card.querySelector('.tool-id');
+                        if (toolIdHeading && !toolIdHeading.querySelector('a')) {
+                            const titleLink = document.createElement('a');
+                            titleLink.className = 'tool-title-link';
+                            titleLink.href = `./${toolId}/`;
+                            titleLink.textContent = toolId;
+                            toolIdHeading.replaceChildren(titleLink);
+                        }
+                        const idRow = card.querySelector('.tool-id-row');
+                        if (idRow && !idRow.querySelector('.tool-profile-link')) {
+                            const profileLink = document.createElement('a');
+                            profileLink.className = 'tool-profile-link';
+                            profileLink.href = `./${toolId}/`;
+                            profileLink.textContent = 'Deep Dive →';
+                            idRow.appendChild(profileLink);
                         }
                         const versionList = card.querySelector('.version-list');
                         if (!versionList) {

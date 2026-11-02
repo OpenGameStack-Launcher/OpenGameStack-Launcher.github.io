@@ -35,6 +35,13 @@ REQUIRED_FILES = [
     "mission/index.html",
     "tools/index.html",
     "examples/index.html",
+    "tools/godot/index.html",
+    "tools/gimp/index.html",
+    "tools/krita/index.html",
+    "tools/blender/index.html",
+    "tools/audacity/index.html",
+    "tools/git/index.html",
+    "tools/vscodium/index.html",
     "content/tools.json",
     "scripts/build_content.py",
     "assets/css/site.css",
@@ -60,6 +67,31 @@ REQUIRED_FILES = [
     "assets/images/lmms.png",
     "assets/images/ardour.png",
     "assets/images/sfxr.png",
+]
+
+CANONICAL_FROZEN_IDS = [
+    "godot",
+    "gimp",
+    "krita",
+    "blender",
+    "audacity",
+    "git",
+    "vscodium",
+]
+
+CANONICAL_RADAR_IDS = [
+    "pixelorama",
+    "libresprite",
+    "inkscape",
+    "ldtk",
+    "tiled",
+    "trenchbroom",
+    "material-maker",
+    "blockbench",
+    "armorpaint",
+    "lmms",
+    "ardour",
+    "sfxr",
 ]
 
 FORBIDDEN_EXTERNAL_PATTERNS = [
@@ -285,12 +317,21 @@ def validate_required_files(results: TestResults) -> None:
             f"Missing required repository file: {rel_path}",
         )
         if full_path.is_file():
-            parent_files = {f.name for f in full_path.parent.iterdir()}
-            expected_name = Path(rel_path).name
-            results.expect(
-                expected_name in parent_files,
-                f"File '{rel_path}' casing mismatch on disk: expected '{expected_name}'",
-            )
+            curr = REPO_ROOT
+            for part in Path(rel_path).parts:
+                part_names = {f.name for f in curr.iterdir()}
+                results.expect(
+                    part in part_names,
+                    f"Path component '{part}' of '{rel_path}' casing mismatch on disk",
+                )
+                curr = curr / part
+
+    for rid in CANONICAL_RADAR_IDS:
+        radar_dir = REPO_ROOT / "tools" / rid
+        results.expect(
+            not radar_dir.exists(),
+            f"Tier-2 Radar tool '{rid}' must not have a dedicated subpage directory",
+        )
 
     cname_path = REPO_ROOT / "CNAME"
     if cname_path.is_file():
@@ -319,13 +360,33 @@ def resolve_local_reference(source_file: Path, raw_ref: str) -> tuple[Path | Non
     fragment = unquote(parsed.fragment)
     if not path_part:
         return source_file, fragment
+
     if path_part.startswith("/"):
-        target = (REPO_ROOT / path_part.lstrip("/")).resolve()
+        curr = REPO_ROOT
+        parts = [p for p in path_part.lstrip("/").split("/") if p and p != "."]
     else:
-        target = (source_file.parent / path_part).resolve()
-    if target.is_dir() and (target / "index.html").is_file():
-        target = (target / "index.html").resolve()
-    return target, fragment
+        curr = source_file.parent.resolve()
+        parts = [p for p in path_part.split("/") if p and p != "."]
+
+    for part in parts:
+        if part == "..":
+            curr = curr.parent.resolve()
+            continue
+        if not curr.is_dir():
+            return None, fragment
+        children = {entry.name: entry for entry in curr.iterdir()}
+        if part not in children:
+            return None, fragment
+        curr = children[part]
+
+    if curr.is_dir() and (curr / "index.html").is_file():
+        children = {entry.name: entry for entry in curr.iterdir()}
+        if "index.html" in children:
+            curr = children["index.html"]
+        else:
+            return None, fragment
+
+    return curr.resolve(), fragment
 
 
 def validate_html_file(html_path: Path, results: TestResults) -> None:
@@ -468,11 +529,13 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             )
 
     # 7. Sitewide navigation and footer consistency checks
-    expected_launcher_nav = (
-        "launcher/"
-        if rel_name == "index.html"
-        else ("./" if rel_name == "launcher/index.html" else "../launcher/")
-    )
+    depth = len(html_path.relative_to(REPO_ROOT).parts) - 1
+    if rel_name == "index.html":
+        expected_launcher_nav = "launcher/"
+    elif rel_name == "launcher/index.html":
+        expected_launcher_nav = "./"
+    else:
+        expected_launcher_nav = f"{'../' * depth}launcher/"
     nav_launcher_links = [
         href
         for _, href, _, _, classes in inspector.links
@@ -796,6 +859,179 @@ def validate_html_file(html_path: Path, results: TestResults) -> None:
             "tools/index.html: Missing aria-pressed attributes on filter buttons",
         )
 
+        # Validate profile links for Tier-1 frozen tools
+        for fid in CANONICAL_FROZEN_IDS:
+            expected_profile_link = f"./{fid}/"
+            profile_links = [
+                href
+                for _, href, _, _, _ in inspector.links
+                if href == expected_profile_link
+            ]
+            results.expect(
+                len(profile_links) >= 1,
+                f"tools/index.html: Missing profile link to '{expected_profile_link}' for Tier-1 tool '{fid}'",
+            )
+        results.expect(
+            "./${toolId}/" in combined_scripts,
+            "tools/index.html: Inline dynamic catalog script must generate profile link './${toolId}/'",
+        )
+
+    # 10. Dedicated tool profile pages (tools/<id>/index.html)
+    tool_profile_prefix = "tools/"
+    if (
+        rel_name.startswith(tool_profile_prefix)
+        and rel_name.endswith("/index.html")
+        and rel_name != "tools/index.html"
+    ):
+        tool_id = rel_name[len(tool_profile_prefix) : -len("/index.html")]
+        if tool_id in CANONICAL_FROZEN_IDS:
+            validate_tool_profile_page(html_path, tool_id, content, inspector, results)
+
+
+def validate_tool_profile_page(
+    html_path: Path,
+    tool_id: str,
+    content: str,
+    inspector: PageInspector,
+    results: TestResults,
+) -> None:
+    rel_name = html_path.relative_to(REPO_ROOT).as_posix()
+    tools_json_path = REPO_ROOT / "content" / "tools.json"
+    if not tools_json_path.is_file():
+        results.expect(False, f"{rel_name}: content/tools.json missing for profile validation")
+        return
+
+    try:
+        data = json.loads(tools_json_path.read_text(encoding="utf-8"))
+        tools = {t["id"]: t for t in data.get("tools", []) if isinstance(t, dict) and "id" in t}
+    except Exception as exc:
+        results.expect(False, f"{rel_name}: Failed to read content/tools.json: {exc}")
+        return
+
+    tool_data = tools.get(tool_id)
+    if not tool_data:
+        results.expect(False, f"{rel_name}: Tool '{tool_id}' not found in content/tools.json")
+        return
+
+    tname = tool_data.get("name", tool_id)
+    expected_title = f"{tname} | Open Game Stack Tools"
+    results.expect(
+        inspector.title_text == expected_title,
+        f"{rel_name}: Expected title '{expected_title}', found '{inspector.title_text}'",
+    )
+
+    # 4 required sections
+    for sec_id in ["role", "launcher-integration", "vital-signs", "resources"]:
+        results.expect(
+            sec_id in inspector.ids,
+            f"{rel_name}: Missing required section id '{sec_id}'",
+        )
+
+    # Breadcrumb back-link to catalog
+    has_back_link = any(
+        href == "../" and "back-link" in classes
+        for _, href, _, _, classes in inspector.links
+    )
+    results.expect(
+        has_back_link,
+        f"{rel_name}: Missing breadcrumb back link to '../'",
+    )
+
+    # ogs_stack.json configuration snippet
+    results.expect(
+        "ogs_stack.json" in content,
+        f"{rel_name}: Missing 'ogs_stack.json' manifest configuration snippet",
+    )
+    has_manifest_id = (
+        f'&quot;id&quot;: &quot;{tool_id}&quot;' in content
+        or f'"id": "{tool_id}"' in content
+        or f"&quot;id&quot;: &quot;{tool_id}&quot;" in content
+    )
+    results.expect(
+        has_manifest_id,
+        f"{rel_name}: Missing tool id '{tool_id}' in ogs_stack.json configuration snippet",
+    )
+
+    # Exact version and SHA-256 parity with content/tools.json
+    versions = tool_data.get("versions", [])
+    results.expect(
+        len(versions) > 0,
+        f"{rel_name}: Tier-1 frozen tool '{tool_id}' must have at least one frozen version",
+    )
+    for ver in versions:
+        v_str = ver.get("version", "")
+        v_sha = ver.get("sha256", "")
+        v_arch = ver.get("archive_url", "")
+        v_exe = ver.get("executable_path", "")
+        results.expect(
+            v_str in content,
+            f"{rel_name}: Missing frozen version tag '{v_str}'",
+        )
+        results.expect(
+            v_sha in content,
+            f"{rel_name}: Missing sha256 checksum '{v_sha}' for version '{v_str}'",
+        )
+        if v_arch:
+            has_arch_link = any(href == v_arch for _, href, _, _, _ in inspector.links)
+            results.expect(
+                has_arch_link,
+                f"{rel_name}: Missing archive download link '{v_arch}' for version '{v_str}'",
+            )
+        if v_exe:
+            results.expect(
+                v_exe in content,
+                f"{rel_name}: Missing relative executable path '{v_exe}' for version '{v_str}'",
+            )
+
+    # Parity with sibling repository.json if present
+    sibling_repo = find_sibling_repository_json()
+    if sibling_repo and sibling_repo.is_file():
+        try:
+            repo_data = json.loads(sibling_repo.read_text(encoding="utf-8"))
+            for r_item in repo_data.get("tools", []):
+                if r_item.get("id") == tool_id:
+                    r_ver = r_item.get("version", "")
+                    r_sha = r_item.get("sha256", "")
+                    r_arch = r_item.get("archive_url", "")
+                    results.expect(
+                        r_ver in content,
+                        f"{rel_name}: Missing upstream version '{r_ver}' from repository.json",
+                    )
+                    results.expect(
+                        r_sha in content,
+                        f"{rel_name}: Missing upstream sha256 checksum '{r_sha}' for version '{r_ver}' from repository.json",
+                    )
+                    if r_arch:
+                        has_upstream_link = any(href == r_arch for _, href, _, _, _ in inspector.links)
+                        results.expect(
+                            has_upstream_link,
+                            f"{rel_name}: Missing upstream archive link '{r_arch}' from repository.json",
+                        )
+        except Exception as exc:
+            results.expect(False, f"{rel_name}: Error verifying parity against repository.json: {exc}")
+
+    # Vital signs
+    results.expect(
+        tool_data.get("license", "") in content,
+        f"{rel_name}: Missing license '{tool_data.get('license')}' in vital signs",
+    )
+    results.expect(
+        any(href == tool_data.get("website_url") for _, href, _, _, _ in inspector.links),
+        f"{rel_name}: Missing official website link '{tool_data.get('website_url')}'",
+    )
+    results.expect(
+        any(href == tool_data.get("repo_url") for _, href, _, _, _ in inspector.links),
+        f"{rel_name}: Missing source repository link '{tool_data.get('repo_url')}'",
+    )
+
+    # Resources
+    for res in tool_data.get("resources", []):
+        r_url = res.get("url", "")
+        results.expect(
+            any(href == r_url for _, href, _, _, _ in inspector.links),
+            f"{rel_name}: Missing learning resource link '{r_url}'",
+        )
+
 
 def validate_css_file(css_path: Path, results: TestResults) -> None:
     rel_name = css_path.relative_to(REPO_ROOT).as_posix()
@@ -1031,7 +1267,7 @@ def main() -> int:
     validate_tools_metadata_and_builder(results)
 
     html_files = discover_html_files(REPO_ROOT)
-    results.expect(len(html_files) >= 5, f"Expected at least 5 HTML files, found {len(html_files)}")
+    results.expect(len(html_files) >= 12, f"Expected at least 12 HTML files, found {len(html_files)}")
     for html_file in html_files:
         validate_html_file(html_file, results)
 
