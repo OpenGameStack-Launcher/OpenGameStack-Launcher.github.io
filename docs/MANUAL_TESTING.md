@@ -39,6 +39,7 @@ Open `http://127.0.0.1:8000` in your browser. When finished, stop the server (`C
 
 ### 3. Tool Catalog Page (`tools/index.html` -> `/tools/`)
 - [ ] **Skip Link:** Pressing `Tab` on initial page load reveals the `Skip to content` link and moves focus to `#main` when activated.
+- [ ] **Category Accent Bars & Badges:** Verify that category containers display their distinctive left accent bar matching their semantic category token (Engine: cyan, 2D: emerald, 3D: amber, Audio: violet, Level: rose, Code: blue). If tier badges (`.badge-tier-frozen`, `.badge-tier-radar`) or category filter pills (`.catalog-filters`, `.filter-btn`) are rendered, verify appropriate contrast and active state highlight.
 - [ ] **Dynamic Catalog Hydration:** With network access enabled, `tools/index.html` fetches `https://raw.githubusercontent.com/OpenGameStack-Launcher/ogs-frozen-stacks/main/repository.json` and renders 5 categories (`Engine`, `2D`, `3D`, `Audio`, `Code`), 7 tools (`godot`, `gimp`, `krita`, `blender`, `audacity`, `git`, `vscodium`), descriptions, version tags in descending order, `Official release page` links, and `Frozen archive` download links. Verify that all 7 tools, including Git and VSCodium, display crisp PNG logos (140x140 px on desktop, 100x100 px on mobile).
 - [ ] **Offline / No-JS Fallback:** With network access blocked (or JavaScript disabled in browser DevTools), `tools/index.html` displays the static HTML tool catalog inside `[data-catalog]` containing all 7 tools across 5 categories in descending version order, rendering their official PNG logos rather than circular text monogram marks, and without broken images or empty containers.
 
@@ -50,7 +51,10 @@ Open `http://127.0.0.1:8000` in your browser. When finished, stop the server (`C
 
 ## 3. Cross-Cutting Visual & Accessibility Checks
 
+- [ ] **Ambient Studio Canvas:** Confirm the root canvas uses calm, stationary ambient illumination via subtle radial background gradients on `body::before` with no continuous pulse animations, eye strain, or background flickering.
+- [ ] **Editorial Typography & Prose:** In sections using `.prose` or `.article-body`, verify line length conforms to readable widths (around 72 characters), line height is comfortable (1.75), and blockquotes, headings, and links maintain high contrast and clear visual hierarchy.
+- [ ] **Code Blocks & Specification Tables:** Verify that `.code-block` preformatted code containers and `.spec-table` / `.version-table` inside `.table-container` support smooth horizontal overflow scrolling on narrow viewports without expanding the main page layout or triggering document-level horizontal scrollbars.
 - [ ] **Self-Hosted Typography:** Open browser DevTools -> Network tab and confirm `font-01.woff2` through `font-10.woff2` load from local `/assets/fonts/` with **zero** outbound requests to `fonts.googleapis.com` or `fonts.gstatic.com`.
 - [ ] **Clean Directory URLs:** Navigate across `Home`, `Mission`, `Tools`, and `Examples`. Confirm the browser URL bar displays clean directory URLs (`/`, `/mission/`, `/tools/`, `/examples/`) without appending `.html` extensions or exposing legacy `/pages/` directory segments.
 - [ ] **Responsive Breakpoints:** Resize viewport across `1280px` (desktop), `800px` (tablet), and `375px` (mobile) and confirm no horizontal scrollbar (`overflow-x`), text clipping, or overlapping buttons.
-- [ ] **Reduced Motion:** Emulate `prefers-reduced-motion: reduce` in DevTools and verify background pulse animations and hover transforms are disabled.
+- [ ] **Reduced Motion:** Emulate `prefers-reduced-motion: reduce` in DevTools and verify all transform transitions and hover animations are disabled or minimized.

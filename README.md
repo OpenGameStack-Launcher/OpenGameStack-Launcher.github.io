@@ -11,12 +11,19 @@ This repository hosts the source code for the Open Game Stack web presence. Cons
 * **No Build Steps:** What you see is what you get.
 * **No Tracking:** Respects user privacy by design.
 
+## 🎨 Design System & Styling Tokens
+The site styling (`assets/css/site.css`) implements a Modern Game Studio and Editorial Dark UI built with pure CSS custom properties:
+* **Calm Studio Dark Surface Tokens:** Grounded slate surfaces (`--bg-dark: #090d16`, `--bg-surface`, `--card-bg`, `--card-border`) with subtle stationary ambient illumination for fatigue-free reading.
+* **Semantic Category Accent Properties:** Standardized color tokens across tooling domains (`--cat-engine`, `--cat-2d`, `--cat-3d`, `--cat-audio`, `--cat-level`, `--cat-code`).
+* **Editorial & Catalog Component Library:** Reusable styles for long-form articles (`.prose`, `.article-body`), specification tables (`.spec-table`, `.version-table`), copyable code blocks (`.code-block`), callouts (`.callout`), two-tier status badges (`.badge-tier-frozen`, `.badge-tier-radar`), and catalog filter pills (`.catalog-filters`, `.filter-btn`).
+* **Sovereign Privacy & Accessibility:** Self-hosted local fonts (`assets/fonts/`), zero external CDNs or analytics, high-contrast `:focus-visible` outlines, and full `prefers-reduced-motion` compliance.
+
 ## 📂 Repository Structure
 * `index.html`: The main landing page (`/`).
 * `mission/index.html`: The core philosophy and "Declaration of Digital Sovereignty" (`/mission/`).
 * `tools/index.html`: The frozen tool catalog with category, tool id, version, and release links (`/tools/`).
 * `examples/index.html`: Reference games and showcase projects built with Open Game Stack (`/examples/`).
-* `assets/css/site.css`: Shared site chrome, typography, and footer/header styles used by every page.
+* `assets/css/site.css`: Modern game studio dark UI, shared chrome, semantic category tokens, editorial typography, and responsive styles.
 * `tests/validate_site.py`: Zero-dependency static site validation suite.
 * `docs/`: Canonical workflow guides, testing procedures, and standards.
 * `AGENTS.md`: Agent architecture guidelines, coding rules, and workflow entry point.
@@ -41,7 +48,7 @@ We welcome contributions to improve the messaging or design.
 4.  Open a Pull Request.
 
 ## 📜 License
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** (see the [LICENSE](LICENSE) file for details).
 
 ---
 *Maintained by the Open Game Stack Initiative.*

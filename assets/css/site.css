@@ -2,26 +2,34 @@
 
 /* --- COLORS & VARIABLES --- */
 :root {
-    /* Neon Tech Palette */
-    --primary: #00f0ff;       /* Neon Cyan */
-    --primary-glow: rgba(0, 240, 255, 0.4);
-    --primary-dim: rgba(0, 240, 255, 0.1);
-    
+    /* Core Game Studio Dark Palette */
+    --primary: #00f0ff;       /* Studio Cyan Accent */
+    --primary-glow: rgba(0, 240, 255, 0.25);
+    --primary-dim: rgba(0, 240, 255, 0.08);
+
     --secondary: #94a3b8;     /* Slate */
-    --accent: #7000ff;        /* Deep Purple/Pink accent */
-    
-    --bg-dark: #050b14;       /* Deep space blue/black */
-    --bg-surface: rgba(10, 18, 35, 0.6); /* Glass surface */
-    
-    --card-bg: rgba(15, 23, 42, 0.45);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --card-border-hover: rgba(0, 240, 255, 0.5);
-    
-    --grid-line: rgba(255, 255, 255, 0.03);
+    --accent: #7000ff;        /* Deep Violet Accent */
+
+    --bg-dark: #090d16;       /* Deep dark slate canvas */
+    --bg-surface: rgba(17, 24, 39, 0.85); /* Layered dark slate glass surface */
+
+    --card-bg: rgba(17, 24, 39, 0.75);    /* Card surface */
+    --card-border: rgba(148, 163, 184, 0.16); /* Subtle slate border */
+    --card-border-hover: rgba(56, 189, 248, 0.4);
+
+    --grid-line: rgba(148, 163, 184, 0.04);
     --outline: rgba(226, 232, 240, 0.15);
-    
+
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
+
+    /* Semantic Category Accent Custom Properties */
+    --cat-engine: #38bdf8;   /* Cyan */
+    --cat-2d: #34d399;       /* Emerald */
+    --cat-3d: #fb923c;       /* Amber */
+    --cat-audio: #a78bfa;    /* Violet */
+    --cat-level: #f472b6;    /* Rose */
+    --cat-code: #60a5fa;     /* Blue */
 }
 
 /* --- RESET & BASICS --- */
@@ -44,16 +52,17 @@ body {
     overflow-x: hidden;
 }
 
-/* Dynamic Animated Background */
+/* Calm Ambient Studio Background */
 body::before {
     content: "";
     position: fixed;
-    inset: -50%;
+    inset: 0;
     background-image: 
-        radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(112, 0, 255, 0.05) 0%, transparent 30%);
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at 85% 25%, rgba(112, 0, 255, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 15% 75%, rgba(56, 189, 248, 0.03) 0%, transparent 50%);
     z-index: -2;
-    animation: pulseBg 15s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
 body::after {
@@ -67,12 +76,7 @@ body::after {
     z-index: -1;
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
     -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-}
-
-@keyframes pulseBg {
-    0% { transform: scale(1) translate(0, 0); }
-    50% { transform: scale(1.1) translate(2%, 2%); }
-    100% { transform: scale(1) translate(-2%, -2%); }
+    pointer-events: none;
 }
 
 a {
@@ -125,7 +129,7 @@ ul {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--card-border);
-    background: rgba(5, 11, 20, 0.75);
+    background: rgba(9, 13, 22, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     z-index: 100;
@@ -204,7 +208,8 @@ ul {
 .site-footer-link:focus-visible,
 .nav-link:focus-visible,
 .btn:focus-visible,
-.btn-outline:focus-visible {
+.btn-outline:focus-visible,
+.filter-btn:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 4px;
     border-radius: 4px;
@@ -273,6 +278,7 @@ ul {
     padding-left: 24px;
     box-shadow: -10px 0 20px -10px var(--primary-glow);
 }
+
 .hero .intro {
     font-size: 1.15rem;
     border-left: none;
@@ -325,7 +331,7 @@ ul {
 }
 
 .btn-outline {
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(17, 24, 39, 0.6);
     color: #fff;
     border: 1px solid var(--card-border);
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -421,10 +427,10 @@ ul {
     padding: 2.5rem;
     border-radius: 16px;
     border: 1px solid var(--card-border);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 /* Glowing Top Edge */
@@ -437,24 +443,24 @@ ul {
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--primary), transparent);
     opacity: 0.3;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease;
 }
 
-/* Inner Glow */
+/* Inner Subtle Highlight */
 .card::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.06), transparent 40%);
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.04), transparent 40%);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
 .card:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-4px);
     border-color: var(--card-border-hover);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--primary-glow);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), 0 0 20px rgba(56, 189, 248, 0.12);
 }
 
 .card:hover::before {
@@ -485,13 +491,13 @@ ul {
 }
 
 .release-panel {
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    background: linear-gradient(145deg, rgba(23, 32, 51, 0.85), rgba(15, 23, 42, 0.95));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 3rem;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     text-align: center;
     box-shadow: 0 15px 50px rgba(0,0,0,0.3);
     position: relative;
@@ -508,9 +514,9 @@ ul {
 }
 
 .release-panel:hover {
-    border-color: var(--primary);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px var(--primary-glow);
-    transform: translateY(-5px);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 25px rgba(56, 189, 248, 0.15);
+    transform: translateY(-3px);
 }
 
 .release-panel h2 {
@@ -551,7 +557,7 @@ ul {
     font-weight: bold;
 }
 
-/* --- MISSION LAYOUT --- */
+/* --- MISSION & EDITORIAL ARTICLE LAYOUT --- */
 .layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 280px;
@@ -566,6 +572,7 @@ ul {
     border-radius: 20px;
     border: 1px solid var(--card-border);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 
@@ -607,7 +614,7 @@ strong {
 .section-index {
     position: sticky;
     top: 100px; /* Below sticky header */
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(17, 24, 39, 0.8);
     border: 1px solid var(--card-border);
     border-radius: 12px;
     padding: 1.5rem;
@@ -658,6 +665,378 @@ strong {
     box-shadow: inset 0 -20px 40px -20px var(--primary-glow);
 }
 
+/* --- EDITORIAL TYPOGRAPHY & LONG-FORM PROSE --- */
+.prose,
+.article-body {
+    max-width: 72ch;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-muted);
+    font-size: 1.125rem;
+    line-height: 1.75;
+}
+
+.layout article .prose,
+.layout article.prose {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 72ch;
+}
+
+.prose h1,
+.article-body h1 {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: #ffffff;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.prose h2,
+.article-body h2 {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: #ffffff;
+    font-size: 1.85rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin-top: 2.75rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.prose h2::after,
+.article-body h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.prose h3,
+.article-body h3 {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: #ffffff;
+    font-size: 1.4rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.prose h4,
+.article-body h4 {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: #ffffff;
+    font-size: 1.15rem;
+    line-height: 1.4;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.prose p,
+.article-body p {
+    margin-bottom: 1.5rem;
+}
+
+.prose strong,
+.article-body strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.prose em,
+.article-body em {
+    color: #e2e8f0;
+}
+
+.prose a,
+.article-body a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+}
+
+.prose a:hover,
+.article-body a:hover {
+    color: #ffffff;
+}
+
+.prose ul,
+.article-body ul {
+    list-style: disc;
+    padding-left: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.prose ol,
+.article-body ol {
+    list-style: decimal;
+    padding-left: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.prose li,
+.article-body li {
+    margin-bottom: 0.6rem;
+    line-height: 1.75;
+    padding-left: 0.25rem;
+}
+
+.prose blockquote,
+.article-body blockquote {
+    border-left: 4px solid var(--primary);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(17, 24, 39, 0.6);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #e2e8f0;
+}
+
+.prose hr,
+.article-body hr {
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 3rem 0;
+}
+
+/* --- SPECIFICATION & COMPARISON TABLES --- */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    -webkit-overflow-scrolling: touch;
+}
+
+.spec-table,
+.version-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.spec-table th,
+.version-table th {
+    background: rgba(13, 20, 36, 0.9);
+    color: #ffffff;
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+}
+
+.spec-table td,
+.version-table td {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text-muted);
+    vertical-align: middle;
+}
+
+.spec-table tbody tr:last-child td,
+.version-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.spec-table tbody tr:nth-child(even),
+.version-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.spec-table tbody tr:hover,
+.version-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* --- MANIFEST & CONFIG CODE BLOCKS --- */
+.code-block {
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    background: rgba(10, 15, 26, 0.9);
+    margin: 1.75rem 0;
+    overflow: hidden;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(15, 23, 42, 0.75);
+    border-bottom: 1px solid var(--card-border);
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.code-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.code-copy-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.code-copy-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+}
+
+.code-block pre {
+    margin: 0;
+    padding: 18px;
+    overflow-x: auto;
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    tab-size: 2;
+}
+
+.code-block code {
+    font-family: inherit;
+}
+
+/* --- CALLOUT BANNERS --- */
+.callout {
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--primary);
+    background: rgba(17, 24, 39, 0.65);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+    color: var(--text-main);
+}
+
+.callout-title {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.callout p {
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.callout-info {
+    border-left-color: var(--cat-engine);
+}
+
+.callout-warning {
+    border-left-color: var(--cat-3d);
+}
+
+.callout-success {
+    border-left-color: var(--cat-2d);
+}
+
+/* --- TWO-TIER TOOL STATUS BADGES --- */
+.badge-tier-frozen,
+.badge-tier-radar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1;
+}
+
+.badge-tier-frozen {
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--cat-engine);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.badge-tier-radar {
+    background: rgba(251, 146, 60, 0.12);
+    color: var(--cat-3d);
+    border: 1px solid rgba(251, 146, 60, 0.35);
+}
+
+/* --- CATALOG FILTERS & PILLS --- */
+.catalog-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 2rem 0 2.5rem 0;
+    align-items: center;
+}
+
+.filter-btn {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: "IBM Plex Mono", "Segoe UI", monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.filter-btn:hover {
+    color: #ffffff;
+    border-color: rgba(148, 163, 184, 0.4);
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.filter-btn.is-active {
+    background: var(--primary);
+    color: var(--bg-dark);
+    border-color: var(--primary);
+    box-shadow: 0 0 12px var(--primary-glow);
+}
+
 /* --- TOOLS CATALOG (PREMIUM CARDS) --- */
 .catalog {
     padding: 2rem 0 4rem 0;
@@ -671,13 +1050,14 @@ strong {
     border-radius: 16px;
     overflow: hidden;
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .category-head {
     padding: 1.5rem 2rem;
     border-bottom: 1px solid var(--card-border);
-    background: rgba(10, 15, 25, 0.8);
+    background: rgba(13, 20, 36, 0.85);
     position: relative;
     overflow: hidden;
 }
@@ -688,6 +1068,43 @@ strong {
     top: 0; left: 0; width: 4px; height: 100%;
     background: var(--primary);
     box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* Category-specific accent bars */
+.category[data-category="Engine"] .category-head::before,
+.category.cat-engine .category-head::before {
+    background: var(--cat-engine);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.category[data-category="2D"] .category-head::before,
+.category.cat-2d .category-head::before {
+    background: var(--cat-2d);
+    box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+}
+
+.category[data-category="3D"] .category-head::before,
+.category.cat-3d .category-head::before {
+    background: var(--cat-3d);
+    box-shadow: 0 0 15px rgba(251, 146, 60, 0.4);
+}
+
+.category[data-category="Audio"] .category-head::before,
+.category.cat-audio .category-head::before {
+    background: var(--cat-audio);
+    box-shadow: 0 0 15px rgba(167, 139, 250, 0.4);
+}
+
+.category[data-category="Level"] .category-head::before,
+.category.cat-level .category-head::before {
+    background: var(--cat-level);
+    box-shadow: 0 0 15px rgba(244, 114, 182, 0.4);
+}
+
+.category[data-category="Code"] .category-head::before,
+.category.cat-code .category-head::before {
+    background: var(--cat-code);
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.4);
 }
 
 .category-title {
@@ -724,9 +1141,9 @@ strong {
 
 .tool-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(0, 240, 255, 0.3);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 240, 255, 0.1);
-    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.1);
+    background: rgba(17, 24, 39, 0.8);
 }
 
 .tool-visual {
@@ -867,7 +1284,7 @@ strong {
     border-top: 1px solid var(--card-border);
     color: var(--text-muted);
     font-size: 0.95rem;
-    background: linear-gradient(180deg, transparent, rgba(5, 11, 20, 0.95));
+    background: linear-gradient(180deg, transparent, rgba(9, 13, 22, 0.95));
 }
 
 .site-footer-links {
@@ -950,6 +1367,45 @@ strong {
     
     .layout article {
         padding: 2rem;
+    }
+
+    .prose,
+    .article-body {
+        font-size: 1.05rem;
+    }
+
+    .prose h1,
+    .article-body h1 {
+        font-size: 2rem;
+    }
+
+    .prose h2,
+    .article-body h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .spec-table th,
+    .version-table th,
+    .spec-table td,
+    .version-table td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .code-block pre {
+        padding: 14px;
+        font-size: 0.82rem;
+    }
+
+    .catalog-filters {
+        gap: 8px;
+        margin: 1.5rem 0 2rem 0;
+    }
+
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 0.8rem;
     }
 
     .tool-card {
