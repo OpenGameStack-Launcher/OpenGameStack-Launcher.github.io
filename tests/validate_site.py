@@ -10,6 +10,7 @@ Checks:
 5. Zero external dependencies, self-hosted fonts, no trackers/CDNs, and safe DOM rendering.
 6. Landing page v0.2.0 release links, engine notes, and canonical manifest naming.
 7. Tool catalog static fallback parity against repository.json (or canonical 7-tool baseline).
+8. Game studio dark CSS tokens (category accents, surface tokens) and editorial/catalog classes in site.css.
 """
 
 from __future__ import annotations
@@ -604,6 +605,53 @@ def validate_css_file(css_path: Path, results: TestResults) -> None:
             target is not None and target.is_file(),
             f"{rel_name}: CSS url('{raw_url}') does not resolve to an existing file",
         )
+
+
+    if rel_name == "assets/css/site.css":
+        required_surface_tokens = [
+            "--bg-dark",
+            "--bg-surface",
+            "--card-bg",
+            "--card-border",
+        ]
+        for token in required_surface_tokens:
+            results.expect(
+                token in content,
+                f"{rel_name}: Missing required surface token '{token}'",
+            )
+
+        required_category_properties = [
+            "--cat-engine",
+            "--cat-2d",
+            "--cat-3d",
+            "--cat-audio",
+            "--cat-level",
+            "--cat-code",
+        ]
+        for prop in required_category_properties:
+            results.expect(
+                prop in content,
+                f"{rel_name}: Missing required category custom property '{prop}'",
+            )
+
+        required_css_classes = [
+            ".prose",
+            ".article-body",
+            ".catalog-filters",
+            ".filter-btn",
+            ".badge-tier-frozen",
+            ".badge-tier-radar",
+            ".spec-table",
+            ".version-table",
+            ".code-block",
+            ".code-header",
+            ".callout",
+        ]
+        for cls in required_css_classes:
+            results.expect(
+                cls in content,
+                f"{rel_name}: Missing required CSS class selector '{cls}'",
+            )
 
 
 def main() -> int:
